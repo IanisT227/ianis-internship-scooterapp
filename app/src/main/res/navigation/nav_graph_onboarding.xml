@@ -42,7 +42,12 @@
         <fragment
             android:id="@+id/onboardingFragment"
             android:name="com.internship.move.OnboardingFragment"
-            android:label="OnboardingFragment" />
+            android:label="OnboardingFragment" >
+            <action
+                android:id="@+id/action_onboardingFragment_pop_including_splashFragment"
+                app:popUpTo="@id/splashFragment"
+                app:popUpToInclusive="true" />
+        </fragment>
         <action
             android:id="@+id/action_global_registerFragment"
             app:destination="@id/registerFragment" />
