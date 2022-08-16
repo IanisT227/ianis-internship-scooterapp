@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_onboarding"
+    app:startDestination="@id/navigation_intro">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.internship.move.LoginFragment"
+        android:label="LoginFragment">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.internship.move.RegisterFragment"
+        android:label="RegisterFragment">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+
+    <navigation
+        android:id="@+id/navigation_intro"
+        app:startDestination="@id/splashFragment">
+        <fragment
+            android:id="@+id/splashFragment"
+            android:name="com.internship.move.SplashFragment"
+            android:label="SplashFragment">
+            <action
+                android:id="@+id/action_splashFragment_to_onboardingFragment"
+                app:destination="@id/onboardingFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/onboardingFragment"
+            android:name="com.internship.move.OnboardingFragment"
+            android:label="OnboardingFragment" >
+            <action
+                android:id="@+id/action_onboardingFragment_pop_including_splashFragment"
+                app:popUpTo="@id/splashFragment"
+                app:popUpToInclusive="true" />
+        </fragment>
+        <action
+            android:id="@+id/action_global_registerFragment"
+            app:destination="@id/registerFragment" />
+    </navigation>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.internship.move.MapFragment"
+        android:label="MapFragment">
+        <action
+            android:id="@+id/action_mapFragment_to_navigation_intro"
+            app:destination="@id/navigation_intro" />
+    </fragment>
+</navigation>
