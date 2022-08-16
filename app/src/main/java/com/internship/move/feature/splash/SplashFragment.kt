@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.internship.move.R
 
@@ -16,6 +17,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
         }, SPLASH_NAV_DELAY)
+
+        if (lifecycle.currentState == Lifecycle.State.RESUMED)
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
+            }, SPLASH_NAV_DELAY)
     }
 
     companion object {
