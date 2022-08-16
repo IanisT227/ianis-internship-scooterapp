@@ -1,9 +1,10 @@
-package com.internship.move
+package com.internship.move.feature.authentication.register
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.internship.move.R
 import com.internship.move.databinding.FragmentRegisterBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
@@ -14,10 +15,10 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initButtons()
+        initListeners()
     }
 
-    private fun initButtons() {
+    private fun initListeners() {
         binding.goHomeBtn.setOnClickListener {
             findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment())
         }

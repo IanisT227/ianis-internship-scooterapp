@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_onboarding"
     app:startDestination="@id/navigation_intro">
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.internship.move.LoginFragment"
+        android:name="com.internship.move.feature.authentication.login.LoginFragment"
         android:label="LoginFragment">
+
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -18,8 +20,9 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.internship.move.RegisterFragment"
+        android:name="com.internship.move.feature.authentication.register.RegisterFragment"
         android:label="RegisterFragment">
+
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -31,31 +34,41 @@
     <navigation
         android:id="@+id/navigation_intro"
         app:startDestination="@id/splashFragment">
+
         <fragment
             android:id="@+id/splashFragment"
-            android:name="com.internship.move.SplashFragment"
-            android:label="SplashFragment">
+            android:name="com.internship.move.feature.splash.SplashFragment"
+            android:label="SplashFragment"
+            tools:layout="@layout/fragment_splash">
+
             <action
                 android:id="@+id/action_splashFragment_to_onboardingFragment"
-                app:destination="@id/onboardingFragment" />
+                app:destination="@id/onboardingFragment"
+                app:popUpTo="@id/splashFragment"
+                app:popUpToInclusive="true" />
         </fragment>
+
         <fragment
             android:id="@+id/onboardingFragment"
-            android:name="com.internship.move.OnboardingFragment"
-            android:label="OnboardingFragment" >
+            android:name="com.internship.move.feature.onboarding.OnboardingFragment"
+            android:label="OnboardingFragment">
+
             <action
                 android:id="@+id/action_onboardingFragment_pop_including_splashFragment"
                 app:popUpTo="@id/splashFragment"
                 app:popUpToInclusive="true" />
         </fragment>
+
         <action
             android:id="@+id/action_global_registerFragment"
             app:destination="@id/registerFragment" />
     </navigation>
+
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.internship.move.MapFragment"
+        android:name="com.internship.move.feature.map.MapFragment"
         android:label="MapFragment">
+
         <action
             android:id="@+id/action_mapFragment_to_navigation_intro"
             app:destination="@id/navigation_intro" />

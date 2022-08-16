@@ -1,10 +1,10 @@
-package com.internship.move
+package com.internship.move.feature.onboarding
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.internship.move.R
 import com.internship.move.databinding.FragmentOnboardingBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
@@ -15,17 +15,10 @@ class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initButtons()
-        handleBackPress()
+        initListeners()
     }
 
-    private fun handleBackPress() {
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            requireActivity().finish()
-        }
-    }
-
-    private fun initButtons() {
+    private fun initListeners() {
         binding.onboardingBtn.setOnClickListener {
             findNavController().navigate(OnboardingFragmentDirections.actionGlobalRegisterFragment())
         }
