@@ -15,12 +15,11 @@ class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initListeners()
+        initViewPager()
     }
 
-    private fun initListeners() {
-        binding.onboardingBtn.setOnClickListener {
-            findNavController().navigate(OnboardingFragmentDirections.actionGlobalRegisterFragment())
-        }
+    private fun initViewPager() {
+        binding.onboardingVP2.isUserInputEnabled = true // will change to false once i get how to change page via buttons
+        binding.onboardingVP2.adapter = OnboardingItemAdapter(this)
     }
 }
