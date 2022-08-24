@@ -16,10 +16,35 @@ class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
         super.onViewCreated(view, savedInstanceState)
 
         initViewPager()
+        initNextButton()
     }
 
     private fun initViewPager() {
-        binding.onboardingVP2.isUserInputEnabled = true // will change to false once i get how to change page via buttons
-        binding.onboardingVP2.adapter = OnboardingItemAdapter(this)
+        binding.onboardingVP2.isUserInputEnabled = false
+        binding.onboardingVP2.adapter = OnboardingItemAdapter(this, initList())
+        binding.dotsIndicator.attachTo(binding.onboardingVP2)
+    }
+
+    private fun initNextButton() {
+        binding.nextItemBtn.setOnClickListener {
+            if (binding.onboardingVP2.currentItem < 3) {
+                println("Item no" + binding.onboardingVP2.currentItem)
+                if (binding.onboardingVP2.currentItem == 2)
+                    binding.nextItemBtn.text = "Get started"
+                binding.onboardingVP2.currentItem = binding.onboardingVP2.currentItem + 1
+            } else {
+                findNavController().navigate(OnboardingFragmentDirections.actionGlobalRegisterFragment())
+            }
+        }
+    }
+
+    private fun initList(): List<OnboardingItem> {
+        val onboardingItemsList = mutableListOf<OnboardingItem>()
+        onboardingItemsList.add(OnboardingItem(R.drawable.onboarding_1, "Title1", "Body1", true))
+        onboardingItemsList.add(OnboardingItem(R.drawable.onboarding_2, "Title2", "Body2", true))
+        onboardingItemsList.add(OnboardingItem(R.drawable.onboarding_3, "Title3", "Body3", true))
+        onboardingItemsList.add(OnboardingItem(R.drawable.onboarding_4, "Title4", "Body4", false))
+
+        return onboardingItemsList
     }
 }

@@ -2,6 +2,7 @@ package com.internship.move.feature.onboarding
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.internship.move.R
 import com.internship.move.databinding.OnboardingViewpagerItemBinding
@@ -19,11 +20,14 @@ class OnboardingitemFragment() : Fragment(R.layout.onboarding_viewpager_item) {
     }
 
     private fun initViews() {
-        onboardingItem = arguments?.getParcelable(ONBOARDING_ITEM)
+        onboardingItem = arguments?.getParcelable(KEY_ONBOARDING_ITEM)
         binding.bodyTV.text = onboardingItem?.bodyText
         binding.titleTV.text = onboardingItem?.titleText
         binding.bannerIV.setImageResource(onboardingItem?.imageURL!!)
-        binding.nextItemBtn.text = onboardingItem?.buttonText
+        binding.skipTV.isVisible = onboardingItem?.isSkipVisible!!
+        binding.skipTV.setOnClickListener {
+            (requireActivity() as? OnSkipButtonPressed)?.onPressed()
+        }
     }
 
     companion object {
@@ -31,10 +35,10 @@ class OnboardingitemFragment() : Fragment(R.layout.onboarding_viewpager_item) {
         fun newInstance(receivedOnboardingItem: OnboardingItem) =
             OnboardingitemFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(ONBOARDING_ITEM, receivedOnboardingItem)
+                    putParcelable(KEY_ONBOARDING_ITEM, receivedOnboardingItem)
                 }
             }
 
-        const val ONBOARDING_ITEM = "ONBOARDING_ITEM"
+        const val KEY_ONBOARDING_ITEM = "ONBOARDING_ITEM"
     }
 }
