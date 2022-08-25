@@ -1,5 +1,6 @@
 package com.internship.move.feature.onboarding
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -33,7 +34,10 @@ class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
                     binding.nextItemBtn.text = "Get started"
                 binding.onboardingVP2.currentItem = binding.onboardingVP2.currentItem + 1
             } else {
-                findNavController().navigate(OnboardingFragmentDirections.actionGlobalRegisterFragment())
+                initPersistence()
+                findNavController().navigate(
+                    OnboardingFragmentDirections.actionGlobalRegisterFragment()
+                )
             }
         }
     }
@@ -80,7 +84,13 @@ class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
                 false
             )
         )
-
         return onboardingItemsList
+    }
+
+    private fun initPersistence() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
+        editor?.putBoolean("IS_LOGGED", true)
+        editor?.commit()
     }
 }
