@@ -1,5 +1,6 @@
 package com.internship.move.feature.map
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -22,5 +23,17 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         binding.logoutBtn.setOnClickListener {
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToNavigationIntro())
         }
+
+        binding.ClearBtn.setOnClickListener {
+            initPersistence()
+            findNavController().navigate(MapFragmentDirections.actionMapFragmentToNavigationIntro())
+        }
+    }
+
+    private fun initPersistence() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
+        editor?.putBoolean("IS_LOGGED", false)
+        editor?.commit()
     }
 }
