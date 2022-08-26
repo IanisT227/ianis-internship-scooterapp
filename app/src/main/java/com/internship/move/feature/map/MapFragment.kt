@@ -24,16 +24,12 @@ class MapFragment : Fragment(R.layout.fragment_map) {
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToNavigationIntro())
         }
 
-        binding.ClearBtn.setOnClickListener {
-            initPersistence()
+        binding.clearBtn.setOnClickListener {
+            requireActivity().getPreferences(Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean("IS_LOGGED", false)
+                .apply()
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToNavigationIntro())
         }
-    }
-
-    private fun initPersistence() {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        val editor = sharedPref?.edit()
-        editor?.putBoolean("IS_LOGGED", false)
-        editor?.commit()
     }
 }

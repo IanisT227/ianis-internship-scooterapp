@@ -7,4 +7,5 @@
     <dimen name="skip_margin_start_onboarding_page">14dp</dimen>
     <dimen name="skip_margin_end_onboarding_page">24dp</dimen>
     <dimen name="skip_margin_bottom_onboarding_page">22dp</dimen>
+    <dimen name="button_margin_top_map_fragment">16dp</dimen>
 </resources>

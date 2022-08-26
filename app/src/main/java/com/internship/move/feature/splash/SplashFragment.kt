@@ -18,19 +18,15 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         Handler(Looper.getMainLooper()).postDelayed({
             navigateToNextFragment()
         }, SPLASH_NAV_DELAY)
-
-        if (lifecycle.currentState == Lifecycle.State.STARTED)
-            Handler(Looper.getMainLooper()).postDelayed({
-                navigateToNextFragment()
-            }, SPLASH_NAV_DELAY)
     }
 
     private fun navigateToNextFragment() {
-        val pref = activity?.getPreferences(Context.MODE_PRIVATE)
-        if (pref?.getBoolean("IS_LOGGED", false) == true)
+        val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        if (pref.getBoolean("IS_LOGGED", false)) {
             findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
-        else
+        } else {
             findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
+        }
     }
 
     companion object {
