@@ -5,13 +5,14 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.internship.move.R
-import com.internship.move.databinding.OnboardingViewpagerItemBinding
+import com.internship.move.databinding.FragmentOnboardingPageBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
-class OnboardingitemFragment() : Fragment(R.layout.onboarding_viewpager_item) {
+class OnboardingItemFragment() : Fragment(R.layout.fragment_onboarding_page) {
 
-    private val binding by viewBinding(OnboardingViewpagerItemBinding::bind)
-    private var onboardingItem: OnboardingItem? = null
+    private val binding by viewBinding(FragmentOnboardingPageBinding::bind)
+    private var onboardingItem: OnboardingItem =
+        OnboardingItem(R.drawable.onboarding_1, R.string.onboarding_1_title, R.string.onboarding_1_body)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,11 +21,11 @@ class OnboardingitemFragment() : Fragment(R.layout.onboarding_viewpager_item) {
     }
 
     private fun initViews() {
-        onboardingItem = arguments?.getParcelable(KEY_ONBOARDING_ITEM)
-        binding.bodyTV.text = onboardingItem?.bodyText
-        binding.titleTV.text = onboardingItem?.titleText
-        binding.bannerIV.setImageResource(onboardingItem?.imageURL!!)
-        binding.skipTV.isVisible = onboardingItem?.isSkipVisible!!
+        onboardingItem = arguments?.getParcelable(KEY_ONBOARDING_ITEM)!!
+        binding.bodyTV.text = getString(onboardingItem.bodyText)
+        binding.titleTV.text = getString(onboardingItem.titleText)
+        binding.bannerIV.setImageResource(onboardingItem.imageRes)
+        binding.skipTV.isVisible = onboardingItem.isLastPage
         binding.skipTV.setOnClickListener {
             (requireActivity() as? OnSkipButtonPressed)?.onPressed()
         }
@@ -33,7 +34,7 @@ class OnboardingitemFragment() : Fragment(R.layout.onboarding_viewpager_item) {
     companion object {
         @JvmStatic
         fun newInstance(receivedOnboardingItem: OnboardingItem) =
-            OnboardingitemFragment().apply {
+            OnboardingItemFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(KEY_ONBOARDING_ITEM, receivedOnboardingItem)
                 }

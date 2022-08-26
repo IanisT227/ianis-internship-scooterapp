@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/bannerIV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/onboarding_5" />
+
+    <TextView
+        android:id="@+id/titleTV"
+        style="@style/Heading1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/title_margin_onboarding_page"
+        android:layout_marginTop="@dimen/title_margin_onboarding_page"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bannerIV"
+        tools:text="Safety" />
+
+    <TextView
+        android:id="@+id/bodyTV"
+        style="@style/Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/body_start_margin_onboarding_page"
+        android:layout_marginTop="@dimen/body_margin_top_onboarding_page"
+        android:layout_marginEnd="@dimen/body_margin_end_onboarding_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTV"
+        tools:text="Please wear a helmet and protect yourself while driving" />
+
+    <TextView
+        android:id="@+id/skipTV"
+        style="@style/RegularText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/skip_margin_start_onboarding_page"
+        android:layout_marginEnd="@dimen/skip_margin_end_onboarding_page"
+        android:layout_marginBottom="@dimen/skip_margin_bottom_onboarding_page"
+        android:text="@string/skip_button_text"
+        app:layout_constraintBottom_toTopOf="@+id/bodyTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bodyTV"
+        app:layout_constraintTop_toBottomOf="@id/bannerIV" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/onboardingVP2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,20 +22,21 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="74dp"
         android:backgroundTint="@color/accent_pink"
-        android:drawableRight="@drawable/ic_arrow_right"
-        android:text="Next"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:text="@string/text_button_onboarding_page"
         android:textColor="@color/white"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
         android:id="@+id/dots_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="98dp"
-        app:dotsColor="@color/accent_pink"
+        app:dotsColor="@color/neutral_light_gray"
+        app:selectedDotColor="@color/neutral_grey"
         app:dotsCornerRadius="8dp"
         app:dotsSize="12dp"
         app:dotsSpacing="4dp"
