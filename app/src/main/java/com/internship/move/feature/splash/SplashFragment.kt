@@ -1,5 +1,6 @@
 package com.internship.move.feature.splash
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,13 +16,21 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
+            navigateToNextFragment()
         }, SPLASH_NAV_DELAY)
 
-        if (lifecycle.currentState == Lifecycle.State.RESUMED)
+        if (lifecycle.currentState == Lifecycle.State.STARTED)
             Handler(Looper.getMainLooper()).postDelayed({
-                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
+                navigateToNextFragment()
             }, SPLASH_NAV_DELAY)
+    }
+
+    private fun navigateToNextFragment() {
+        val pref = activity?.getPreferences(Context.MODE_PRIVATE)
+        if (pref?.getBoolean("IS_LOGGED", false) == true)
+            findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
+        else
+            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
     }
 
     companion object {

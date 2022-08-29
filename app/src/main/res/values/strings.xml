@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Move</string>
+    <string name="onboarding_button_start_text">Get started</string>
+    <string name="onboarding_1_title">Safety</string>
+    <string name="onboarding_1_body">Please wear a helmet and protect yourself while riding</string>
+    <string name="onboarding_2_title">Scan</string>
+    <string name="onboarding_2_body">Scan the QR code or NFC sticker on top of the scooter to unlock and ride.</string>
+    <string name="onboarding_3_title">Ride</string>
+    <string name="onboarding_3_body">Step on the scooter with one foot and kick off the ground. When the scooter starts to coast, push the right throttle to accelerate.</string>
+    <string name="onboarding_4_title">Parking</string>
+    <string name="onboarding_4_body">If convenient, park at a bike rack. If not, park close to the edge of the sidewalk closest to the street. Do not block sidewalks, doors or ramps.</string>
+    <string name="onboarding_5_title">Rules</string>
+    <string name="onboarding_5_body">You must be 18 years or and older with a valid driving licence to operate a scooter. Please follow all street signs, signals and markings, and obey local traffic laws.</string>
+    <string name="skip_button_text">Skip</string>
+    <string name="text_button_onboarding_page">Next</string>
 </resources>
