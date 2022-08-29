@@ -1,40 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_app">
 
-    <TextView
-        android:id="@+id/registerTV"
-        style="@style/TextAppearance.MaterialComponents.Headline4"
+    <ImageView
+        android:id="@+id/smallLogoTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register Fragment"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/small_logo_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/goHomeBtn"
+    <TextView
+        android:id="@+id/registerTitleTV"
+        style="@style/Heading1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Home"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/register_title"
+        android:textColor="@color/neutral_white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerTV" />
+        app:layout_constraintTop_toBottomOf="@+id/smallLogoTV" />
 
-    <Button
-        android:id="@+id/loginBtn"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/subtitleTV"
+        style="@style/Heading2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Login"
-        android:textSize="16sp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="68dp"
+        android:text="@string/register_subtitle"
+        android:textColor="@color/neutral_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goHomeBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/registerTitleTV" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailInputTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:textColorHint="@color/neutral_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subtitleTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailInputET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@color/neutral_grey"
+            android:hint="Email address"
+            android:textColor="@color/neutral_grey"
+            app:boxStrokeColor="@color/neutral_grey" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameInputTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:textColorHint="@color/neutral_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emailInputTIL">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usernameInputET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@color/neutral_grey"
+            android:hint="Username"
+            android:textColor="@color/neutral_grey"
+            app:boxStrokeColor="@color/neutral_grey" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:textColorHint="@color/neutral_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/usernameInputTIL"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/neutral_grey">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordInputET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@color/neutral_grey"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="@color/neutral_grey"
+            app:boxStrokeColor="@color/neutral_grey" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/termsAndConditionsTV"
+        style="@style/Caption1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:textColor="@color/neutral_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        tools:text="@string/terms_and_conditions_text" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/launchHomeBtn"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/bai_jamjuree_bold"
+        android:paddingVertical="16dp"
+        android:text="Get Started"
+        android:textColor="@color/neutral_grey"
+        android:textSize="16sp"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/termsAndConditionsTV"
+        app:strokeColor="@color/neutral_grey" />
+
+    <TextView
+        android:id="@+id/goToLoginTV"
+        style="@style/Caption1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/neutral_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/launchHomeBtn"
+        tools:text="aaaa" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -76,6 +76,6 @@ class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
         editor?.putBoolean("IS_LOGGED", true)
-        editor?.commit()
+        editor?.apply()
     }
 }

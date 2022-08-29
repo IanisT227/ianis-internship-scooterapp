@@ -6,6 +6,11 @@
         <item name="fontFamily">@font/bai_jamjuree_bold</item>
     </style>
 
+    <style name="Heading2">
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/bai_jamjuree_medium</item>
+    </style>
+
     <style name="Body1">
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/bai_jamjuree_medium</item>
@@ -14,6 +19,16 @@
     <style name="RegularText">
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/bai_jamjuree_regular</item>
+    </style>
+
+    <style name="Caption1">
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/bai_jamjuree_semi_bold</item>
+    </style>
+
+    <style name="Button1">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/bai_jamjuree_bold</item>
     </style>
 
 </resources>
