@@ -48,6 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:textColorHint="@color/neutral_grey"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/neutral_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/subtitleTV">
 
@@ -70,6 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:textColorHint="@color/neutral_grey"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/neutral_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailInputTIL">
 
