@@ -34,3 +34,7 @@ fun interface ClickCallBack {
     fun invoke()
 }
 
+fun logTag(tag: String, message: String = "") {
+    println("[$tag] $message")
+}
+
