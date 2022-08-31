@@ -64,6 +64,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         } else {
             binding.launchHomeBtn.isEnabled = false
             binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_pink, null))
+
         }
     }
 
