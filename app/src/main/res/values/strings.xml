@@ -28,4 +28,17 @@
     <string name="launch_login_link"><a href="">log in here</a></string>
     <string name="register_subtitle">Sign up or login and start riding right away</string>
     <string name="register_title">Let\'s get started</string>
+    <string name="login_btn_string">Login</string>
+    <string name="register_btn_string">Register</string>
+    <string name="send_reset_link_text">Send Reset Link</string>
+    <string name="forgot_password_title_string">Forgot Password</string>
+    <string name="forgot_password_subtitle_string">Enter the email address you’re using for your account bellow and we’ll send you a password reset link.</string>
+    <string name="forgot_password_email_address_hint_string">Email address</string>
+    <string name="login_title_string">Login</string>
+    <string name="login_subtitle_string">Enter your account credentials and start riding right away</string>
+    <string name="login_email_address_hint_string">Email address</string>
+    <string name="login_password_hint_string">Password</string>
+    <string name="register_email_address_hint_string">Email address</string>
+    <string name="register_username_hint_string">Username</string>
+    <string name="register_password_hint_string">Password</string>
 </resources>

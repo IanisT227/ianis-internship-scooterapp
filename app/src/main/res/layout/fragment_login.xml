@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
-        android:text="Login"
+        android:text="@string/login_title_string"
         android:textColor="@color/neutral_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/smallLogoTV" />
@@ -36,7 +36,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="68dp"
-        android:text="Enter your account credentials and start riding right away"
+        android:text="@string/login_subtitle_string"
         android:textColor="@color/neutral_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,34 +44,30 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailInputTIL"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:textColorHint="@color/neutral_grey"
-        app:boxStrokeColor="@color/neutral_grey"
         app:endIconMode="clear_text"
-        app:endIconTint="@color/neutral_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/subtitleTV">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailInputET"
+            style="@style/TextInputEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@color/neutral_grey"
-            android:hint="Email address"
-            android:textColor="@color/neutral_grey" />
+            android:hint="@string/login_email_address_hint_string" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:textColorHint="@color/neutral_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailInputTIL"
         app:passwordToggleEnabled="true"
@@ -79,16 +75,13 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordInputET"
+            style="@style/TextInputEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@color/neutral_grey"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:textColor="@color/neutral_grey"
-            app:boxStrokeColor="@color/neutral_grey" />
+            android:hint="@string/login_password_hint_string"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -103,30 +96,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-    <!--    <Button-->
-    <!--        android:id="@+id/launchHomeBtn"-->
-    <!--        style="@style/Widget.MaterialComponents.Button"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginHorizontal="24dp"-->
-    <!--        android:layout_marginTop="32dp"-->
-    <!--        android:background="@drawable/launch_home_fragment_btn"-->
-    <!--        android:backgroundTint="@null"-->
-    <!--        android:enabled="false"-->
-    <!--        android:fontFamily="@font/bai_jamjuree_bold"-->
-    <!--        android:insetTop="0dp"-->
-    <!--        android:insetBottom="0dp"-->
-    <!--        android:outlineProvider="none"-->
-    <!--        android:paddingVertical="16dp"-->
-    <!--        android:text="Login"-->
-    <!--        android:textColor="@color/neutral_grey"-->
-    <!--        android:textSize="16sp"-->
-    <!--        app:cornerRadius="16dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/forgotPasswordTV"-->
-    <!--        tools:visibility="visible" />-->
-
     <Button
         android:id="@+id/launchHomeBtn"
         android:layout_width="0dp"
@@ -134,7 +103,7 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="32dp"
         android:enabled="false"
-        android:text="Login"
+        android:text="@string/login_btn_string"
         android:textColor="@color/neutral_pink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_loginFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
 
     <fragment
@@ -73,4 +76,8 @@
             android:id="@+id/action_mapFragment_to_navigation_intro"
             app:destination="@id/navigation_intro" />
     </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.internship.move.feature.authentication.login.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment" />
 </navigation>

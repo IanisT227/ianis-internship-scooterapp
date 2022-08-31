@@ -1,12 +1,9 @@
 package com.internship.move.feature.authentication.login
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
+import android.widget.EditText
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -30,29 +27,33 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
         }
         binding.forgotPasswordTV.addClickableText(text = getString(R.string.forgot_password)) {
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
         }
         binding.goToRegisterTV.addClickableText(getString(R.string.goToRegisterLink)) {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
         }
 
-        val editTexts = listOf(binding.emailInputET, binding.passwordInputET)
-        for (editText in editTexts) {
-            editText.doOnTextChanged { _, _, _, _ ->
-                if (binding.emailInputET.text?.isNotEmpty() == true && binding.passwordInputET.text?.isNotEmpty() == true) {
-                    binding.launchHomeBtn.isEnabled = true
-                    binding.launchHomeBtn.setTextColor(resources.getColor(R.color.neutral_white))
-                } else {
-                    binding.launchHomeBtn.isEnabled = false
-                    binding.launchHomeBtn.setTextColor(resources.getColor(R.color.neutral_pink))
-                }
-            }
+        binding.emailInputET.doOnTextChanged { _, _, _, _ ->
+            enableLoginBtn(binding.emailInputET)
+        }
+
+        binding.passwordInputET.doOnTextChanged { _, _, _, _ ->
+            enableLoginBtn(binding.passwordInputET)
+        }
+    }
+
+    private fun enableLoginBtn(editText: EditText) {
+        if (binding.emailInputET.text?.isNotEmpty() == true && binding.passwordInputET.text?.isNotEmpty() == true) {
+            binding.launchHomeBtn.isEnabled = true
+            binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))
+        } else {
+            binding.launchHomeBtn.isEnabled = false
+            binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_pink, null))
         }
     }
 
     private fun initViews() {
         binding.forgotPasswordTV.text = getString(R.string.forgot_password)
         binding.goToRegisterTV.text = getString(R.string.goToRegisterText) + " " + getString(R.string.goToRegisterLink)
-
     }
 }

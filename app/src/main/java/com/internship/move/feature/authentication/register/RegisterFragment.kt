@@ -2,7 +2,10 @@ package com.internship.move.feature.authentication.register
 
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.internship.move.R
@@ -41,10 +44,27 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             Toast.makeText(requireContext(), "Los privaciones policiones", Toast.LENGTH_SHORT).show()
         }
 
+        binding.emailInputET.doOnTextChanged { _, _, _, _ ->
+            enableLoginBtn(binding.emailInputET)
+        }
 
-//        binding.loginBtn.setOnClickListener {
-//            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
-//        }
+        binding.passwordInputET.doOnTextChanged { _, _, _, _ ->
+            enableLoginBtn(binding.passwordInputET)
+        }
+
+        binding.usernameInputET.doOnTextChanged { _, _, _, _ ->
+            enableLoginBtn(binding.usernameInputET)
+        }
+    }
+
+    private fun enableLoginBtn(editText: EditText) {
+        if (binding.emailInputET.text?.isNotEmpty() == true && binding.passwordInputET.text?.isNotEmpty() == true && binding.usernameInputET.text?.isNotEmpty() == true) {
+            binding.launchHomeBtn.isEnabled = true
+            binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))
+        } else {
+            binding.launchHomeBtn.isEnabled = false
+            binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_pink, null))
+        }
     }
 
     private fun initViews() {
