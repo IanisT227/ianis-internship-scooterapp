@@ -8,9 +8,18 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.internship.move.MainViewModel
 import com.internship.move.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
+
+    private val viewModel: MainViewModel by viewModel()
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,11 +30,13 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     }
 
     private fun navigateToNextFragment() {
-        val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        if (pref.getBoolean("IS_LOGGED", false)) {
-            findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
-        } else {
-            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
+
+        scope.launch {
+            if (viewModel.getLoggedStatus()) {
+                findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
+            } else {
+                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
+            }
         }
     }
 
