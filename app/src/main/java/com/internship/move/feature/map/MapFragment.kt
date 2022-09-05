@@ -1,17 +1,24 @@
 package com.internship.move.feature.map
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.internship.move.OnboardingViewModel
 import com.internship.move.R
 import com.internship.move.databinding.FragmentMapBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : Fragment(R.layout.fragment_map) {
 
     private val binding by viewBinding(FragmentMapBinding::bind)
+    private val viewModel: OnboardingViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,10 +32,9 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         }
 
         binding.clearBtn.setOnClickListener {
-            requireActivity().getPreferences(Context.MODE_PRIVATE)
-                .edit()
-                .putBoolean("IS_LOGGED", false)
-                .apply()
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.changeLogStatus(logValue = false)
+            }
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToNavigationIntro())
         }
     }
