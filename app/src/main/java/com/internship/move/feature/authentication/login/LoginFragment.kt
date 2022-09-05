@@ -31,7 +31,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun initListeners() {
         binding.launchHomeBtn.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.logIn(UserLogin(email = "ianist227@gmail.com", password = "password123"))
+                viewModel.logIn(user = UserLogin(email = "ianist227@gmail.com", password = "password123"))
+//            viewModel.getAll()
             }
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
         }
