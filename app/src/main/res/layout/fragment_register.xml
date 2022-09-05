@@ -1,40 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_app">
 
-    <TextView
-        android:id="@+id/registerTV"
-        style="@style/TextAppearance.MaterialComponents.Headline4"
+    <ImageView
+        android:id="@+id/smallLogoTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register Fragment"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/small_logo_margin_start"
+        android:layout_marginTop="@dimen/small_logo_margin_top"
+        android:src="@drawable/ic_small_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/goHomeBtn"
+    <TextView
+        android:id="@+id/registerTitleTV"
+        style="@style/Heading1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Home"
-        android:textSize="16sp"
+        android:layout_marginStart="@dimen/textView_margin_start"
+        android:layout_marginTop="@dimen/textView_margin_top"
+        android:text="@string/register_title"
+        android:textColor="@color/primary_text_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/smallLogoTV" />
+
+    <TextView
+        android:id="@+id/subtitleTV"
+        style="@style/Heading2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textView_margin_start"
+        android:layout_marginTop="@dimen/textView_margin_top"
+        android:layout_marginEnd="@dimen/textView_margin_end"
+        android:text="@string/register_subtitle"
+        android:textColor="@color/secondary_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerTV" />
+        app:layout_constraintTop_toBottomOf="@+id/registerTitleTV" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailInputTIL"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/textField_margin_top"
+        app:endIconMode="clear_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subtitleTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailInputET"
+            style="@style/TextInputEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/textField_margin_start"
+            android:layout_marginEnd="@dimen/textField_margin_End"
+            android:hint="@string/register_email_address_hint_string" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameInputTIL"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/textField_margin_top"
+        app:endIconMode="clear_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emailInputTIL">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usernameInputET"
+            style="@style/TextInputEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/textField_margin_start"
+            android:layout_marginEnd="@dimen/textField_margin_End"
+            android:hint="@string/register_username_hint_string" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/textField_margin_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/usernameInputTIL"
+        app:passwordToggleDrawable="@drawable/show_password_selector"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/neutral_grey">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordInputET"
+            style="@style/TextInputEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/textField_margin_start"
+            android:layout_marginEnd="@dimen/textField_margin_End"
+            android:hint="@string/register_password_hint_string"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/termsAndConditionsTV"
+        style="@style/Caption1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textView_margin_start"
+        android:layout_marginTop="@dimen/secondary_textView_margin_top"
+        android:textColor="@color/secondary_text_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        tools:text="@string/terms_and_conditions_text" />
 
     <Button
-        android:id="@+id/loginBtn"
-        android:layout_width="wrap_content"
+        android:id="@+id/launchHomeBtn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Login"
-        android:textSize="16sp"
+        android:layout_marginHorizontal="@dimen/button_margin_horizontal"
+        android:layout_marginTop="@dimen/button_margin_top"
+        android:enabled="false"
+        android:text="@string/register_btn_string"
+        android:textColor="@color/neutral_pink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goHomeBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/termsAndConditionsTV" />
+
+    <TextView
+        android:id="@+id/goToLoginTV"
+        style="@style/Caption1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textView_margin_start"
+        android:layout_marginTop="@dimen/subtitle_textView_margin_top"
+        android:textColor="@color/secondary_text_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/launchHomeBtn"
+        tools:text="You already have an account?" />
 </androidx.constraintlayout.widget.ConstraintLayout>

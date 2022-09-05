@@ -24,7 +24,7 @@
         android:backgroundTint="@color/accent_pink"
         android:drawableEnd="@drawable/ic_arrow_right"
         android:text="@string/text_button_onboarding_page"
-        android:textColor="@color/white"
+        android:textColor="@color/primary_text_color"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

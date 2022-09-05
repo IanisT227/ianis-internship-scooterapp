@@ -13,4 +13,36 @@
     <string name="onboarding_5_body">You must be 18 years or and older with a valid driving licence to operate a scooter. Please follow all street signs, signals and markings, and obey local traffic laws.</string>
     <string name="skip_button_text">Skip</string>
     <string name="text_button_onboarding_page">Next</string>
+
+    <!--    LOGIN TO REGISTER  -->
+    <string name="goToRegisterText">Don\'t have an account? You can</string>
+    <string name="goToRegisterLink"><a href="">start with one here</a></string>
+
+    <!--    LOGIN TO FORGOT PASSWORD  -->
+    <string name="forgot_password"><a href="">Forgot password?</a></string>
+
+    <!--    REGISTER TERMS AND CONDITIONS  -->
+    <string name="terms_and_conditions_text">By continuing you agree to Move’s\n</string>
+    <string name="t_and_c_link"><a href="">Terms and Conditions</a></string>
+    <string name="just_and">and</string>
+    <string name="privacy_policy_link"><a href="">Privacy Policy</a></string>
+
+    <!--  REGISTER TO LOGIN  -->
+    <string name="launch_login_Text">You already have an account? You can </string>
+    <string name="launch_login_link"><a href="">log in here</a></string>
+    <string name="register_subtitle">Sign up or login and start riding right away</string>
+    <string name="register_title">Let\'s get started</string>
+    <string name="login_btn_string">Login</string>
+    <string name="register_btn_string">Register</string>
+    <string name="send_reset_link_text">Send Reset Link</string>
+    <string name="forgot_password_title_string">Forgot Password</string>
+    <string name="forgot_password_subtitle_string">Enter the email address you’re using for your account bellow and we’ll send you a password reset link.</string>
+    <string name="forgot_password_email_address_hint_string">Email address</string>
+    <string name="login_title_string">Login</string>
+    <string name="login_subtitle_string">Enter your account credentials and start riding right away</string>
+    <string name="login_email_address_hint_string">Email address</string>
+    <string name="login_password_hint_string">Password</string>
+    <string name="register_email_address_hint_string">Email address</string>
+    <string name="register_username_hint_string">Username</string>
+    <string name="register_password_hint_string">Password</string>
 </resources>

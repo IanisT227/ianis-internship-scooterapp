@@ -9,6 +9,9 @@
     <color name="neutral_light_purple">#B2AAC2</color>
     <color name="neutral_light_gray">#F4F2F6</color>
     <color name="neutral_white">#FFFFFF</color>
+    <color name="primary_text_color">@color/neutral_white</color>
+    <color name="secondary_text_color">@color/neutral_grey</color>
+    <color name="principal_icon_tint">@color/neutral_white</color>
 
     <!--   Standard android colors-->
     <color name="purple_200">#FFBB86FC</color>
