@@ -6,15 +6,21 @@ import android.widget.EditText
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.internship.move.R
 import com.internship.move.databinding.FragmentLoginBinding
+import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.utils.addClickableText
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
+    private val viewModel: AuthenticationViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,6 +30,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun initListeners() {
         binding.launchHomeBtn.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.logIn(UserLogin(email = "ianist227@gmail.com", password = "password123"))
+            }
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
         }
         binding.forgotPasswordTV.addClickableText(text = getString(R.string.forgot_password)) {

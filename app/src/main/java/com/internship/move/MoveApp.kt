@@ -14,7 +14,8 @@ class MoveApp : Application() {
                 listOf(
                     internalStorage,
                     repository,
-                    viewModel
+                    viewModel,
+                    service
                 )
             )
         }

@@ -1,4 +1,4 @@
-package com.internship.move
+package com.internship.move.model
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE

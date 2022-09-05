@@ -1,10 +1,7 @@
-package com.internship.move
+package com.internship.move.feature.onboarding
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.internship.move.model.Repository
-import kotlinx.coroutines.launch
 
 class OnboardingViewModel(private val repo: Repository) : ViewModel() {
 
