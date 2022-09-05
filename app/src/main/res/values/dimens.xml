@@ -8,4 +8,22 @@
     <dimen name="skip_margin_end_onboarding_page">24dp</dimen>
     <dimen name="skip_margin_bottom_onboarding_page">22dp</dimen>
     <dimen name="button_margin_top_map_fragment">16dp</dimen>
+    <dimen name="button_height">56dp</dimen>
+    <dimen name="small_logo_margin_start">52dp</dimen>
+    <dimen name="small_logo_margin_top">20dp</dimen>
+    <dimen name="textView_margin_start">24dp</dimen>
+    <dimen name="textView_margin_top">20dp</dimen>
+    <dimen name="textView_margin_end">68dp</dimen>
+    <dimen name="textField_margin_top">18dp</dimen>
+    <dimen name="textField_margin_start">24dp</dimen>
+    <dimen name="textField_margin_End">24dp</dimen>
+    <dimen name="secondary_textView_margin_top">36dp</dimen>
+    <dimen name="button_margin_horizontal">24dp</dimen>
+    <dimen name="button_margin_top">32dp</dimen>
+    <dimen name="subtitle_textView_margin_top">32dp</dimen>
+    <dimen name="textView_secondary_margin_end">24dp</dimen>
+    <dimen name="textView_secondary_margin_top">20dp</dimen>
+    <dimen name="textField_secondary_margin_top">32dp</dimen>
+    <dimen name="textView_reset_pwd_margin_top">14dp</dimen>
+    <dimen name="ic_back_margin_top">28dp</dimen>
 </resources>

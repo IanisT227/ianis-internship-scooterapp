@@ -29,35 +29,32 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment())
         }
 
-        binding.goToLoginTV.addClickableText(getString(R.string.launch_login_link))
-        {
+        binding.goToLoginTV.addClickableText(getString(R.string.launch_login_link)) {
             findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
         }
 
-        binding.termsAndConditionsTV.addClickableText(getString(R.string.t_and_c_link))
-        {
+        binding.termsAndConditionsTV.addClickableText(getString(R.string.t_and_c_link)) {
             Toast.makeText(requireContext(), "Los termos and conditiones", Toast.LENGTH_SHORT).show()
         }
 
-        binding.termsAndConditionsTV.addClickableText(getString(R.string.privacy_policy_link))
-        {
+        binding.termsAndConditionsTV.addClickableText(getString(R.string.privacy_policy_link)) {
             Toast.makeText(requireContext(), "Los privaciones policiones", Toast.LENGTH_SHORT).show()
         }
 
         binding.emailInputET.doOnTextChanged { _, _, _, _ ->
-            enableLoginBtn(binding.emailInputET)
+            updateRegisterButtonState(binding.emailInputET)
         }
 
         binding.passwordInputET.doOnTextChanged { _, _, _, _ ->
-            enableLoginBtn(binding.passwordInputET)
+            updateRegisterButtonState(binding.passwordInputET)
         }
 
         binding.usernameInputET.doOnTextChanged { _, _, _, _ ->
-            enableLoginBtn(binding.usernameInputET)
+            updateRegisterButtonState(binding.usernameInputET)
         }
     }
 
-    private fun enableLoginBtn(editText: EditText) {
+    private fun updateRegisterButtonState(editText: EditText) {
         if (binding.emailInputET.text?.isNotEmpty() == true && binding.passwordInputET.text?.isNotEmpty() == true && binding.usernameInputET.text?.isNotEmpty() == true) {
             binding.launchHomeBtn.isEnabled = true
             binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))
@@ -68,8 +65,8 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initViews() {
-        binding.goToLoginTV.text = getString(R.string.launch_login_Text) + " " + getString(R.string.launch_login_link)
+        binding.goToLoginTV.text = "${getString(R.string.launch_login_Text)} ${getString(R.string.launch_login_link)}"
         binding.termsAndConditionsTV.text =
-            getString(R.string.t_and_c_link) + " " + getString(R.string.just_and) + " " + getString(R.string.privacy_policy_link)
+            "${getString(R.string.t_and_c_link)}  ${getString(R.string.just_and)} ${getString(R.string.privacy_policy_link)}"
     }
 }

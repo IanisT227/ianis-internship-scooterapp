@@ -34,15 +34,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         binding.emailInputET.doOnTextChanged { _, _, _, _ ->
-            enableLoginBtn(binding.emailInputET)
+            updateLoginButtonState(binding.emailInputET)
         }
 
         binding.passwordInputET.doOnTextChanged { _, _, _, _ ->
-            enableLoginBtn(binding.passwordInputET)
+            updateLoginButtonState(binding.passwordInputET)
         }
     }
 
-    private fun enableLoginBtn(editText: EditText) {
+    private fun updateLoginButtonState(editText: EditText) {
         if (binding.emailInputET.text?.isNotEmpty() == true && binding.passwordInputET.text?.isNotEmpty() == true) {
             binding.launchHomeBtn.isEnabled = true
             binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))
@@ -54,6 +54,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun initViews() {
         binding.forgotPasswordTV.text = getString(R.string.forgot_password)
-        binding.goToRegisterTV.text = getString(R.string.goToRegisterText) + " " + getString(R.string.goToRegisterLink)
+        binding.goToRegisterTV.text = "${getString(R.string.goToRegisterText)} ${getString(R.string.goToRegisterLink)}"
     }
 }
