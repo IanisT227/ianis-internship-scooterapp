@@ -1,14 +1,13 @@
 package com.internship.move.feature.splash
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.internship.move.MainViewModel
+import com.internship.move.OnboardingViewModel
 import com.internship.move.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
-    private val viewModel: MainViewModel by viewModel()
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val viewModel: OnboardingViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,7 +29,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private fun navigateToNextFragment() {
 
-        scope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             if (viewModel.getLoggedStatus()) {
                 findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
             } else {

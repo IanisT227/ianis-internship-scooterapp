@@ -1,11 +1,11 @@
 package com.internship.move.feature.onboarding
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.internship.move.MainViewModel
+import com.internship.move.OnboardingViewModel
 import com.internship.move.R
 import com.internship.move.databinding.FragmentOnboardingBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -18,8 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
 
     private val binding by viewBinding(FragmentOnboardingBinding::bind)
-    private val viewModel: MainViewModel by viewModel()
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val viewModel: OnboardingViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +41,7 @@ class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
                 }
                 binding.onboardingVP2.currentItem = binding.onboardingVP2.currentItem + 1
             } else {
-                scope.launch { viewModel.logIn() }
+                viewLifecycleOwner.lifecycleScope.launch { viewModel.changeLogStatus(logValue = true) }
                 findNavController().navigate(
                     OnboardingFragmentDirections.actionGlobalRegisterFragment()
                 )
