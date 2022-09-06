@@ -2,32 +2,44 @@ package com.internship.move.feature.authentication
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.internship.move.feature.authentication.login.UserLogin
 import com.internship.move.feature.authentication.register.UserRegister
+import com.internship.move.utils.ERROR
+import com.internship.move.utils.LOGGED
+import com.internship.move.utils.UNCHECKED
 import com.internship.move.utils.logTag
-import com.squareup.moshi.Moshi
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
+import kotlinx.coroutines.launch
 
 class AuthenticationViewModel(private val authenticationApi: AuthenticationService) : ViewModel() {
 
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val onUserLoggedIn: MutableLiveData<Int> = MutableLiveData(UNCHECKED)
 
-    suspend fun logIn(user: UserLogin) {
-        isLoading.value = true
-//        try {
-            val response = authenticationApi.loginUser(userdata = user)
-            logTag("LOGIN", response.toString())
-//        } catch (e: Exception) {
-//            logTag("LOGIN", e.toString())
-//        } finally {
-//            isLoading.value = false
-//        }
+    fun logIn(user: UserLogin) {
+        viewModelScope.launch {
+            try {
+                val response = authenticationApi.loginUser(userdata = user)
+                logTag("LOGIN", response.toString())
+                onUserLoggedIn.value = LOGGED
+            } catch (e: Exception) {
+                onUserLoggedIn.value = ERROR
+                logTag("LOGIN", e.toString())
+            }
+        }
+
     }
 
     suspend fun register(user: UserRegister) {
-
+        viewModelScope.launch {
+            try {
+                val response = authenticationApi.registerUser(userdata = user)
+                logTag("LOGIN", response.toString())
+                onUserLoggedIn.value = LOGGED
+            } catch (e: Exception) {
+                onUserLoggedIn.value = ERROR
+                logTag("LOGIN", e.toString())
+            }
+        }
     }
 
     suspend fun getAll() {
@@ -35,11 +47,12 @@ class AuthenticationViewModel(private val authenticationApi: AuthenticationServi
             val response = authenticationApi.getUsers()
             logTag("LOGIN", response.toString())
         } catch (e: Exception) {
-            logTag("LOGIN", e.toString())
+            throw(e)
         }
     }
 
     companion object {
         private const val SERVER_URL = "https://move-scooter.herokuapp.com/"
+
     }
 }

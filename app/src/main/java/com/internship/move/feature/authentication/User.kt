@@ -10,8 +10,8 @@ data class User(
     val id: String,
     @Json(name = "email")
     val email: String,
-    @Json(name = "password")
-    val password: String,
+    @Json(name = "driverLicenseKey")
+    val driverLicenseKey: String?,
     @Json(name = "status")
     val status: String,
     @Json(name = "username")

@@ -3,38 +3,42 @@ package com.internship.move.feature.authentication.login
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.internship.move.R
 import com.internship.move.databinding.FragmentLoginBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
+import com.internship.move.utils.ERROR
+import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
+import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
     private val viewModel: AuthenticationViewModel by viewModel()
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         initListeners()
+        initObservers()
     }
 
     private fun initListeners() {
         binding.launchHomeBtn.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.logIn(user = UserLogin(email = "ianist227@gmail.com", password = "password123"))
-//            viewModel.getAll()
-            }
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
+            viewModel.logIn(
+                user = UserLogin(
+                    email = binding.emailInputET.text.toString(),
+                    password = binding.passwordInputET.text.toString()
+                )
+            )
         }
         binding.forgotPasswordTV.addClickableText(text = getString(R.string.forgot_password)) {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
@@ -65,5 +69,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun initViews() {
         binding.forgotPasswordTV.text = getString(R.string.forgot_password)
         binding.goToRegisterTV.text = "${getString(R.string.goToRegisterText)} ${getString(R.string.goToRegisterLink)}"
+    }
+
+    private fun initObservers() {
+        viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
+            logTag("ONLOGGED", viewModel.onUserLoggedIn.value.toString())
+            if (logValue == LOGGED) {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
+            } else if (logValue == ERROR) {
+                Toast.makeText(context, "Incorrect credentials", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

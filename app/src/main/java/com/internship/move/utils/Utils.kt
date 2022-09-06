@@ -37,3 +37,7 @@ fun interface ClickCallBack {
 fun logTag(tag: String, message: String = "") {
     println("[$tag] $message")
 }
+
+const val UNCHECKED = 0
+const val LOGGED = 1
+const val ERROR = -1
