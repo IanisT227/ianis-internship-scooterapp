@@ -14,6 +14,8 @@ import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.utils.ERROR
 import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
+import com.internship.move.utils.checkMail
+import com.internship.move.utils.checkUserOrPassword
 import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,12 +35,29 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun initListeners() {
         binding.launchHomeBtn.setOnClickListener {
-            viewModel.logIn(
-                user = UserLogin(
-                    email = binding.emailInputET.text.toString(),
-                    password = binding.passwordInputET.text.toString()
+            var checkStatus = true
+
+            if (!checkMail(binding.emailInputET)) {
+                binding.emailInputTIL.error = "Invalid email"
+                checkStatus = false
+            } else {
+                binding.emailInputET.error = null
+            }
+
+            if (!checkUserOrPassword(binding.passwordInputET)) {
+                binding.passwordInputTIL.error = "At least 5 characters"
+            } else {
+                binding.passwordInputTIL.error = null
+            }
+
+            if (checkStatus) {
+                viewModel.logIn(
+                    user = UserLogin(
+                        email = binding.emailInputET.text.toString(),
+                        password = binding.passwordInputET.text.toString()
+                    )
                 )
-            )
+            }
         }
         binding.forgotPasswordTV.addClickableText(text = getString(R.string.forgot_password)) {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())

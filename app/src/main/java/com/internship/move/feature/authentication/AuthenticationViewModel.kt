@@ -29,7 +29,7 @@ class AuthenticationViewModel(private val authenticationApi: AuthenticationServi
 
     }
 
-    suspend fun register(user: UserRegister) {
+    fun register(user: UserRegister) {
         viewModelScope.launch {
             try {
                 val response = authenticationApi.registerUser(userdata = user)

@@ -1,9 +1,9 @@
 package com.internship.move.feature.onboarding
 
 import androidx.lifecycle.ViewModel
-import com.internship.move.model.Repository
+import com.internship.move.model.OnBoardingRepository
 
-class OnboardingViewModel(private val repo: Repository) : ViewModel() {
+class OnboardingViewModel(private val repo: OnBoardingRepository) : ViewModel() {
 
     suspend fun getLoggedStatus() = repo.getLoggedStatus()
 

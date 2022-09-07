@@ -2,7 +2,6 @@ package com.internship.move.feature.authentication
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.sql.ClientInfoStatus
 
 @JsonClass(generateAdapter = true)
 data class User(

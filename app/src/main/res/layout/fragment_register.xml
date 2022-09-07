@@ -59,7 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/textField_margin_start"
             android:layout_marginEnd="@dimen/textField_margin_End"
-            android:hint="@string/register_email_address_hint_string" />
+            android:hint="@string/register_email_address_hint_string"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -79,11 +80,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/textField_margin_start"
             android:layout_marginEnd="@dimen/textField_margin_End"
-            android:hint="@string/register_username_hint_string" />
+            android:hint="@string/register_username_hint_string"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/passwordInputTIL"
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,7 +116,7 @@
         android:layout_marginTop="@dimen/secondary_textView_margin_top"
         android:textColor="@color/secondary_text_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/passwordInputTIL"
         tools:text="@string/terms_and_conditions_text" />
 
     <Button

@@ -3,8 +3,8 @@ package com.internship.move
 import com.internship.move.feature.authentication.AuthenticationService
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.feature.onboarding.OnboardingViewModel
-import com.internship.move.model.InternalStorageManager
-import com.internship.move.model.Repository
+import com.internship.move.model.OnBoardingInternalStorageManager
+import com.internship.move.model.OnBoardingRepository
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,8 +19,8 @@ val viewModel = module {
     viewModel { AuthenticationViewModel(get()) }
 }
 
-val repository = module {
-    single<Repository> { Repository(internalStorageManager = get()) }
+val onBoardingRepository = module {
+    single<OnBoardingRepository> { OnBoardingRepository(onBoardingInternalStorageManager = get()) }
 }
 
 val service = module {
@@ -31,7 +31,7 @@ val service = module {
 }
 
 val internalStorage = module {
-    single { InternalStorageManager(androidContext()) }
+    single { OnBoardingInternalStorageManager(androidContext()) }
 }
 
 fun provideAuthService(retrofit: Retrofit): AuthenticationService =

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 
-class InternalStorageManager(context: Context) {
+class OnBoardingInternalStorageManager(context: Context) {
 
     private val preferences: SharedPreferences = context.getSharedPreferences(KEY_IS_LOGGED, MODE_PRIVATE)
 

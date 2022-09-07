@@ -7,8 +7,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.internship.move.feature.onboarding.OnboardingViewModel
 import com.internship.move.R
+import com.internship.move.feature.onboarding.OnboardingViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

@@ -5,8 +5,10 @@ import android.text.Spanned.SPAN_EXCLUSIVE_INCLUSIVE
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Patterns
 import android.view.View
 import android.widget.TextView
+import com.google.android.material.textfield.TextInputEditText
 import com.internship.move.R
 
 fun TextView.addClickableText(text: String, color: Int = context.getColor(R.color.accent_pink), callback: ClickCallBack) {
@@ -36,6 +38,14 @@ fun interface ClickCallBack {
 
 fun logTag(tag: String, message: String = "") {
     println("[$tag] $message")
+}
+
+fun checkMail(mailEditText: TextInputEditText): Boolean {
+    return Patterns.EMAIL_ADDRESS.matcher(mailEditText.text.toString()).matches() && mailEditText.text?.length!! > 7
+}
+
+fun checkUserOrPassword(userOrPasswordEditText: TextInputEditText): Boolean {
+    return userOrPasswordEditText.text?.length!! > 4
 }
 
 const val UNCHECKED = 0

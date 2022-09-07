@@ -9,7 +9,7 @@ import retrofit2.http.POST
 
 interface AuthenticationService {
 
-    @POST("register")
+    @POST("user/register")
     suspend fun registerUser(@Body userdata: UserRegister)
 
     @POST("user/login")
