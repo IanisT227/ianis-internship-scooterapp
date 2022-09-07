@@ -5,4 +5,8 @@ class OnBoardingRepository(private val onBoardingInternalStorageManager: OnBoard
     suspend fun getLoggedStatus() = onBoardingInternalStorageManager.getLoggedStatus()
 
     suspend fun changeLoggedStatus(logValue: Boolean) = onBoardingInternalStorageManager.changeLogStatus(logValue)
+
+    suspend fun getAuthStatus(): String? {
+        return onBoardingInternalStorageManager.getAuthPreferences()
+    }
 }

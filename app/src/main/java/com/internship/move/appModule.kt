@@ -16,7 +16,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val viewModel = module {
     viewModel { OnboardingViewModel(repo = get()) }
-    viewModel { AuthenticationViewModel(get()) }
+    viewModel { AuthenticationViewModel(get(), get()) }
 }
 
 val onBoardingRepository = module {

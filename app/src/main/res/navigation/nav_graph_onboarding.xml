@@ -66,6 +66,10 @@
         <action
             android:id="@+id/action_global_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_global_mapFragment"
+            app:destination="@id/mapFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </navigation>
 
     <fragment

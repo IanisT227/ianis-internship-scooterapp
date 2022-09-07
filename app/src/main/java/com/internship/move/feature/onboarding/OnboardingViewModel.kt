@@ -8,4 +8,8 @@ class OnboardingViewModel(private val repo: OnBoardingRepository) : ViewModel() 
     suspend fun getLoggedStatus() = repo.getLoggedStatus()
 
     suspend fun changeLogStatus(logValue: Boolean) = repo.changeLoggedStatus(logValue)
+
+    suspend fun getAuthStatus(): String? {
+        return repo.getAuthStatus()
+    }
 }
