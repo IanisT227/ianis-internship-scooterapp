@@ -1,9 +1,12 @@
 package com.internship.move.feature.authentication
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class User(
     @Json(name = "_id")
     val id: String,
@@ -15,4 +18,4 @@ data class User(
     val status: String,
     @Json(name = "username")
     val username: String
-)
+) : Parcelable

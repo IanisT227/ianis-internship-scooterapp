@@ -14,30 +14,28 @@ import kotlinx.coroutines.launch
 class AuthenticationViewModel(private val authenticationApi: AuthenticationService) : ViewModel() {
 
     val onUserLoggedIn: MutableLiveData<Int> = MutableLiveData(UNCHECKED)
+    val userData: MutableLiveData<UserResponse> = MutableLiveData(null)
 
     fun logIn(user: UserLogin) {
         viewModelScope.launch {
             try {
                 val response = authenticationApi.loginUser(userdata = user)
-                logTag("LOGIN", response.toString())
+                userData.value = response
                 onUserLoggedIn.value = LOGGED
             } catch (e: Exception) {
                 onUserLoggedIn.value = ERROR
-                logTag("LOGIN", e.toString())
             }
         }
-
     }
 
     fun register(user: UserRegister) {
         viewModelScope.launch {
             try {
                 val response = authenticationApi.registerUser(userdata = user)
-                logTag("LOGIN", response.toString())
+                userData.value = response
                 onUserLoggedIn.value = LOGGED
             } catch (e: Exception) {
                 onUserLoggedIn.value = ERROR
-                logTag("LOGIN", e.toString())
             }
         }
     }
@@ -53,6 +51,5 @@ class AuthenticationViewModel(private val authenticationApi: AuthenticationServi
 
     companion object {
         private const val SERVER_URL = "https://move-scooter.herokuapp.com/"
-
     }
 }

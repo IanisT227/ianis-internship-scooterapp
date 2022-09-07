@@ -60,7 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/textField_margin_start"
             android:layout_marginEnd="@dimen/textField_margin_End"
-            android:hint="@string/login_email_address_hint_string" />
+            android:hint="@string/login_email_address_hint_string"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

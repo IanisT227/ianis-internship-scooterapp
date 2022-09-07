@@ -16,7 +16,6 @@ import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
 import com.internship.move.utils.checkMail
 import com.internship.move.utils.checkUserOrPassword
-import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -92,9 +91,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun initObservers() {
         viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
-            logTag("ONLOGGED", viewModel.onUserLoggedIn.value.toString())
             if (logValue == LOGGED) {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment(receivedResponse = viewModel.userData.value!!))
             } else if (logValue == ERROR) {
                 Toast.makeText(context, "Incorrect credentials", Toast.LENGTH_SHORT).show()
             }
