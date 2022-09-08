@@ -10,6 +10,7 @@ import com.internship.move.R
 import com.internship.move.databinding.FragmentMapBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.feature.onboarding.OnboardingViewModel
+import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,31 +31,24 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
     private fun initListeners() {
         binding.logoutBtn.setOnClickListener {
-            authViewModel.deleteToken()
+            logTag("LOGOOUT", authViewModel.userData.value.toString())
+            authViewModel.logOut()
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToNavigationIntro())
         }
 
         binding.clearBtn.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 onboardingViewModel.changeLogStatus(logValue = false)
-                authViewModel.deleteToken()
+                authViewModel.logOut()
             }
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToNavigationIntro())
         }
     }
 
+
+
     private fun initViews() {
         binding.mapTV.text = args.receivedResponse.user.email
+        authViewModel.userData.value = args.receivedResponse
     }
-
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(receivedUser: UserResponse) =
-//            MapFragment().apply {
-//                arguments = Bundle().apply {
-//                    putParcelable(RECEIVED_USER, receivedUser)
-//                }
-//            }
-//        const val RECEIVED_USER = "RECEIVED_USER"
-//    }
 }

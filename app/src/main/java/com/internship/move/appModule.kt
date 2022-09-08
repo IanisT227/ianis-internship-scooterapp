@@ -47,4 +47,4 @@ fun provideMoshi(): Moshi = Moshi.Builder().build()
 
 fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor()).build()
 
-private const val SERVER_URL = "https://move-scooter.herokuapp.com/"
+private const val SERVER_URL = "https://move-scooter.herokuapp.com/api/"

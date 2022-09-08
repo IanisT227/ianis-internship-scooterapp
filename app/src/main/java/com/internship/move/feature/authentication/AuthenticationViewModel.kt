@@ -40,13 +40,23 @@ class AuthenticationViewModel(
                 userData.value = response
                 onUserLoggedIn.value = LOGGED
             } catch (e: Exception) {
+                logTag("REGISTER", e.toString())
                 onUserLoggedIn.value = ERROR
             }
         }
     }
 
-    fun deleteToken() {
-        onBoardingInternalStorageManager.changeAuthPreferences(userData = UserResponse("", User("", "", "", "", "")))
+    fun logOut() {
+        viewModelScope.launch {
+            try {
+            logTag("LOGOUT", userData.value?.token.toString())
+            authenticationApi.logoutUser("Bearer " + userData.value?.token)
+            onBoardingInternalStorageManager.changeAuthPreferences(userData = UserResponse("", User("", "", "", "", "")))
+            } catch (e: Exception) {
+                logTag("LOGOUT", e.toString())
+            }
+
+        }
     }
 
     suspend fun getAll() {
