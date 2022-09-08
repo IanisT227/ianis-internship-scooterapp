@@ -21,7 +21,7 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
         initListeners()
 
         binding.bar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            requireActivity().finish()
         }
     }
 

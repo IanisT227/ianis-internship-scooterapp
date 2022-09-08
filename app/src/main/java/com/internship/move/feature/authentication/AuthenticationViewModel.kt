@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.internship.move.feature.authentication.login.UserLogin
 import com.internship.move.feature.authentication.register.UserRegister
-import com.internship.move.model.OnBoardingInternalStorageManager
+import com.internship.move.model.UserDataInternalStorageManager
 import com.internship.move.utils.ERROR
 import com.internship.move.utils.LOGGED
 import com.internship.move.utils.UNCHECKED
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class AuthenticationViewModel(
     private val authenticationApi: AuthenticationService,
-    private val onBoardingInternalStorageManager: OnBoardingInternalStorageManager
+    private val userDataInternalStorageManager: UserDataInternalStorageManager
 ) : ViewModel() {
 
     val onUserLoggedIn: MutableLiveData<Int> = MutableLiveData(UNCHECKED)
@@ -26,7 +26,7 @@ class AuthenticationViewModel(
                 val response = authenticationApi.loginUser(userdata = user)
                 userData.value = response
                 onUserLoggedIn.value = LOGGED
-                onBoardingInternalStorageManager.changeAuthPreferences(userData.value!!)
+                userDataInternalStorageManager.changeAuthPreferences(userData.value!!)
             } catch (e: Exception) {
                 onUserLoggedIn.value = ERROR
             }
@@ -51,7 +51,7 @@ class AuthenticationViewModel(
             try {
             logTag("LOGOUT", userData.value?.token.toString())
             authenticationApi.logoutUser("Bearer " + userData.value?.token)
-            onBoardingInternalStorageManager.changeAuthPreferences(userData = UserResponse("", User("", "", "", "", "")))
+            userDataInternalStorageManager.changeAuthPreferences(userData = UserResponse("", User("", "", "", "", "")))
             } catch (e: Exception) {
                 logTag("LOGOUT", e.toString())
             }

@@ -18,7 +18,7 @@ val viewModel = module {
 }
 
 val onBoardingRepository = module {
-    single<OnBoardingRepository> { OnBoardingRepository(onBoardingInternalStorageManager = get()) }
+    single<OnBoardingRepository> { OnBoardingRepository(userDataInternalStorageManager = get()) }
 }
 
 val service = module {
@@ -29,7 +29,7 @@ val service = module {
 }
 
 val internalStorage = module {
-    single { OnBoardingInternalStorageManager(androidContext()) }
+    single { UserDataInternalStorageManager(androidContext()) }
 }
 
 fun provideAuthService(retrofit: Retrofit): AuthenticationService =

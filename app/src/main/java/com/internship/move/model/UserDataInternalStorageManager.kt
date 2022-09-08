@@ -7,7 +7,7 @@ import com.google.gson.Gson
 import com.internship.move.feature.authentication.User
 import com.internship.move.feature.authentication.UserResponse
 
-class OnBoardingInternalStorageManager(context: Context) {
+class UserDataInternalStorageManager(context: Context) {
 
     private val preferences: SharedPreferences = context.getSharedPreferences(KEY_PREFERENCES, MODE_PRIVATE)
 
