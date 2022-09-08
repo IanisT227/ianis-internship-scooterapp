@@ -41,8 +41,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                     val userResponse: UserResponse = Gson().fromJson(
                         viewModel.getAuthStatus(), UserResponse::class.java
                     )
-
-                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment(userResponse))
+                    if (userResponse.user.driverLicenseKey != null)
+                        findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment(userResponse))
+                    else
+                        findNavController().navigate(SplashFragmentDirections.actionGlobalLicenseInstructionsFragment(userResponse))
                 }
             } else {
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
@@ -52,6 +54,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     companion object {
         private const val SPLASH_NAV_DELAY = 2000L
-        private const val NULL_USER = "{\"token\":\"\",\"user\":{\"driverLicenseKey\":\"\",\"email\":\"\",\"id\":\"\",\"status\":\"\",\"username\":\"\"}}"
+        private const val NULL_USER =
+            "{\"token\":\"\",\"user\":{\"driverLicenseKey\":\"\",\"email\":\"\",\"id\":\"\",\"status\":\"\",\"username\":\"\"}}"
     }
 }
