@@ -92,7 +92,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun initObservers() {
         viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
             if (logValue == LOGGED) {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment(receivedResponse = viewModel.userData.value!!))
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLicenseInstructionsFragment(userData = viewModel.userData.value!!))
             } else if (logValue == ERROR) {
                 Toast.makeText(context, "Incorrect credentials", Toast.LENGTH_SHORT).show()
             }

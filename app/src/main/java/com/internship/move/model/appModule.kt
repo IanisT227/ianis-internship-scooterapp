@@ -1,10 +1,8 @@
-package com.internship.move
+package com.internship.move.model
 
 import com.internship.move.feature.authentication.AuthenticationService
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.feature.onboarding.OnboardingViewModel
-import com.internship.move.model.OnBoardingInternalStorageManager
-import com.internship.move.model.OnBoardingRepository
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

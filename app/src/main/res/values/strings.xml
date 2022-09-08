@@ -45,4 +45,8 @@
     <string name="register_email_address_hint_string">Email address</string>
     <string name="register_username_hint_string">Username</string>
     <string name="register_password_hint_string">Password</string>
+    <string name="license_disclaimer_title_string">Before you can start riding</string>
+    <string name="disclaimer_instructions_string">Please take a photo or upload the front side of your driving license so we can make sure that it is valid.</string>
+    <string name="driving_license_title">Driving License</string>
+    <string name="add_license_button_string">Add driving license</string>
 </resources>

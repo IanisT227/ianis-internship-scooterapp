@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_licenseInstructionsFragment"
+            app:destination="@id/licenseInstructionsFragment" />
     </fragment>
 
     <fragment
@@ -33,6 +36,9 @@
         <action
             android:id="@+id/action_registerFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_licenseInstructionsFragment"
+            app:destination="@id/licenseInstructionsFragment" />
     </fragment>
 
     <navigation
@@ -87,5 +93,20 @@
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.internship.move.feature.authentication.login.ForgotPasswordFragment"
-        android:label="ForgotPasswordFragment" />
+        android:label="ForgotPasswordFragment" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_self"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/licenseInstructionsFragment"
+        android:name="com.internship.move.feature.licenseRegistration.LicenseInstructionsFragment"
+        android:label="LicenseInstructionsFragment" >
+        <action
+            android:id="@+id/action_licenseInstructionsFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <argument
+            android:name="userData"
+            app:argType="com.internship.move.feature.authentication.UserResponse" />
+    </fragment>
 </navigation>

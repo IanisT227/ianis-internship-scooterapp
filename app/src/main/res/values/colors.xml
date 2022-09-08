@@ -12,6 +12,7 @@
     <color name="primary_text_color">@color/neutral_white</color>
     <color name="secondary_text_color">@color/neutral_grey</color>
     <color name="principal_icon_tint">@color/neutral_white</color>
+    <color name="driving_instructions_accent_color">@color/primary_dark_purple</color>
 
     <!--   Standard android colors-->
     <color name="purple_200">#FFBB86FC</color>

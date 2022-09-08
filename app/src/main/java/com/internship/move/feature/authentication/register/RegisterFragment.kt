@@ -116,7 +116,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
             logTag("ONLOGGED", viewModel.onUserLoggedIn.value.toString())
             if (logValue == LOGGED) {
-                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment(receivedResponse = viewModel.userData.value!!))
+                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLicenseInstructionsFragment(userData = viewModel.userData.value!!))
             } else if (logValue == ERROR) {
                 Toast.makeText(context, "Email already exists", Toast.LENGTH_SHORT).show()
             }
