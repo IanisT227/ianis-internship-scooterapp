@@ -111,5 +111,12 @@
         <argument
             android:name="userData"
             app:argType="com.internship.move.feature.authentication.UserResponse" />
+        <action
+            android:id="@+id/action_licenseInstructionsFragment_to_licensePreviewFragment"
+            app:destination="@id/licensePreviewFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/licensePreviewFragment"
+        android:name="com.internship.move.feature.licenseRegistration.LicensePreviewFragment"
+        android:label="LicensePreviewFragment" />
 </navigation>

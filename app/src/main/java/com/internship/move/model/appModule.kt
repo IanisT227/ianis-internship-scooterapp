@@ -2,6 +2,8 @@ package com.internship.move.model
 
 import com.internship.move.feature.authentication.AuthenticationService
 import com.internship.move.feature.authentication.AuthenticationViewModel
+import com.internship.move.feature.licenseRegistration.LicenseRegistrationViewModel
+import com.internship.move.feature.licenseRegistration.LicenseService
 import com.internship.move.feature.onboarding.OnboardingViewModel
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
@@ -15,6 +17,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val viewModel = module {
     viewModel { OnboardingViewModel(repo = get()) }
     viewModel { AuthenticationViewModel(get(), get()) }
+    viewModel { LicenseRegistrationViewModel(get(), get()) }
 }
 
 val onBoardingRepository = module {
@@ -26,6 +29,8 @@ val service = module {
     single<Moshi> { provideMoshi() }
     single<Retrofit> { provideRetrofit(get(), get()) }
     single<AuthenticationService> { provideAuthService(get()) }
+    single<LicenseService> { provideLicenseService(get()) }
+
 }
 
 val internalStorage = module {
@@ -34,6 +39,8 @@ val internalStorage = module {
 
 fun provideAuthService(retrofit: Retrofit): AuthenticationService =
     retrofit.create(AuthenticationService::class.java)
+
+fun provideLicenseService(retrofit: Retrofit): LicenseService = retrofit.create(LicenseService::class.java)
 
 fun provideRetrofit(moshi: Moshi, client: OkHttpClient) = Retrofit.Builder()
     .baseUrl(SERVER_URL)

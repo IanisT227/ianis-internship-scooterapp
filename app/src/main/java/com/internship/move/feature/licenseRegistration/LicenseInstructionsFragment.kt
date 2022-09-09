@@ -28,8 +28,7 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
     private fun initListeners() {
         binding.addLicenseBtn.setOnClickListener {
             findNavController().navigate(
-                LicenseInstructionsFragmentDirections.actionLicenseInstructionsFragmentToMapFragment(
-                    receivedResponse = args.userData
+                LicenseInstructionsFragmentDirections.actionLicenseInstructionsFragmentToLicensePreviewFragment(
                 )
             )
         }
