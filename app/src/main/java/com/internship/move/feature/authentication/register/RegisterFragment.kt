@@ -45,14 +45,14 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 binding.emailInputTIL.error = null
             }
 
-            if (!checkUserOrPassword(binding.passwordInputET)) {
+            if (!checkUserOrPassword(binding.passwordInputET.text.toString())) {
                 checkStatus = false
                 binding.passwordInputTIL.error = "At least 5 characters"
             } else {
                 binding.passwordInputTIL.error = null
             }
 
-            if (!checkUserOrPassword(binding.usernameInputET)) {
+            if (!checkUserOrPassword(binding.usernameInputET.text.toString())) {
                 checkStatus = false
                 binding.usernameInputTIL.error = "At least 5 characters"
             } else {
@@ -61,7 +61,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
             if (checkStatus) {
                 viewModel.register(
-                    user = UserRegister(
+                    user = UserRegisterRequest(
                         email = binding.emailInputET.text.toString(),
                         password = binding.passwordInputET.text.toString(),
                         username = binding.usernameInputET.text.toString()

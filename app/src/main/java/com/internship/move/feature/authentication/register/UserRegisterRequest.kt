@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class UserRegister(
+data class UserRegisterRequest(
     @Json(name = "username")
     val username: String,
     @Json(name = "email")

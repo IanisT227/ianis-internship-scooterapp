@@ -5,14 +5,9 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
 import com.internship.move.R
-import com.internship.move.feature.authentication.UserResponse
 import com.internship.move.feature.onboarding.OnboardingViewModel
-import com.internship.move.utils.logTag
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
@@ -21,28 +16,20 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         Handler(Looper.getMainLooper()).postDelayed({
-            navigateToNextFragment()
+            initObservers()
         }, SPLASH_NAV_DELAY)
+        viewModel.getOnboardingStatus()
     }
 
-    private fun navigateToNextFragment() {
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            if (viewModel.getLoggedStatus()) {
-                if (viewModel.getAuthStatus().isNullOrEmpty() || viewModel.getAuthStatus()
-                        .equals(NULL_USER)
-                ) {
-                    logTag("USERDATA", viewModel.getAuthStatus().toString())
-                    findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
+    private fun initObservers() {
+        viewModel.userLoggedStatus.observe(viewLifecycleOwner) { onboardingStatusValue ->
+            if (onboardingStatusValue == true) {
+                viewModel.getAuthData()
+                if (viewModel.userData.value != null) {
+                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment(viewModel.userData.value!!))
                 } else {
-                    logTag("USERDATA", viewModel.getAuthStatus().toString())
-                    val userResponse: UserResponse = Gson().fromJson(
-                        viewModel.getAuthStatus(), UserResponse::class.java
-                    )
-
-                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment(userResponse))
+                    findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
                 }
             } else {
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
@@ -52,6 +39,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     companion object {
         private const val SPLASH_NAV_DELAY = 2000L
-        private const val NULL_USER = "{\"token\":\"\",\"user\":{\"driverLicenseKey\":\"\",\"email\":\"\",\"id\":\"\",\"status\":\"\",\"username\":\"\"}}"
+
     }
 }

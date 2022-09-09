@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.internship.move.feature.authentication.login.UserLogin
-import com.internship.move.feature.authentication.register.UserRegister
+import com.internship.move.feature.authentication.register.UserRegisterRequest
 import com.internship.move.model.OnBoardingInternalStorageManager
 import com.internship.move.utils.ERROR
 import com.internship.move.utils.LOGGED
@@ -33,7 +33,7 @@ class AuthenticationViewModel(
         }
     }
 
-    fun register(user: UserRegister) {
+    fun register(user: UserRegisterRequest) {
         viewModelScope.launch {
             try {
                 val response = authenticationApi.registerUser(userdata = user)
@@ -56,15 +56,6 @@ class AuthenticationViewModel(
                 logTag("LOGOUT", e.toString())
             }
 
-        }
-    }
-
-    suspend fun getAll() {
-        try {
-            val response = authenticationApi.getUsers()
-            logTag("LOGIN", response.toString())
-        } catch (e: Exception) {
-            throw(e)
         }
     }
 

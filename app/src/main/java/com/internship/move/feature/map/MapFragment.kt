@@ -31,16 +31,15 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
     private fun initListeners() {
         binding.logoutBtn.setOnClickListener {
-            logTag("LOGOOUT", authViewModel.userData.value.toString())
             authViewModel.logOut()
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToNavigationIntro())
         }
 
         binding.clearBtn.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.lifecycleScope.launch {
                 onboardingViewModel.changeLogStatus(logValue = false)
                 authViewModel.logOut()
-            }
+//            }
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToNavigationIntro())
         }
     }

@@ -37,14 +37,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             var checkStatus = true
 
             if (!checkMail(binding.emailInputET)) {
-                binding.emailInputTIL.error = "Invalid email"
+                binding.emailInputTIL.error = getString(R.string.invalid_email_string)
                 checkStatus = false
             } else {
                 binding.emailInputET.error = null
             }
 
-            if (!checkUserOrPassword(binding.passwordInputET)) {
-                binding.passwordInputTIL.error = "At least 5 characters"
+            if (!checkUserOrPassword(binding.passwordInputET.text.toString())) {
+                binding.passwordInputTIL.error = getString(R.string.invalid_password_string)
             } else {
                 binding.passwordInputTIL.error = null
             }
@@ -94,7 +94,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if (logValue == LOGGED) {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment(receivedResponse = viewModel.userData.value!!))
             } else if (logValue == ERROR) {
-                Toast.makeText(context, "Incorrect credentials", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.login_error_string), Toast.LENGTH_SHORT).show()
             }
         }
     }

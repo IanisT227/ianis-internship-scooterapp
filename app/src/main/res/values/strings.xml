@@ -45,4 +45,7 @@
     <string name="register_email_address_hint_string">Email address</string>
     <string name="register_username_hint_string">Username</string>
     <string name="register_password_hint_string">Password</string>
+    <string name="login_error_string">Incorrect credentials</string>
+    <string name="invalid_email_string">Invalid email</string>
+    <string name="invalid_password_string">At least 5 characters</string>
 </resources>
