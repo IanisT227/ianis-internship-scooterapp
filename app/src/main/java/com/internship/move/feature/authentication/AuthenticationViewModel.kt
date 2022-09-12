@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.internship.move.feature.authentication.login.UserLogin
-import com.internship.move.feature.authentication.register.UserRegister
-import com.internship.move.model.UserDataInternalStorageManager
+import com.internship.move.feature.authentication.register.UserRegisterRequest
+import com.internship.move.model.OnBoardingInternalStorageManager
 import com.internship.move.utils.ERROR
 import com.internship.move.utils.LOGGED
 import com.internship.move.utils.UNCHECKED
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class AuthenticationViewModel(
     private val authenticationApi: AuthenticationService,
-    private val userDataInternalStorageManager: UserDataInternalStorageManager
+    private val onBoardingInternalStorageManager: OnBoardingInternalStorageManager
 ) : ViewModel() {
 
     val onUserLoggedIn: MutableLiveData<Int> = MutableLiveData(UNCHECKED)
@@ -26,14 +26,14 @@ class AuthenticationViewModel(
                 val response = authenticationApi.loginUser(userdata = user)
                 userData.value = response
                 onUserLoggedIn.value = LOGGED
-                userDataInternalStorageManager.changeAuthPreferences(userData.value!!)
+                onBoardingInternalStorageManager.changeAuthPreferences(userData.value!!)
             } catch (e: Exception) {
                 onUserLoggedIn.value = ERROR
             }
         }
     }
 
-    fun register(user: UserRegister) {
+    fun register(user: UserRegisterRequest) {
         viewModelScope.launch {
             try {
                 val response = authenticationApi.registerUser(userdata = user)
@@ -51,20 +51,11 @@ class AuthenticationViewModel(
             try {
             logTag("LOGOUT", userData.value?.token.toString())
             authenticationApi.logoutUser("Bearer " + userData.value?.token)
-            userDataInternalStorageManager.changeAuthPreferences(userData = UserResponse("", User("", "", "", "", "")))
+            onBoardingInternalStorageManager.changeAuthPreferences(userData = UserResponse("", User("", "", "", "", "")))
             } catch (e: Exception) {
                 logTag("LOGOUT", e.toString())
             }
 
-        }
-    }
-
-    suspend fun getAll() {
-        try {
-            val response = authenticationApi.getUsers()
-            logTag("LOGIN", response.toString())
-        } catch (e: Exception) {
-            throw(e)
         }
     }
 

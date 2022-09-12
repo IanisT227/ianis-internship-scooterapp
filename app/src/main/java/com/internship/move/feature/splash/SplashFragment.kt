@@ -21,30 +21,20 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         Handler(Looper.getMainLooper()).postDelayed({
-            navigateToNextFragment()
+            initObservers()
         }, SPLASH_NAV_DELAY)
+        viewModel.getOnboardingStatus()
     }
 
-    private fun navigateToNextFragment() {
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            if (viewModel.getLoggedStatus()) {
-                if (viewModel.getAuthStatus().isNullOrEmpty() || viewModel.getAuthStatus()
-                        .equals(NULL_USER)
-                ) {
-                    logTag("USERDATA", viewModel.getAuthStatus().toString())
-                    findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
+    private fun initObservers() {
+        viewModel.userLoggedStatus.observe(viewLifecycleOwner) { onboardingStatusValue ->
+            if (onboardingStatusValue == true) {
+                viewModel.getAuthData()
+                if (viewModel.userData.value != null) {
+                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment(viewModel.userData.value!!))
                 } else {
-                    logTag("USERDATA", viewModel.getAuthStatus().toString())
-                    val userResponse: UserResponse = Gson().fromJson(
-                        viewModel.getAuthStatus(), UserResponse::class.java
-                    )
-                    if (userResponse.user.driverLicenseKey != null)
-                        findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment(userResponse))
-                    else
-                        findNavController().navigate(SplashFragmentDirections.actionGlobalLicenseInstructionsFragment(userResponse))
+                    findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
                 }
             } else {
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
@@ -54,7 +44,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     companion object {
         private const val SPLASH_NAV_DELAY = 2000L
-        private const val NULL_USER =
-            "{\"token\":\"\",\"user\":{\"driverLicenseKey\":\"\",\"email\":\"\",\"id\":\"\",\"status\":\"\",\"username\":\"\"}}"
+
     }
 }

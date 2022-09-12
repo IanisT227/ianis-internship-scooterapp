@@ -44,8 +44,11 @@ fun checkMail(mailEditText: TextInputEditText): Boolean {
     return Patterns.EMAIL_ADDRESS.matcher(mailEditText.text.toString()).matches() && mailEditText.text?.length!! > 7
 }
 
-fun checkUserOrPassword(userOrPasswordEditText: TextInputEditText): Boolean {
-    return userOrPasswordEditText.text?.length!! > 4
+fun checkUserOrPassword(userOrPasswordText: String?): Boolean {
+    return if (userOrPasswordText != null) {
+        userOrPasswordText.length > 4
+    } else
+        false
 }
 
 const val UNCHECKED = 0

@@ -1,12 +1,14 @@
 package com.internship.move.model
 
-class OnBoardingRepository(private val userDataInternalStorageManager: UserDataInternalStorageManager) {
+import com.internship.move.feature.authentication.UserResponse
 
-    suspend fun getLoggedStatus() = userDataInternalStorageManager.getLoggedStatus()
+class OnBoardingRepository(private val onBoardingInternalStorageManager: OnBoardingInternalStorageManager) {
 
-    suspend fun changeLoggedStatus(logValue: Boolean) = userDataInternalStorageManager.changeLogStatus(logValue)
+    suspend fun getOnboardingStatus() = onBoardingInternalStorageManager.getOnboardingStatus()
 
-    suspend fun getAuthStatus(): String? {
-        return userDataInternalStorageManager.getAuthPreferences()
+    suspend fun changeLoggedStatus(logValue: Boolean) = onBoardingInternalStorageManager.changeLogStatus(logValue)
+
+    suspend fun getAuthStatus(): UserResponse? {
+        return onBoardingInternalStorageManager.getAuthPreferences()
     }
 }
