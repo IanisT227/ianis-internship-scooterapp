@@ -30,7 +30,6 @@ val service = module {
     single<Retrofit> { provideRetrofit(get(), get()) }
     single<AuthenticationService> { provideAuthService(get()) }
     single<LicenseService> { provideLicenseService(get()) }
-
 }
 
 val internalStorage = module {
@@ -50,6 +49,7 @@ fun provideRetrofit(moshi: Moshi, client: OkHttpClient) = Retrofit.Builder()
 
 fun provideMoshi(): Moshi = Moshi.Builder().build()
 
-fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor()).build()
+fun provideHttpClient(): OkHttpClient =
+    OkHttpClient.Builder().addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build()
 
 private const val SERVER_URL = "https://move-scooter.herokuapp.com/api/"
