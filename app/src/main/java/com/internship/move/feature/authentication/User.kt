@@ -13,7 +13,7 @@ data class User(
     @Json(name = "email")
     val email: String,
     @Json(name = "driverLicenseKey")
-    val driverLicenseKey: String?,
+    var driverLicenseKey: String?,
     @Json(name = "status")
     val status: String,
     @Json(name = "username")

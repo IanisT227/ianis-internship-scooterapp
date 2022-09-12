@@ -25,6 +25,13 @@ class UserDataInternalStorageManager(context: Context) {
             Gson().fromJson(preferences.getString(KEY_IS_AUTH, ""), UserResponse::class.java)
     }
 
+    fun uploadLicensePicture(filepath: String) {
+        val response: UserResponse? = getAuthPreferences()
+        response?.user?.driverLicenseKey = filepath
+        changeAuthPreferences(userData = response)
+
+    }
+
     fun changeAuthPreferences(userData: UserResponse?) {
         val userStringData: String = Gson().toJson(userData)
         preferences.edit().putString(KEY_IS_AUTH, userStringData).apply()

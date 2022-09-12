@@ -92,7 +92,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun initObservers() {
         viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
             if (logValue == LOGGED) {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLicenseInstructionsFragment(userData = viewModel.userData.value!!))
+                if (viewModel.userData.value?.user?.driverLicenseKey == null) {
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLicenseInstructionsFragment(userData = viewModel.userData.value!!))
+                } else {
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
+                }
             } else if (logValue == ERROR) {
                 Toast.makeText(context, getString(R.string.login_error_string), Toast.LENGTH_SHORT).show()
             }

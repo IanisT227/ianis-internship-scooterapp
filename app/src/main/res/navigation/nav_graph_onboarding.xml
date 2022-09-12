@@ -89,9 +89,6 @@
         <action
             android:id="@+id/action_mapFragment_to_navigation_intro"
             app:destination="@id/navigation_intro" />
-        <argument
-            android:name="receivedResponse"
-            app:argType="com.internship.move.feature.authentication.UserResponse" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -118,5 +115,13 @@
     <fragment
         android:id="@+id/licenseConfirmFragment"
         android:name="com.internship.move.feature.licenseRegistration.LicenseConfirmFragment"
-        android:label="LicenseConfirmFragment" />
+        android:label="LicenseConfirmFragment">
+        <argument
+            android:name="licenseItem"
+            app:argType="com.internship.move.feature.licenseRegistration.LicenseItem" />
+        <action
+            android:id="@+id/action_licenseConfirmFragment_to_mapFragment"
+            app:destination="@id/mapFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
 </navigation>

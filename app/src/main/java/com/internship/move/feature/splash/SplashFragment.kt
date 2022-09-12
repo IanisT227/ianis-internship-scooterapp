@@ -5,14 +5,9 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
 import com.internship.move.R
-import com.internship.move.feature.authentication.UserResponse
 import com.internship.move.feature.onboarding.OnboardingViewModel
-import com.internship.move.utils.logTag
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
@@ -32,7 +27,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             if (onboardingStatusValue == true) {
                 viewModel.getAuthData()
                 if (viewModel.userData.value != null) {
-                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment(viewModel.userData.value!!))
+                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment())
                 } else {
                     findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
                 }
