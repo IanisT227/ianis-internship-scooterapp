@@ -5,14 +5,9 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.internship.move.OnboardingViewModel
 import com.internship.move.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import com.internship.move.feature.onboarding.OnboardingViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
@@ -21,17 +16,21 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         Handler(Looper.getMainLooper()).postDelayed({
-            navigateToNextFragment()
+            initObservers()
         }, SPLASH_NAV_DELAY)
+        viewModel.getOnboardingStatus()
     }
 
-    private fun navigateToNextFragment() {
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            if (viewModel.getLoggedStatus()) {
-                findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
+    private fun initObservers() {
+        viewModel.userLoggedStatus.observe(viewLifecycleOwner) { onboardingStatusValue ->
+            if (onboardingStatusValue == true) {
+                viewModel.getAuthData()
+                if (viewModel.userData.value != null) {
+                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment(viewModel.userData.value!!))
+                } else {
+                    findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
+                }
             } else {
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
             }
@@ -40,5 +39,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     companion object {
         private const val SPLASH_NAV_DELAY = 2000L
+
     }
 }

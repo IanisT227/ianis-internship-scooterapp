@@ -13,8 +13,9 @@ class MoveApp : Application() {
             modules(
                 listOf(
                     internalStorage,
-                    repository,
-                    viewModel
+                    onBoardingRepository,
+                    viewModel,
+                    service
                 )
             )
         }

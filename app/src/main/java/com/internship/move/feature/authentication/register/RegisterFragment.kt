@@ -10,23 +10,64 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.internship.move.R
 import com.internship.move.databinding.FragmentRegisterBinding
+import com.internship.move.feature.authentication.AuthenticationViewModel
+import com.internship.move.utils.ERROR
+import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
+import com.internship.move.utils.checkMail
+import com.internship.move.utils.checkUserOrPassword
+import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private val binding by viewBinding(FragmentRegisterBinding::bind)
+    private val viewModel: AuthenticationViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
         initListeners()
+        initObservers()
     }
 
     private fun initListeners() {
         binding.launchHomeBtn.setOnClickListener {
-            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment())
+            var checkStatus = true
+
+            if (!checkMail(binding.emailInputET)) {
+                binding.emailInputTIL.error = "Invalid email"
+                checkStatus = false
+            } else {
+                binding.emailInputTIL.error = null
+            }
+
+            if (!checkUserOrPassword(binding.passwordInputET.text.toString())) {
+                checkStatus = false
+                binding.passwordInputTIL.error = "At least 5 characters"
+            } else {
+                binding.passwordInputTIL.error = null
+            }
+
+            if (!checkUserOrPassword(binding.usernameInputET.text.toString())) {
+                checkStatus = false
+                binding.usernameInputTIL.error = "At least 5 characters"
+            } else {
+                binding.usernameInputTIL.error = null
+            }
+
+            if (checkStatus) {
+                viewModel.register(
+                    user = UserRegisterRequest(
+                        email = binding.emailInputET.text.toString(),
+                        password = binding.passwordInputET.text.toString(),
+                        username = binding.usernameInputET.text.toString()
+                    )
+                )
+            }
         }
 
         binding.goToLoginTV.addClickableText(getString(R.string.launch_login_link)) {
@@ -69,5 +110,16 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         binding.goToLoginTV.text = "${getString(R.string.launch_login_Text)} ${getString(R.string.launch_login_link)}"
         binding.termsAndConditionsTV.text =
             "${getString(R.string.t_and_c_link)}  ${getString(R.string.just_and)} ${getString(R.string.privacy_policy_link)}"
+    }
+
+    private fun initObservers() {
+        viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
+            logTag("ONLOGGED", viewModel.onUserLoggedIn.value.toString())
+            if (logValue == LOGGED) {
+                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment(receivedResponse = viewModel.userData.value!!))
+            } else if (logValue == ERROR) {
+                Toast.makeText(context, "Email already exists", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

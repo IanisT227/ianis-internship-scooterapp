@@ -15,7 +15,8 @@
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_loginFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
+            app:destination="@id/mapFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
@@ -65,6 +66,10 @@
         <action
             android:id="@+id/action_global_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_global_mapFragment"
+            app:destination="@id/mapFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </navigation>
 
     <fragment
@@ -75,6 +80,9 @@
         <action
             android:id="@+id/action_mapFragment_to_navigation_intro"
             app:destination="@id/navigation_intro" />
+        <argument
+            android:name="receivedResponse"
+            app:argType="com.internship.move.feature.authentication.UserResponse" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"

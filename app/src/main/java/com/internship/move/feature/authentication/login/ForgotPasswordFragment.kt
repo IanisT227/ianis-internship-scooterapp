@@ -3,14 +3,11 @@ package com.internship.move.feature.authentication.login
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.internship.move.R
 import com.internship.move.databinding.FragmentForgotPasswordBinding
-import com.internship.move.databinding.FragmentLoginBinding
-import com.internship.move.utils.addClickableText
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
 class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
