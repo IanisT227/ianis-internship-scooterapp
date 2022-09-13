@@ -8,6 +8,7 @@ import com.internship.move.R
 import com.internship.move.databinding.FragmentMapBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.feature.onboarding.OnboardingViewModel
+import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -20,6 +21,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         authViewModel.getCurrentUser()
+        logTag("MAP_USER", authViewModel.getCurrentUser().toString())
         initListeners()
         initViews()
     }

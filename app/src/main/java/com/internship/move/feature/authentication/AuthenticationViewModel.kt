@@ -26,7 +26,7 @@ class AuthenticationViewModel(
                 val response = authenticationApi.loginUser(userdata = user)
                 userData.value = response
                 onUserLoggedIn.value = LOGGED
-                onBoardingInternalStorageManager.changeAuthPreferences(userData.value!!)
+                onBoardingInternalStorageManager.changeAuthPreferences(userData.value)
             } catch (e: Exception) {
                 onUserLoggedIn.value = ERROR
             }
@@ -39,6 +39,7 @@ class AuthenticationViewModel(
                 val response = authenticationApi.registerUser(userdata = user)
                 userData.value = response
                 onUserLoggedIn.value = LOGGED
+                onBoardingInternalStorageManager.changeAuthPreferences(userData.value)
             } catch (e: Exception) {
                 logTag("REGISTER", e.toString())
                 onUserLoggedIn.value = ERROR

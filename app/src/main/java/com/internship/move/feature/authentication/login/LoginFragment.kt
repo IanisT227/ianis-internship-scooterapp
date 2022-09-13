@@ -91,9 +91,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun initObservers() {
         viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
-            if (logValue == LOGGED) {
-                if (viewModel.userData.value?.user?.driverLicenseKey == null) {
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLicenseInstructionsFragment(userData = viewModel.userData.value!!))
+            val userResponse = viewModel.userData.value
+            if (logValue == LOGGED && userResponse != null) {
+                if (userResponse.user.driverLicenseKey == null) {
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLicenseInstructionsFragment(userData = userResponse))
                 } else {
                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
                 }
