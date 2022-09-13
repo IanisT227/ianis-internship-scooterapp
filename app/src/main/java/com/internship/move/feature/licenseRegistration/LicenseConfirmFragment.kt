@@ -15,7 +15,6 @@ class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
 
     private val binding by viewBinding(FragmentLicenseConfirmBinding::bind)
     private val licenseRegistrationViewModel: LicenseRegistrationViewModel by viewModel()
-    private val authenticationViewModel: AuthenticationViewModel by viewModel()
     private val args: LicenseConfirmFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

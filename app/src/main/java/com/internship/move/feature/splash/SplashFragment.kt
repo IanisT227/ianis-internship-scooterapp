@@ -39,6 +39,5 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     companion object {
         private const val SPLASH_NAV_DELAY = 2000L
-
     }
 }

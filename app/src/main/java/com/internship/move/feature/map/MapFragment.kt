@@ -1,8 +1,23 @@
 package com.internship.move.feature.map
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context.LOCATION_SERVICE
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
+import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -14,12 +29,18 @@ import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     private val binding by viewBinding(FragmentMapBinding::bind)
     private val authViewModel: AuthenticationViewModel by viewModel()
+    private val mapViewModel: MapViewModel by viewModel()
     private lateinit var scooterMap: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val permissionId = 2
+    private lateinit var currentLocation: LatLng
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,7 +49,11 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
         binding.scooterMapView.onCreate(savedInstanceState)
         binding.scooterMapView.onResume()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        getLocation()
         initViews()
+        initButtons()
+        initObservers()
     }
 
     private fun initViews() {
@@ -37,9 +62,108 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         scooterMap = googleMap
-        val Galati = LatLng(45.45, 28.05)
-        scooterMap.addMarker(MarkerOptions().position(Galati).title("Galati"))
-        scooterMap.moveCamera(CameraUpdateFactory.newLatLng(Galati))
-        scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Galati, 7.0F))
+        scooterMap.moveCamera(CameraUpdateFactory.newLatLng(CLUJANGELES))
+        scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CLUJANGELES, ZOOM_LEVEL))
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            permissionId
+        )
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == permissionId) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLocation()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission", "SetTextI18n")
+    private fun getLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                fusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+                    val location: Location? = task.result
+                    if (location != null) {
+                        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                        val list: List<Address> =
+                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                        currentLocation = LatLng(list[0].latitude, list[0].longitude)
+                        scooterMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
+                        scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL))
+                        mapViewModel.getScooters(currentLocation.latitude.toFloat(), currentLocation.longitude.toFloat())
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "Please turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+
+    private fun initObservers() {
+        mapViewModel.scooterList.observe(viewLifecycleOwner) { scooterList ->
+            if (scooterList.isNotEmpty())
+                scooterList.forEach { scooterItem ->
+                    scooterMap.addMarker(
+                        MarkerOptions().position(
+                            LatLng(
+                                scooterItem.location.coordinates[1],
+                                scooterItem.location.coordinates[0]
+                            )
+                        ).title(scooterItem._id)
+                    )
+                }
+        }
+    }
+
+    private fun initButtons() {
+        requireActivity().onBackPressedDispatcher.addCallback {
+            authViewModel.logOut()
+            requireActivity().finish()
+        }
+    }
+
+    companion object {
+        private val CLUJANGELES = LatLng(46.770439, 23.591423)
+        private const val ZOOM_LEVEL = 18.0f
     }
 }

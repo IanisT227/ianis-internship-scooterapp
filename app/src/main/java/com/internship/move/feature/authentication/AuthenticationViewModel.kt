@@ -65,8 +65,4 @@ class AuthenticationViewModel(
             userData.value = onBoardingInternalStorageManager.getAuthPreferences()
         }
     }
-
-    companion object {
-        private const val SERVER_URL = "https://move-scooter.herokuapp.com/"
-    }
 }

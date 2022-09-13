@@ -2,7 +2,6 @@ package com.internship.move.feature.authentication.login
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
@@ -66,15 +65,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         binding.emailInputET.doOnTextChanged { _, _, _, _ ->
-            updateLoginButtonState(binding.emailInputET)
+            updateLoginButtonState()
         }
 
         binding.passwordInputET.doOnTextChanged { _, _, _, _ ->
-            updateLoginButtonState(binding.passwordInputET)
+            updateLoginButtonState()
         }
     }
 
-    private fun updateLoginButtonState(editText: EditText) {
+    private fun updateLoginButtonState() {
         if (binding.emailInputET.text?.isNotEmpty() == true && binding.passwordInputET.text?.isNotEmpty() == true) {
             binding.launchHomeBtn.isEnabled = true
             binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))

@@ -2,7 +2,6 @@ package com.internship.move.feature.authentication.register
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
@@ -16,7 +15,6 @@ import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
 import com.internship.move.utils.checkMail
 import com.internship.move.utils.checkUserOrPassword
-import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -83,19 +81,19 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
 
         binding.emailInputET.doOnTextChanged { _, _, _, _ ->
-            updateRegisterButtonState(binding.emailInputET)
+            updateRegisterButtonState()
         }
 
         binding.passwordInputET.doOnTextChanged { _, _, _, _ ->
-            updateRegisterButtonState(binding.passwordInputET)
+            updateRegisterButtonState()
         }
 
         binding.usernameInputET.doOnTextChanged { _, _, _, _ ->
-            updateRegisterButtonState(binding.usernameInputET)
+            updateRegisterButtonState()
         }
     }
 
-    private fun updateRegisterButtonState(editText: EditText) {
+    private fun updateRegisterButtonState() {
         if (binding.emailInputET.text?.isNotEmpty() == true && binding.passwordInputET.text?.isNotEmpty() == true && binding.usernameInputET.text?.isNotEmpty() == true) {
             binding.launchHomeBtn.isEnabled = true
             binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))

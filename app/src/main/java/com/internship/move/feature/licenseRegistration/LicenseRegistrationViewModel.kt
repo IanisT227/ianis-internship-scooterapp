@@ -18,7 +18,7 @@ class LicenseRegistrationViewModel(
     private val licenseService: LicenseService
 ) : ViewModel() {
 
-    val licenseResponse: MutableLiveData<User?> = MutableLiveData()
+    private val licenseResponse: MutableLiveData<User?> = MutableLiveData()
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun uploadImage(token: String, image: File) {
