@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -99,6 +100,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 }
             } else if (logValue == ERROR) {
                 Toast.makeText(context, getString(R.string.login_error_string), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner)
+        { logValue ->
+            binding.apply {
+                validationProcessSpn.isVisible = logValue
+                emailInputET.isActivated = !logValue
+                passwordInputET.isActivated = !logValue
+                launchHomeBtn.isActivated = !logValue
             }
         }
     }

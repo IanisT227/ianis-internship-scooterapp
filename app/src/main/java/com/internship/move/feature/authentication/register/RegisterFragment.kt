@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -107,7 +108,11 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private fun initViews() {
         binding.goToLoginTV.text = "${getString(R.string.launch_login_Text)} ${getString(R.string.launch_login_link)}"
         binding.termsAndConditionsTV.text =
-            "${getString(R.string.t_and_c_link)}  ${getString(R.string.just_and)} ${getString(R.string.privacy_policy_link)}"
+            "${getString(R.string.terms_and_conditions_text)}\n${getString(R.string.t_and_c_link)}  ${getString(R.string.just_and)} ${
+                getString(
+                    R.string.privacy_policy_link
+                )
+            }"
     }
 
     private fun initObservers() {
@@ -118,6 +123,18 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             } else if (logValue == ERROR) {
                 Toast.makeText(context, "Email already exists", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner)
+        { logValue ->
+            binding.apply {
+                validationProcessSpn.isVisible = logValue
+                emailInputET.isActivated = !logValue
+                passwordInputET.isActivated = !logValue
+                usernameInputET.isActivated = !logValue
+                launchHomeBtn.isActivated = !logValue
+            }
+
         }
     }
 }

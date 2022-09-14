@@ -2,12 +2,12 @@ package com.internship.move.feature.licenseRegistration
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.internship.move.R
 import com.internship.move.databinding.FragmentLicenseConfirmBinding
-import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -30,16 +30,12 @@ class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
 
     private fun initObservers() {
         licenseRegistrationViewModel.isLoading.observe(viewLifecycleOwner) { loadingValue ->
-            if (loadingValue == true) {
-                binding.validationProcessSpn.visibility = View.VISIBLE
-                binding.validationStatusTV.text = "We are currently verifying your driving license"
-                binding.imageView.visibility = View.GONE
-                binding.launchMapBtn.visibility = View.INVISIBLE
-            } else {
-                binding.validationProcessSpn.visibility = View.GONE
-                binding.validationStatusTV.text = "We’ve succesfuly validated your driving license"
-                binding.imageView.visibility = View.VISIBLE
-                binding.launchMapBtn.visibility = View.VISIBLE
+            binding.apply {
+                validationProcessSpn.isVisible = loadingValue
+                launchMapBtn.isVisible = !loadingValue
+                imageView.isVisible = !loadingValue
+                validationStatusTV.text =
+                    if (loadingValue) getString(R.string.pre_license_check_text) else getString(R.string.post_license_verification_text)
             }
         }
     }

@@ -19,7 +19,7 @@ class UserDataInternalStorageManager(context: Context) {
     }
 
     fun getAuthPreferences(): UserResponse? {
-        return if (preferences.getString(KEY_IS_AUTH, "").isNullOrEmpty() || preferences.getString(KEY_IS_AUTH, "").equals(NULL_USER))
+        return if (preferences.getString(KEY_IS_AUTH, "").isNullOrEmpty() || preferences.getString(KEY_IS_AUTH, "").equals("null"))
             null
         else
             Gson().fromJson(preferences.getString(KEY_IS_AUTH, ""), UserResponse::class.java)
@@ -37,11 +37,13 @@ class UserDataInternalStorageManager(context: Context) {
         preferences.edit().putString(KEY_IS_AUTH, userStringData).apply()
     }
 
+    fun logOutUser(){
+        preferences.edit().putString(KEY_IS_AUTH, "null").apply()
+    }
+
     companion object {
         private const val KEY_PREFERENCES = "com.internship.move.KEY_PREFERENCES"
         private const val KEY_PASSED_ONBOARDING = "IS_LOGGED"
         private const val KEY_IS_AUTH = "IS_AUTH"
-        private const val NULL_USER =
-            "{\"token\":\"\",\"user\":{\"driverLicenseKey\":\"\",\"email\":\"\",\"id\":\"\",\"status\":\"\",\"username\":\"\"}}"
     }
 }

@@ -17,6 +17,7 @@
     <!--    LOGIN TO REGISTER  -->
     <string name="goToRegisterText">Don\'t have an account? You can</string>
     <string name="goToRegisterLink"><a href="">start with one here</a></string>
+    <string name="goToRegister">%1$s %2$s</string>
 
     <!--    LOGIN TO FORGOT PASSWORD  -->
     <string name="forgot_password"><a href="">Forgot password?</a></string>
@@ -30,6 +31,7 @@
     <!--  REGISTER TO LOGIN  -->
     <string name="launch_login_Text">You already have an account? You can </string>
     <string name="launch_login_link"><a href="">log in here</a></string>
+    <string name="launch_login">%1$s %2$s</string>
     <string name="register_subtitle">Sign up or login and start riding right away</string>
     <string name="register_title">Let\'s get started</string>
     <string name="login_btn_string">Login</string>
@@ -53,4 +55,7 @@
     <string name="invalid_email_string">Invalid email</string>
     <string name="invalid_password_string">At least 5 characters</string>
     <string name="find_scooters_btn_string">Find scooters</string>
+    <string name="exit_app_button_text">Press double tap to exit</string>
+    <string name="pre_license_check_text">We are currently verifying your driving license</string>
+    <string name="post_license_verification_text">We’ve successfully validated your driving license</string>
 </resources>

@@ -19,16 +19,21 @@ class AuthenticationViewModel(
 
     val onUserLoggedIn: MutableLiveData<Int> = MutableLiveData(UNCHECKED)
     val userData: MutableLiveData<UserResponse> = MutableLiveData(null)
+    val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+
 
     fun logIn(user: UserLogin) {
         viewModelScope.launch {
             try {
+                isLoading.value = true
                 val response = authenticationApi.loginUser(userdata = user)
                 userData.value = response
                 onUserLoggedIn.value = LOGGED
                 onBoardingInternalStorageManager.changeAuthPreferences(userData.value)
             } catch (e: Exception) {
                 onUserLoggedIn.value = ERROR
+            } finally {
+                isLoading.value = false
             }
         }
     }
@@ -36,6 +41,7 @@ class AuthenticationViewModel(
     fun register(user: UserRegisterRequest) {
         viewModelScope.launch {
             try {
+                isLoading.value = true
                 val response = authenticationApi.registerUser(userdata = user)
                 userData.value = response
                 onUserLoggedIn.value = LOGGED
@@ -43,6 +49,8 @@ class AuthenticationViewModel(
             } catch (e: Exception) {
                 logTag("REGISTER", e.toString())
                 onUserLoggedIn.value = ERROR
+            } finally {
+                isLoading.value = false
             }
         }
     }
@@ -52,7 +60,7 @@ class AuthenticationViewModel(
             try {
                 logTag("LOGOUT", userData.value?.token.toString())
                 authenticationApi.logoutUser("Bearer " + userData.value?.token)
-                onBoardingInternalStorageManager.changeAuthPreferences(userData = UserResponse("", User("", "", "", "", "")))
+                onBoardingInternalStorageManager.logOutUser()
             } catch (e: Exception) {
                 logTag("LOGOUT", e.toString())
             }

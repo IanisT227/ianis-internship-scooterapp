@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import com.internship.move.R
 
-fun TextView.addClickableText(text: String, color: Int = context.getColor(R.color.accent_pink), callback: ClickCallBack) {
+fun TextView.addClickableText(text: String, color: Int = context.getColor(R.color.neutral_white), callback: ClickCallBack) {
     val spannableString = SpannableString(this.text)
     val clickableSpan = object : ClickableSpan() {
         override fun updateDrawState(textPaint: TextPaint) {

@@ -46,23 +46,28 @@
         <item name="android:outlineProvider">none</item>
         <item name="android:minHeight">@dimen/button_height</item>
         <item name="android:textAppearance">@style/Button1</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="backgroundTint">@null</item>
         <item name="android:textAppearance">@style/Body1</item>
-        <item name="boxStrokeColor">@color/neutral_white</item>
+        <item name="background">@drawable/edit_text_box_stroke</item>
         <item name="hintTextColor">@color/neutral_grey</item>
         <item name="android:textColorHint">@color/neutral_grey</item>
-        <item name="endIconTint">@color/neutral_grey</item>
         <item name="android:textColor">@color/neutral_grey</item>
-        <item name="android:textCursorDrawable">@null</item>
     </style>
 
     <style name="TextInputEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="boxStrokeColor">@color/neutral_grey</item>
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:textColor">@color/neutral_white</item>
-        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
+    </style>
+
+    <style name="skipButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/neutral_grey</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:textAppearance">@style/Body1</item>
     </style>
 </resources>

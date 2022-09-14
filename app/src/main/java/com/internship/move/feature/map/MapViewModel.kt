@@ -7,7 +7,7 @@ import com.internship.move.utils.logTag
 import kotlinx.coroutines.launch
 
 class MapViewModel(private val mapService: MapService) : ViewModel() {
-     val scooterList: MutableLiveData<List<ScooterResponse>> = MutableLiveData()
+    val scooterList: MutableLiveData<List<ScooterResponse>> = MutableLiveData()
 
     fun getScooters(latitude: Float, longitude: Float) {
         viewModelScope.launch {

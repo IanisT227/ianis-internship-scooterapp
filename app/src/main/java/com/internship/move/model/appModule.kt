@@ -20,7 +20,7 @@ val viewModel = module {
     viewModel { OnboardingViewModel(repo = get()) }
     viewModel { AuthenticationViewModel(get(), get()) }
     viewModel { LicenseRegistrationViewModel(get(), get()) }
-    viewModel {MapViewModel(get())}
+    viewModel { MapViewModel(get()) }
 }
 
 val onBoardingRepository = module {
@@ -33,7 +33,7 @@ val service = module {
     single<Retrofit> { provideRetrofit(get(), get()) }
     single<AuthenticationService> { provideAuthService(get()) }
     single<LicenseService> { provideLicenseService(get()) }
-    single<MapService> { provideMapService(get())}
+    single<MapService> { provideMapService(get()) }
 }
 
 val internalStorage = module {

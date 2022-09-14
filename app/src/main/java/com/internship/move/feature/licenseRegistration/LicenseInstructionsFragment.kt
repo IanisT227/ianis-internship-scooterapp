@@ -2,7 +2,9 @@ package com.internship.move.feature.licenseRegistration
 
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
@@ -24,6 +26,7 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
     private val args: LicenseInstructionsFragmentArgs by navArgs()
     private lateinit var imageUri: Uri
     private val authenticationViewModel: AuthenticationViewModel by viewModel()
+    private var doubleBackPressed = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,14 +41,22 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
         }
 
         binding.bar.setNavigationOnClickListener {
-            authenticationViewModel.logOut()
-            requireActivity().finish()
+            if (doubleBackPressed) {
+                authenticationViewModel.logOut()
+                requireActivity().finish()
+            } else {
+                doubleBackPressed = true
+                Toast.makeText(requireContext(), getString(R.string.exit_app_button_text), Toast.LENGTH_SHORT).show()
+                Handler().postDelayed(Runnable {
+                    doubleBackPressed = false
+                }, 3000L)
+            }
         }
     }
 
     private val takeImageResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
         if (isSuccess) {
-            latestTmpUri?.let { uri ->
+            latestTmpUri?.let {
                 findNavController().navigate(
                     LicenseInstructionsFragmentDirections.actionLicenseInstructionsFragmentToLicenseConfirmFragment(
                         LicenseItem(args.userData.token, File(imageUri.path.toString()))

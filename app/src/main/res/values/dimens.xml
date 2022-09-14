@@ -9,7 +9,7 @@
     <dimen name="skip_margin_bottom_onboarding_page">22dp</dimen>
     <dimen name="button_margin_top_map_fragment">16dp</dimen>
     <dimen name="button_height">56dp</dimen>
-    <dimen name="small_logo_margin_start">52dp</dimen>
+    <dimen name="small_logo_margin_start">24dp</dimen>
     <dimen name="small_logo_margin_top">20dp</dimen>
     <dimen name="textView_margin_start">24dp</dimen>
     <dimen name="textView_margin_top">20dp</dimen>
@@ -33,4 +33,6 @@
     <dimen name="fragment_title_textView_margin_top">16dp</dimen>
     <dimen name="textView_heading1_top_margin">67dp</dimen>
     <dimen name="textView_heading1_bottom_margin">35dp</dimen>
+    <dimen name="button_margin_end">24dp</dimen>
+    <dimen name="dots_indicator_margin_start">24dp</dimen>
 </resources>

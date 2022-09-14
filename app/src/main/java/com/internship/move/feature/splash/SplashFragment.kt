@@ -27,7 +27,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             if (onboardingStatusValue == true) {
                 viewModel.getAuthData()
                 if (viewModel.userData.value != null) {
-                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment())
+                    if (viewModel.userData.value!!.user.driverLicenseKey.isNullOrEmpty()) {
+                        findNavController().navigate(SplashFragmentDirections.actionGlobalLicenseInstructionsFragment(viewModel.userData.value!!))
+                    } else
+                        findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment())
                 } else {
                     findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
                 }
