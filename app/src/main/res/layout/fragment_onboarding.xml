@@ -9,18 +9,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/nextItemBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="72dp"/>
 
     <Button
         android:id="@+id/nextItemBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/button_margin_end"
-        android:layout_marginBottom="74dp"
         android:drawableEnd="@drawable/ic_arrow_right"
         android:text="@string/text_button_onboarding_page"
         app:layout_constraintBottom_toBottomOf="@id/dots_indicator"
@@ -32,7 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dots_indicator_margin_start"
-        android:layout_marginTop="72dp"
         android:layout_marginBottom="58dp"
         app:dotsColor="@color/neutral_light_gray"
         app:dotsCornerRadius="8dp"
@@ -42,7 +40,6 @@
         app:dotsWidthFactor="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/onboardingVP2"
         app:progressMode="true"
         app:selectedDotColor="@color/primary_dark_purple" />
 </androidx.constraintlayout.widget.ConstraintLayout>

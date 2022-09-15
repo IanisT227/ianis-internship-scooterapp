@@ -3,10 +3,10 @@ package com.internship.move.model
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.google.gson.Gson
 import com.internship.move.feature.authentication.UserResponse
+import com.squareup.moshi.Moshi
 
-class UserDataInternalStorageManager(context: Context) {
+class UserDataInternalStorageManager(context: Context, private val moshi: Moshi) {
 
     private val preferences: SharedPreferences = context.getSharedPreferences(KEY_PREFERENCES, MODE_PRIVATE)
 
@@ -19,25 +19,27 @@ class UserDataInternalStorageManager(context: Context) {
     }
 
     fun getAuthPreferences(): UserResponse? {
-        return if (preferences.getString(KEY_IS_AUTH, "").isNullOrEmpty() || preferences.getString(KEY_IS_AUTH, "").equals("null"))
+        return if (preferences.getString(KEY_IS_AUTH, "").isNullOrEmpty() || preferences.getString(KEY_IS_AUTH, "").equals("null")) {
             null
-        else
-            Gson().fromJson(preferences.getString(KEY_IS_AUTH, ""), UserResponse::class.java)
+        } else {
+            val userJsonAdapter = moshi.adapter(UserResponse::class.java)
+            userJsonAdapter.fromJson(preferences.getString(KEY_IS_AUTH, ""))
+        }
     }
 
     fun uploadLicensePicture(filepath: String) {
         val response: UserResponse? = getAuthPreferences()
         response?.user?.driverLicenseKey = filepath
         changeAuthPreferences(userData = response)
-
     }
 
     fun changeAuthPreferences(userData: UserResponse?) {
-        val userStringData: String = Gson().toJson(userData)
+        val userJsonAdapter = moshi.adapter(UserResponse::class.java)
+        val userStringData = userJsonAdapter.toJson(userData)
         preferences.edit().putString(KEY_IS_AUTH, userStringData).apply()
     }
 
-    fun logOutUser(){
+    fun logOutUser() {
         preferences.edit().putString(KEY_IS_AUTH, "null").apply()
     }
 

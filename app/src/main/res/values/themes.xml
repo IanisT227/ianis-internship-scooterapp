@@ -14,5 +14,6 @@
         <!-- Customize your theme here. -->
         <item name="materialButtonStyle">@style/PrimaryButton</item>
         <item name="editTextStyle">@style/TextInputEditTextStyle</item>
+        <item name="textInputStyle">@style/TextInputLayoutStyle</item>
     </style>
 </resources>

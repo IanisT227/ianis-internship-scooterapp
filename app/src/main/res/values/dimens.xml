@@ -35,4 +35,5 @@
     <dimen name="textView_heading1_bottom_margin">35dp</dimen>
     <dimen name="button_margin_end">24dp</dimen>
     <dimen name="dots_indicator_margin_start">24dp</dimen>
+    <dimen name="body_bottom_margin_onboarding_page">24dp</dimen>
 </resources>

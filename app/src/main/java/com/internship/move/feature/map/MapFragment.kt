@@ -10,11 +10,14 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -39,7 +42,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private lateinit var scooterMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val permissionId = 2
-    private lateinit var currentLocation: LatLng
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,6 +66,20 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         scooterMap = googleMap
         scooterMap.moveCamera(CameraUpdateFactory.newLatLng(CLUJANGELES))
         scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CLUJANGELES, ZOOM_LEVEL))
+        scooterMap.setOnCameraIdleListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                mapViewModel.currentLocation.value = scooterMap.cameraPosition.target
+                logTag("COORDS", mapViewModel.currentLocation.value.toString())
+            }, 5000L)
+        }
+        scooterMap.setOnMarkerClickListener {
+            initScooterInfo(it.title)
+            return@setOnMarkerClickListener true
+        }
+
+        scooterMap.setOnMapClickListener {
+            binding.scooterInfo.scooterCV.visibility = View.GONE
+        }
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -123,10 +139,13 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                         val geocoder = Geocoder(requireContext(), Locale.getDefault())
                         val list: List<Address> =
                             geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                        currentLocation = LatLng(list[0].latitude, list[0].longitude)
+                        mapViewModel.currentLocation.value = LatLng(list[0].latitude, list[0].longitude)
+                        val currentLocation = mapViewModel.currentLocation.value ?: CLUJANGELES
                         scooterMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
                         scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL))
-                        mapViewModel.getScooters(currentLocation.latitude.toFloat(), currentLocation.longitude.toFloat())
+                        mapViewModel.getScooters(
+                            currentLocation.latitude.toFloat(), currentLocation.longitude.toFloat()
+                        )
                     }
                 }
             } else {
@@ -153,6 +172,11 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                     )
                 }
         }
+
+        mapViewModel.currentLocation.observe(viewLifecycleOwner) { location ->
+            scooterMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+            mapViewModel.getScooters(location.latitude.toFloat(), location.longitude.toFloat())
+        }
     }
 
     private fun initButtons() {
@@ -160,6 +184,34 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             authViewModel.logOut()
             requireActivity().finish()
         }
+    }
+
+
+    private fun initScooterInfo(markerTitle: String) {
+        mapViewModel.scooterList.value?.forEach { scooter ->
+            if (scooter._id == markerTitle) {
+                binding.scooterInfo.scooterCV.isVisible = true
+                binding.scooterInfo.unlockScooterBtn.text = getString(R.string.unlock_scooter_string)
+                binding.scooterInfo.scooterNumberTV.text = "#" + scooter.scooterNumber
+                binding.scooterInfo.batterLevelTV.text = scooter.battery
+                binding.scooterInfo.batteryIndicatorIV.setImageResource(R.drawable.ic_battery_100)
+                binding.scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location)
+            }
+        }
+    }
+
+    private fun getScooterAddress(scooterCoords: Coordinates): String {
+        return Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
+            scooterCoords.coordinates[1],
+            scooterCoords.coordinates[0],
+            1
+        ).get(0).thoroughfare
+            .toString() + ", Nr. " + Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
+            scooterCoords.coordinates[1],
+            scooterCoords.coordinates[0],
+            1
+        ).get(0).subThoroughfare
+            .toString()
     }
 
     companion object {

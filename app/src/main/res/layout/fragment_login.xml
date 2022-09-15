@@ -68,7 +68,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailInputTIL"
-            style="@style/TextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/textField_margin_start"

@@ -37,7 +37,7 @@ val service = module {
 }
 
 val internalStorage = module {
-    single { UserDataInternalStorageManager(androidContext()) }
+    single { UserDataInternalStorageManager(androidContext(), get()) }
 }
 
 fun provideAuthService(retrofit: Retrofit): AuthenticationService =

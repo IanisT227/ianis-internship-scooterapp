@@ -106,7 +106,8 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initViews() {
-        binding.goToLoginTV.text = "${getString(R.string.launch_login_Text)} ${getString(R.string.launch_login_link)}"
+        binding.goToLoginTV.text = getString(R.string.launch_login, getString(R.string.launch_login_Text), getString(R.string.launch_login_link))
+            "${getString(R.string.launch_login_Text)} ${getString(R.string.launch_login_link)}"
         binding.termsAndConditionsTV.text =
             "${getString(R.string.terms_and_conditions_text)}\n${getString(R.string.t_and_c_link)}  ${getString(R.string.just_and)} ${
                 getString(

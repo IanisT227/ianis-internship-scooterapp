@@ -3,11 +3,13 @@ package com.internship.move.feature.map
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
 import com.internship.move.utils.logTag
 import kotlinx.coroutines.launch
 
 class MapViewModel(private val mapService: MapService) : ViewModel() {
     val scooterList: MutableLiveData<List<ScooterResponse>> = MutableLiveData()
+    val currentLocation: MutableLiveData<LatLng> = MutableLiveData()
 
     fun getScooters(latitude: Float, longitude: Float) {
         viewModelScope.launch {

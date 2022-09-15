@@ -52,10 +52,12 @@
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="backgroundTint">@null</item>
         <item name="android:textAppearance">@style/Body1</item>
-        <item name="background">@drawable/edit_text_box_stroke</item>
+        <item name="boxStrokeColor">@color/edit_text_box_stroke</item>
+        <item name="boxStrokeWidth">2dp</item>
         <item name="hintTextColor">@color/neutral_grey</item>
         <item name="android:textColorHint">@color/neutral_grey</item>
         <item name="android:textColor">@color/neutral_grey</item>
+        <item name="iconTint">@color/neutral_grey</item>
     </style>
 
     <style name="TextInputEditTextStyle" parent="Widget.AppCompat.EditText">

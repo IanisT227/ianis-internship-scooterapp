@@ -30,7 +30,7 @@
 
     <!--  REGISTER TO LOGIN  -->
     <string name="launch_login_Text">You already have an account? You can </string>
-    <string name="launch_login_link"><a href="">log in here</a></string>
+    <string name="launch_login_link">log in here</string>
     <string name="launch_login">%1$s %2$s</string>
     <string name="register_subtitle">Sign up or login and start riding right away</string>
     <string name="register_title">Let\'s get started</string>
@@ -58,4 +58,5 @@
     <string name="exit_app_button_text">Press double tap to exit</string>
     <string name="pre_license_check_text">We are currently verifying your driving license</string>
     <string name="post_license_verification_text">We’ve successfully validated your driving license</string>
+    <string name="unlock_scooter_string">Unlock</string>
 </resources>
