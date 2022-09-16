@@ -11,6 +11,7 @@
         android:layout_height="match_parent" />
 
     <include
+        android:elevation="4dp"
         android:id="@+id/scooterInfo"
         layout="@layout/fragment_map_scooter_item"
         android:layout_width="0dp"
