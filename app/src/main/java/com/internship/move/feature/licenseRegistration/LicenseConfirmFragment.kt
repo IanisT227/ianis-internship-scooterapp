@@ -10,6 +10,7 @@ import com.internship.move.R
 import com.internship.move.databinding.FragmentLicenseConfirmBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 
 class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
 
@@ -20,12 +21,13 @@ class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
+        initViews()
         uploadPicture()
         initButton()
     }
 
     private fun uploadPicture() {
-        licenseRegistrationViewModel.uploadImage(args.licenseItem.token, args.licenseItem.image)
+        licenseRegistrationViewModel.uploadImage(args.licenseItem.token, File(args.licenseItem.imageUri.path.toString()))
     }
 
     private fun initObservers() {
@@ -33,11 +35,16 @@ class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
             binding.apply {
                 validationProcessSpn.isVisible = loadingValue
                 launchMapBtn.isVisible = !loadingValue
-                imageView.isVisible = !loadingValue
-                validationStatusTV.text =
-                    if (loadingValue) getString(R.string.pre_license_check_text) else getString(R.string.post_license_verification_text)
+                licenseConfirmIV.isVisible = !loadingValue
+                validationStatusTV.isVisible = loadingValue
+                validationConfirmTV.isVisible = !loadingValue
             }
         }
+    }
+
+    private fun initViews() {
+        binding.validationStatusTV.text = getString(R.string.pre_license_check_text)
+        binding.validationConfirmTV.text = getString(R.string.post_license_verification_text)
     }
 
     private fun initButton() {

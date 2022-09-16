@@ -43,6 +43,10 @@ class UserDataInternalStorageManager(context: Context, private val moshi: Moshi)
         preferences.edit().putString(KEY_IS_AUTH, "null").apply()
     }
 
+    fun getUserToken(): String? {
+        return getAuthPreferences()?.token
+    }
+
     companion object {
         private const val KEY_PREFERENCES = "com.internship.move.KEY_PREFERENCES"
         private const val KEY_PASSED_ONBOARDING = "IS_LOGGED"

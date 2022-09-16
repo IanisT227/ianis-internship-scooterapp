@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
@@ -27,6 +28,8 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
     private lateinit var imageUri: Uri
     private val authenticationViewModel: AuthenticationViewModel by viewModel()
     private var doubleBackPressed = false
+    private var latestTmpUri: Uri? = null
+    private val takeImageResult = initImageResult()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,19 +57,18 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
         }
     }
 
-    private val takeImageResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
-        if (isSuccess) {
+    private fun initImageResult(): ActivityResultLauncher<Uri> {
+        return registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (!isSuccess) return@registerForActivityResult
             latestTmpUri?.let {
                 findNavController().navigate(
                     LicenseInstructionsFragmentDirections.actionLicenseInstructionsFragmentToLicenseConfirmFragment(
-                        LicenseItem(args.userData.token, File(imageUri.path.toString()))
+                        LicenseItem(args.userData.token, imageUri)
                     )
                 )
             }
         }
     }
-
-    private var latestTmpUri: Uri? = null
 
     private fun takeImage() {
         lifecycleScope.launchWhenStarted {
@@ -78,12 +80,12 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
     }
 
     private fun getTmpFileUri(): Uri {
-        val tmpFile = File.createTempFile("tmp_image_file", ".png").apply {
+        val tmpFile = File.createTempFile(getString(R.string.create_image_file_prefix), getString(R.string.create_image_file_sufix)).apply {
             createNewFile()
             deleteOnExit()
         }
         imageUri = tmpFile.toUri()
-        return FileProvider.getUriForFile(requireContext(), "${BuildConfig.APPLICATION_ID}.provider", tmpFile)
+        return FileProvider.getUriForFile(requireActivity().applicationContext, "${BuildConfig.APPLICATION_ID}.provider", tmpFile)
     }
 
     private fun initViews() {
@@ -91,5 +93,4 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
         binding.disclaimerInstructionsTV.text = getString(R.string.disclaimer_instructions_string)
         binding.addLicenseBtn.text = getString(R.string.add_license_button_string)
     }
-
 }

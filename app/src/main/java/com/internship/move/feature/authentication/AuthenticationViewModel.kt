@@ -60,13 +60,16 @@ class AuthenticationViewModel(
             try {
                 logTag("LOGOUT", userData.value?.token.toString())
                 authenticationApi.logoutUser("Bearer " + userData.value?.token)
-                onBoardingInternalStorageManager.logOutUser()
             } catch (e: Exception) {
                 logTag("LOGOUT", e.toString())
+            } finally {
+                onBoardingInternalStorageManager.logOutUser()
             }
 
         }
     }
+
+    fun getUserToken() = userData.value?.token
 
     fun getCurrentUser() {
         viewModelScope.launch {

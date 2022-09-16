@@ -55,3 +55,4 @@ const val UNCHECKED = 0
 const val LOGGED = 1
 const val ERROR = -1
 const val MAPS_API_KEY = "AIzaSyDjK7n4r_ENUgIKBNIsxMD8J09ADCOVUGk"
+const val ERROR_DURATION = 2500L

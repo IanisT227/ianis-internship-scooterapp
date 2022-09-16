@@ -17,16 +17,17 @@
     <!--    LOGIN TO REGISTER  -->
     <string name="goToRegisterText">Don\'t have an account? You can</string>
     <string name="goToRegisterLink"><a href="">start with one here</a></string>
-    <string name="goToRegister">%1$s %2$s</string>
+    <string name="go_to_register_text">%1$s %2$s</string>
 
     <!--    LOGIN TO FORGOT PASSWORD  -->
     <string name="forgot_password"><a href="">Forgot password?</a></string>
 
     <!--    REGISTER TERMS AND CONDITIONS  -->
-    <string name="terms_and_conditions_text">By continuing you agree to Move’s\n</string>
+    <string name="terms_and_conditions_intro_text">By continuing you agree to Move’s\n</string>
     <string name="t_and_c_link"><a href="">Terms and Conditions</a></string>
     <string name="just_and">and</string>
     <string name="privacy_policy_link"><a href="">Privacy Policy</a></string>
+    <string name="terms_and_conditions_text">%1$s %2$s %3$s %4$s</string>
 
     <!--  REGISTER TO LOGIN  -->
     <string name="launch_login_Text">You already have an account? You can </string>
@@ -59,4 +60,9 @@
     <string name="pre_license_check_text">We are currently verifying your driving license</string>
     <string name="post_license_verification_text">We’ve successfully validated your driving license</string>
     <string name="unlock_scooter_string">Unlock</string>
+    <string name="create_image_file_prefix">tmp_image_file</string>
+    <string name="create_image_file_sufix">.png</string>
+    <string name="register_error_message">Email already exists</string>
+    <string name="error_text_tapadoo_toast">Error</string>
+    <string name="scooter_text">Scooter</string>
 </resources>

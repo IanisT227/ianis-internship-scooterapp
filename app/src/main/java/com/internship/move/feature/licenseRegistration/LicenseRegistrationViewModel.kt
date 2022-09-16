@@ -12,12 +12,10 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-
 class LicenseRegistrationViewModel(
     private val userDataInternalStorageManager: UserDataInternalStorageManager,
     private val licenseService: LicenseService
 ) : ViewModel() {
-
     private val licenseResponse: MutableLiveData<User?> = MutableLiveData()
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -44,5 +42,4 @@ class LicenseRegistrationViewModel(
             }
         }
     }
-
 }

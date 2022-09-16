@@ -1,5 +1,6 @@
 package com.internship.move.model
 
+import com.internship.move.BuildConfig
 import com.internship.move.feature.authentication.AuthenticationService
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.feature.licenseRegistration.LicenseRegistrationViewModel
@@ -7,6 +8,8 @@ import com.internship.move.feature.licenseRegistration.LicenseService
 import com.internship.move.feature.map.MapService
 import com.internship.move.feature.map.MapViewModel
 import com.internship.move.feature.onboarding.OnboardingViewModel
+import com.internship.move.model.providers.AuthenticationTokenProvider
+import com.internship.move.model.providers.RuntimeAuthenticationTokenProvider
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,6 +39,8 @@ val service = module {
     single<MapService> { provideMapService(get()) }
 }
 
+val authenticationTokenProvider = module { single<AuthenticationTokenProvider> { RuntimeAuthenticationTokenProvider(get()) } }
+
 val internalStorage = module {
     single { UserDataInternalStorageManager(androidContext(), get()) }
 }
@@ -55,7 +60,13 @@ fun provideRetrofit(moshi: Moshi, client: OkHttpClient) = Retrofit.Builder()
 
 fun provideMoshi(): Moshi = Moshi.Builder().build()
 
-fun provideHttpClient(): OkHttpClient =
-    OkHttpClient.Builder().addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build()
+fun provideHttpClient(): OkHttpClient {
+    val httpClient = OkHttpClient.Builder()
+    if (BuildConfig.DEBUG) {
+        httpClient.addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+//        httpClient.addNetworkInterceptor(SessionInterceptor())
+    }
+    return httpClient.build()
+}
 
 private const val SERVER_URL = "https://move-scooter.herokuapp.com/api/"

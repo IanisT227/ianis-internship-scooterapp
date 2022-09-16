@@ -8,7 +8,5 @@ class OnBoardingRepository(private val userDataInternalStorageManager: UserDataI
 
     suspend fun changeLoggedStatus(logValue: Boolean) = userDataInternalStorageManager.changeLogStatus(logValue)
 
-    suspend fun getAuthStatus(): UserResponse? {
-        return userDataInternalStorageManager.getAuthPreferences()
-    }
+    suspend fun getAuthStatus(): UserResponse? = userDataInternalStorageManager.getAuthPreferences()
 }

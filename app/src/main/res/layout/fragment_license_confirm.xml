@@ -7,10 +7,10 @@
     android:background="@drawable/bg_app">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/licenseConfirmIV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="@dimen/license_confirm_image_margin_top"
         android:src="@drawable/ic_validated_picture"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,8 +32,23 @@
         app:layout_constraintBottom_toTopOf="@+id/validationProcessSpn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:text="We are validating your license" />
+
+    <TextView
+        android:id="@+id/validationConfirmTV"
+        style="@style/Heading1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textView_heading_margin_start"
+        android:layout_marginTop="@dimen/textView_margin_top"
+        android:layout_marginEnd="@dimen/textView_heading_margin_end"
+        android:textAlignment="center"
+        android:textColor="@color/primary_text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/licenseConfirmIV"
+        tools:text="@string/post_license_verification_text"
+        tools:visibility="invisible" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/validationProcessSpn"

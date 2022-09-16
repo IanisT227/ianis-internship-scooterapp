@@ -1,6 +1,7 @@
 package com.internship.move
 
 import android.app.Application
+import com.internship.move.model.authenticationTokenProvider
 import com.internship.move.model.internalStorage
 import com.internship.move.model.onBoardingRepository
 import com.internship.move.model.service
@@ -19,7 +20,8 @@ class MoveApp : Application() {
                     internalStorage,
                     onBoardingRepository,
                     viewModel,
-                    service
+                    service,
+                    authenticationTokenProvider
                 )
             )
         }

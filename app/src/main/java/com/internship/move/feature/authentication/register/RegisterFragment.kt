@@ -12,10 +12,12 @@ import com.internship.move.R
 import com.internship.move.databinding.FragmentRegisterBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.utils.ERROR
+import com.internship.move.utils.ERROR_DURATION
 import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
 import com.internship.move.utils.checkMail
 import com.internship.move.utils.checkUserOrPassword
+import com.tapadoo.alerter.Alerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -106,14 +108,15 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initViews() {
-        binding.goToLoginTV.text = getString(R.string.launch_login, getString(R.string.launch_login_Text), getString(R.string.launch_login_link))
-            "${getString(R.string.launch_login_Text)} ${getString(R.string.launch_login_link)}"
-        binding.termsAndConditionsTV.text =
-            "${getString(R.string.terms_and_conditions_text)}\n${getString(R.string.t_and_c_link)}  ${getString(R.string.just_and)} ${
-                getString(
-                    R.string.privacy_policy_link
-                )
-            }"
+        binding.goToLoginTV.text =
+            getString(R.string.launch_login, getString(R.string.launch_login_Text), getString(R.string.launch_login_link))
+        binding.termsAndConditionsTV.text = getString(
+            R.string.terms_and_conditions_text,
+            getString(R.string.terms_and_conditions_intro_text),
+            getString(R.string.t_and_c_link),
+            getString(R.string.just_and),
+            getString(R.string.privacy_policy_link)
+        )
     }
 
     private fun initObservers() {
@@ -122,7 +125,12 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             if (logValue == LOGGED && userResponse != null) {
                 findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLicenseInstructionsFragment(userData = userResponse))
             } else if (logValue == ERROR) {
-                Toast.makeText(context, "Email already exists", Toast.LENGTH_SHORT).show()
+                Alerter.create(requireActivity())
+                    .setTitle(getString(R.string.error_text_tapadoo_toast))
+                    .setText(getString(R.string.register_error_message))
+                    .setBackgroundColorRes(R.color.primary_dark_purple)
+                    .setDuration(ERROR_DURATION)
+                    .show()
             }
         }
 
