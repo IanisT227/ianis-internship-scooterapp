@@ -16,5 +16,5 @@ interface AuthenticationService {
     suspend fun loginUser(@Body userdata: UserLogin): UserResponse
 
     @DELETE("auth/logout")
-    suspend fun logoutUser(@Header("Authorization") token: String)
+    suspend fun logoutUser()
 }

@@ -59,7 +59,7 @@ class AuthenticationViewModel(
         viewModelScope.launch {
             try {
                 logTag("LOGOUT", userData.value?.token.toString())
-                authenticationApi.logoutUser("Bearer " + userData.value?.token)
+                authenticationApi.logoutUser()
             } catch (e: Exception) {
                 logTag("LOGOUT", e.toString())
             } finally {

@@ -31,7 +31,7 @@ val onBoardingRepository = module {
 }
 
 val service = module {
-    single<OkHttpClient> { provideHttpClient() }
+    single<OkHttpClient> { provideHttpClient(get()) }
     single<Moshi> { provideMoshi() }
     single<Retrofit> { provideRetrofit(get(), get()) }
     single<AuthenticationService> { provideAuthService(get()) }
@@ -39,7 +39,7 @@ val service = module {
     single<MapService> { provideMapService(get()) }
 }
 
-val authenticationTokenProvider = module { single<AuthenticationTokenProvider> { RuntimeAuthenticationTokenProvider(get()) } }
+val tokenProvider = module { single<AuthenticationTokenProvider> { RuntimeAuthenticationTokenProvider(get()) } }
 
 val internalStorage = module {
     single { UserDataInternalStorageManager(androidContext(), get()) }
@@ -60,11 +60,11 @@ fun provideRetrofit(moshi: Moshi, client: OkHttpClient) = Retrofit.Builder()
 
 fun provideMoshi(): Moshi = Moshi.Builder().build()
 
-fun provideHttpClient(): OkHttpClient {
+fun provideHttpClient(tokenProvider:AuthenticationTokenProvider): OkHttpClient {
     val httpClient = OkHttpClient.Builder()
     if (BuildConfig.DEBUG) {
         httpClient.addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//        httpClient.addNetworkInterceptor(SessionInterceptor())
+        httpClient.addNetworkInterceptor(SessionInterceptor(tokenProvider))
     }
     return httpClient.build()
 }
