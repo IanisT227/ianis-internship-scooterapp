@@ -1,10 +1,10 @@
-package com.internship.move
+package com.internship.move.model
 
 import com.internship.move.feature.authentication.AuthenticationService
 import com.internship.move.feature.authentication.AuthenticationViewModel
+import com.internship.move.feature.licenseRegistration.LicenseRegistrationViewModel
+import com.internship.move.feature.licenseRegistration.LicenseService
 import com.internship.move.feature.onboarding.OnboardingViewModel
-import com.internship.move.model.OnBoardingInternalStorageManager
-import com.internship.move.model.OnBoardingRepository
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,10 +17,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val viewModel = module {
     viewModel { OnboardingViewModel(repo = get()) }
     viewModel { AuthenticationViewModel(get(), get()) }
+    viewModel { LicenseRegistrationViewModel(get(), get()) }
 }
 
 val onBoardingRepository = module {
-    single<OnBoardingRepository> { OnBoardingRepository(onBoardingInternalStorageManager = get()) }
+    single<OnBoardingRepository> { OnBoardingRepository(userDataInternalStorageManager = get()) }
 }
 
 val service = module {
@@ -28,14 +29,17 @@ val service = module {
     single<Moshi> { provideMoshi() }
     single<Retrofit> { provideRetrofit(get(), get()) }
     single<AuthenticationService> { provideAuthService(get()) }
+    single<LicenseService> { provideLicenseService(get()) }
 }
 
 val internalStorage = module {
-    single { OnBoardingInternalStorageManager(androidContext()) }
+    single { UserDataInternalStorageManager(androidContext()) }
 }
 
 fun provideAuthService(retrofit: Retrofit): AuthenticationService =
     retrofit.create(AuthenticationService::class.java)
+
+fun provideLicenseService(retrofit: Retrofit): LicenseService = retrofit.create(LicenseService::class.java)
 
 fun provideRetrofit(moshi: Moshi, client: OkHttpClient) = Retrofit.Builder()
     .baseUrl(SERVER_URL)
@@ -45,6 +49,7 @@ fun provideRetrofit(moshi: Moshi, client: OkHttpClient) = Retrofit.Builder()
 
 fun provideMoshi(): Moshi = Moshi.Builder().build()
 
-fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor()).build()
+fun provideHttpClient(): OkHttpClient =
+    OkHttpClient.Builder().addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build()
 
 private const val SERVER_URL = "https://move-scooter.herokuapp.com/api/"

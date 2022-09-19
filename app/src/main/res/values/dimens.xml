@@ -26,4 +26,11 @@
     <dimen name="textField_secondary_margin_top">32dp</dimen>
     <dimen name="textView_reset_pwd_margin_top">14dp</dimen>
     <dimen name="ic_back_margin_top">28dp</dimen>
+    <dimen name="textView_heading_margin_start">28dp</dimen>
+    <dimen name="textView_heading_margin_end">28dp</dimen>
+    <dimen name="disclaimer_textView_margin_end">44dp</dimen>
+    <dimen name="ic_back_secondary_margin_top">14dp</dimen>
+    <dimen name="fragment_title_textView_margin_top">16dp</dimen>
+    <dimen name="textView_heading1_top_margin">67dp</dimen>
+    <dimen name="textView_heading1_bottom_margin">35dp</dimen>
 </resources>

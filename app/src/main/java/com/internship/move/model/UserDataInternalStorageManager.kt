@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.internship.move.feature.authentication.UserResponse
 
-class OnBoardingInternalStorageManager(context: Context) {
+class UserDataInternalStorageManager(context: Context) {
 
     private val preferences: SharedPreferences = context.getSharedPreferences(KEY_PREFERENCES, MODE_PRIVATE)
 
@@ -23,6 +23,13 @@ class OnBoardingInternalStorageManager(context: Context) {
             null
         else
             Gson().fromJson(preferences.getString(KEY_IS_AUTH, ""), UserResponse::class.java)
+    }
+
+    fun uploadLicensePicture(filepath: String) {
+        val response: UserResponse? = getAuthPreferences()
+        response?.user?.driverLicenseKey = filepath
+        changeAuthPreferences(userData = response)
+
     }
 
     fun changeAuthPreferences(userData: UserResponse?) {

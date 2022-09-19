@@ -27,7 +27,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             if (onboardingStatusValue == true) {
                 viewModel.getAuthData()
                 if (viewModel.userData.value != null) {
-                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment(viewModel.userData.value!!))
+                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment())
                 } else {
                     findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
                 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/bar"
+        android:layout_width="0dp"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/driving_instructions_accent_color"
+        app:title="@string/driving_license_title"
+        app:titleCentered="true"
+        app:titleTextColor="@color/driving_instructions_accent_color" />
+
+    <ImageView
+        android:id="@+id/instructionIV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/license"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bar" />
+
+    <TextView
+        android:id="@+id/disclaimerTitleTV"
+        style="@style/Heading1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textView_margin_start"
+        android:layout_marginEnd="@dimen/disclaimer_textView_margin_end"
+        android:textColor="@color/driving_instructions_accent_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instructionIV"
+        tools:text="@string/license_disclaimer_title_string" />
+
+    <TextView
+        android:id="@+id/disclaimerInstructionsTV"
+        style="@style/Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textView_margin_start"
+        android:layout_marginTop="@dimen/textView_margin_top"
+        android:layout_marginEnd="@dimen/textView_secondary_margin_end"
+        android:textColor="@color/driving_instructions_accent_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/disclaimerTitleTV"
+        tools:text="@string/disclaimer_instructions_string" />
+
+    <Button
+        android:id="@+id/addLicenseBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/button_margin_horizontal"
+        android:layout_marginTop="@dimen/button_margin_top"
+        android:layout_marginBottom="44dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/disclaimerInstructionsTV"
+        tools:text="@string/add_license_button_string" />
+</androidx.constraintlayout.widget.ConstraintLayout>
