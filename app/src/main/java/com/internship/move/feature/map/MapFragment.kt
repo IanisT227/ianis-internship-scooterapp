@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -17,6 +19,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -24,7 +27,10 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.internship.move.R
 import com.internship.move.databinding.FragmentMapBinding
@@ -72,6 +78,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                                 scooterItem.location.coordinates[0]
                             )
                         ).title(scooterItem._id)
+                            .icon(bitmapDescriptorFromVector(R.drawable.ic_map_pin))
                     )
                 }
         }
@@ -82,6 +89,15 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         }
     }
 
+    private fun bitmapDescriptorFromVector(vectorResId: Int): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(requireContext(), vectorResId)
+        vectorDrawable!!.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight())
+        val bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
     private fun initButtons() {
         requireActivity().onBackPressedDispatcher.addCallback {
             if (doubleBackPressed) {
@@ -90,7 +106,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             } else {
                 doubleBackPressed = true
                 Toast.makeText(requireContext(), getString(R.string.exit_app_button_text), Toast.LENGTH_SHORT).show()
-                Handler().postDelayed(Runnable {
+                Handler().postDelayed({
                     doubleBackPressed = false
                 }, 3000L)
             }
@@ -127,6 +143,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     @SuppressLint("PotentialBehaviorOverride")
     override fun onMapReady(googleMap: GoogleMap) {
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
         scooterMap = googleMap
         scooterMap.moveCamera(CameraUpdateFactory.newLatLng(CLUJANGELES))
         scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CLUJANGELES, ZOOM_LEVEL))
@@ -137,7 +154,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             }, 5000L)
         }
         scooterMap.setOnMarkerClickListener {
-            initScooterInfo(it.title)
+            initScooterInfo(it.title?: "0000")
             return@setOnMarkerClickListener true
         }
 
