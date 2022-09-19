@@ -41,6 +41,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private lateinit var scooterMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val permissionId = NUMBER_OF_PERMISSIONS
+    private var doubleBackPressed = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -83,8 +84,16 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     private fun initButtons() {
         requireActivity().onBackPressedDispatcher.addCallback {
-            authViewModel.logOut()
-            requireActivity().finish()
+            if (doubleBackPressed) {
+                authViewModel.logOut()
+                requireActivity().finish()
+            } else {
+                doubleBackPressed = true
+                Toast.makeText(requireContext(), getString(R.string.exit_app_button_text), Toast.LENGTH_SHORT).show()
+                Handler().postDelayed(Runnable {
+                    doubleBackPressed = false
+                }, 3000L)
+            }
         }
     }
 

@@ -71,7 +71,7 @@
 
     <!--    MAP STRINGS-->
     <string name="find_scooters_btn_string">Find scooters</string>
-    <string name="exit_app_button_text">Press double tap to exit</string>
+    <string name="exit_app_button_text">Press again to exit</string>
     <string name="unlock_scooter_string">Unlock</string>
     <string name="scooter_text">Scooter</string>
     <string name="scooter_number_text">#%1$s</string>
