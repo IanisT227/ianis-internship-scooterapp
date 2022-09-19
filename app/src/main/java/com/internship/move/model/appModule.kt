@@ -60,7 +60,7 @@ fun provideRetrofit(moshi: Moshi, client: OkHttpClient) = Retrofit.Builder()
 
 fun provideMoshi(): Moshi = Moshi.Builder().build()
 
-fun provideHttpClient(tokenProvider:AuthenticationTokenProvider): OkHttpClient {
+fun provideHttpClient(tokenProvider: AuthenticationTokenProvider): OkHttpClient {
     val httpClient = OkHttpClient.Builder()
     if (BuildConfig.DEBUG) {
         httpClient.addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

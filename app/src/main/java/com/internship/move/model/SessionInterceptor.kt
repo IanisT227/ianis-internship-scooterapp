@@ -1,7 +1,6 @@
 package com.internship.move.model
 
 import com.internship.move.model.providers.AuthenticationTokenProvider
-import com.internship.move.model.providers.RuntimeAuthenticationTokenProvider
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

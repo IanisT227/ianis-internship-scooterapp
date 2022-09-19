@@ -65,4 +65,5 @@
     <string name="register_error_message">Email already exists</string>
     <string name="error_text_tapadoo_toast">Error</string>
     <string name="scooter_text">Scooter</string>
+    <string name="license_registration_error_text">Something went wrong!</string>
 </resources>
