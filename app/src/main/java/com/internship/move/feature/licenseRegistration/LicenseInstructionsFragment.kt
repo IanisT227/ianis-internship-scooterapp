@@ -34,7 +34,6 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews()
         initListeners()
     }
 
@@ -86,11 +85,5 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
         }
         imageUri = tmpFile.toUri()
         return FileProvider.getUriForFile(requireActivity().applicationContext, "${BuildConfig.APPLICATION_ID}.provider", tmpFile)
-    }
-
-    private fun initViews() {
-        binding.disclaimerTitleTV.text = getString(R.string.license_disclaimer_title_string)
-        binding.disclaimerInstructionsTV.text = getString(R.string.disclaimer_instructions_string)
-        binding.addLicenseBtn.text = getString(R.string.add_license_button_string)
     }
 }

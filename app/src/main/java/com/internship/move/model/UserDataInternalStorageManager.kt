@@ -10,13 +10,9 @@ class UserDataInternalStorageManager(context: Context, private val moshi: Moshi)
 
     private val preferences: SharedPreferences = context.getSharedPreferences(KEY_PREFERENCES, MODE_PRIVATE)
 
-    fun getOnboardingStatus(): Boolean {
-        return preferences.getBoolean(KEY_PASSED_ONBOARDING, false)
-    }
+    fun getOnboardingStatus(): Boolean = preferences.getBoolean(KEY_PASSED_ONBOARDING, false)
 
-    fun changeLogStatus(logValue: Boolean) {
-        preferences.edit().putBoolean(KEY_PASSED_ONBOARDING, logValue).apply()
-    }
+    fun changeLogStatus(logValue: Boolean) = preferences.edit().putBoolean(KEY_PASSED_ONBOARDING, logValue).apply()
 
     fun getAuthPreferences(): UserResponse? {
         return if (preferences.getString(KEY_IS_AUTH, "").isNullOrEmpty() || preferences.getString(KEY_IS_AUTH, "").equals("null")) {
@@ -39,13 +35,9 @@ class UserDataInternalStorageManager(context: Context, private val moshi: Moshi)
         preferences.edit().putString(KEY_IS_AUTH, userStringData).apply()
     }
 
-    fun logOutUser() {
-        preferences.edit().putString(KEY_IS_AUTH, "null").apply()
-    }
+    fun logOutUser() = preferences.edit().putString(KEY_IS_AUTH, "null").apply()
 
-    fun getUserToken(): String? {
-        return getAuthPreferences()?.token
-    }
+    fun getUserToken(): String? = getAuthPreferences()?.token
 
     companion object {
         private const val KEY_PREFERENCES = "com.internship.move.KEY_PREFERENCES"

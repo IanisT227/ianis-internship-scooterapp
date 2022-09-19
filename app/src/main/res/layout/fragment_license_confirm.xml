@@ -27,12 +27,12 @@
         android:layout_marginTop="@dimen/textView_heading1_top_margin"
         android:layout_marginEnd="@dimen/textView_heading_margin_end"
         android:layout_marginBottom="@dimen/textView_heading1_bottom_margin"
+        android:text="@string/pre_license_check_text"
         android:textAlignment="center"
         android:textColor="@color/primary_text_color"
         app:layout_constraintBottom_toTopOf="@+id/validationProcessSpn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="We are validating your license" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/validationConfirmTV"
@@ -42,12 +42,12 @@
         android:layout_marginStart="@dimen/textView_heading_margin_start"
         android:layout_marginTop="@dimen/textView_margin_top"
         android:layout_marginEnd="@dimen/textView_heading_margin_end"
+        android:text="@string/post_license_verification_text"
         android:textAlignment="center"
         android:textColor="@color/primary_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/licenseConfirmIV"
-        tools:text="@string/post_license_verification_text"
         tools:visibility="invisible" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator

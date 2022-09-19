@@ -1,9 +1,9 @@
 package com.internship.move.feature.licenseRegistration
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.internship.move.feature.authentication.User
 import com.internship.move.model.UserDataInternalStorageManager
 import com.internship.move.utils.logTag
 import kotlinx.coroutines.launch
@@ -16,8 +16,10 @@ class LicenseRegistrationViewModel(
     private val userDataInternalStorageManager: UserDataInternalStorageManager,
     private val licenseService: LicenseService
 ) : ViewModel() {
-    private val licenseResponse: MutableLiveData<User?> = MutableLiveData()
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _isError: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isError: LiveData<Boolean>
+        get() = _isError
 
     fun uploadImage(token: String, image: File) {
         viewModelScope.launch {
@@ -33,12 +35,12 @@ class LicenseRegistrationViewModel(
                 )
                 userDataInternalStorageManager.uploadLicensePicture(image.path)
                 logTag("IMAGE_RESPONSE", licenseResp.toString())
-                licenseResponse.value = licenseResp
             } catch (e: Exception) {
                 logTag("IMAGE_RESPONSE", e.toString())
-                licenseResponse.value = null
+                _isError.value = true
             } finally {
                 isLoading.value = false
+                _isError.value = false
             }
         }
     }

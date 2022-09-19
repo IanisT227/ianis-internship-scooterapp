@@ -21,7 +21,6 @@ class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
-        initViews()
         uploadPicture()
         initButton()
     }
@@ -39,12 +38,14 @@ class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
                 validationStatusTV.isVisible = loadingValue
                 validationConfirmTV.isVisible = !loadingValue
             }
+            if (licenseRegistrationViewModel.isError.equals(true)) {
+                binding.licenseConfirmIV.isVisible = false
+                binding.validationConfirmTV.isVisible = true
+                binding.validationConfirmTV.text = getString(R.string.license_registration_error_text)
+                binding.launchMapBtn.isVisible = true
+                binding.launchMapBtn.isEnabled = false
+            }
         }
-    }
-
-    private fun initViews() {
-        binding.validationStatusTV.text = getString(R.string.pre_license_check_text)
-        binding.validationConfirmTV.text = getString(R.string.post_license_verification_text)
     }
 
     private fun initButton() {

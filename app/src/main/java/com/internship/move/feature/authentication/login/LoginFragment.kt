@@ -86,7 +86,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun initViews() {
-        binding.forgotPasswordTV.text = getString(R.string.forgot_password)
         binding.goToRegisterTV.text =
             getString(R.string.go_to_register_text, getString(R.string.goToRegisterText), getString(R.string.goToRegisterLink))
     }
