@@ -62,7 +62,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.forgotPasswordTV.addClickableText(text = getString(R.string.forgot_password)) {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
         }
-        binding.goToRegisterTV.addClickableText(getString(R.string.goToRegisterLink)) {
+        binding.goToRegisterTV.addClickableText(getString(R.string.go_to_register_link)) {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
         }
 
@@ -87,36 +87,37 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun initViews() {
         binding.goToRegisterTV.text =
-            getString(R.string.go_to_register_text, getString(R.string.goToRegisterText), getString(R.string.goToRegisterLink))
+            getString(R.string.go_to_register_text, getString(R.string.go_to_register_fill_text), getString(R.string.go_to_register_link))
     }
 
     private fun initObservers() {
         viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
             val userResponse = viewModel.userData.value
             if (logValue == LOGGED && userResponse != null) {
-                if (userResponse.user.driverLicenseKey == null) {
+                if (userResponse.userDTO.driverLicenseKey == null) {
                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLicenseInstructionsFragment(userData = userResponse))
                 } else {
                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
                 }
             } else if (logValue == ERROR) {
-                Alerter.create(requireActivity())
-                    .setTitle(getString(R.string.error_text_tapadoo_toast))
-                    .setText(getString(R.string.login_error_string))
-                    .setBackgroundColorRes(R.color.primary_dark_purple)
-                    .setDuration(ERROR_DURATION)
-                    .show()
+                showAlerter(getString(R.string.login_error_string))
             }
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner)
-        { logValue ->
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.apply {
-                validationProcessSpn.isVisible = logValue
-                emailInputET.isActivated = !logValue
-                passwordInputET.isActivated = !logValue
-                launchHomeBtn.isActivated = !logValue
+                validationProcessSpn.isVisible = isLoading
+                emailInputET.isActivated = !isLoading
+                passwordInputET.isActivated = !isLoading
+                launchHomeBtn.isActivated = !isLoading
             }
         }
     }
+
+    private fun showAlerter(bodyText: String) = Alerter.create(requireActivity())
+        .setTitle(getString(R.string.error_text_tapadoo_toast))
+        .setText(bodyText)
+        .setBackgroundColorRes(R.color.primary_dark_purple)
+        .setDuration(ERROR_DURATION)
+        .show()
 }

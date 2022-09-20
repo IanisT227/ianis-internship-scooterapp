@@ -16,17 +16,19 @@ class LicenseRegistrationViewModel(
     private val userDataInternalStorageManager: UserDataInternalStorageManager,
     private val licenseService: LicenseService
 ) : ViewModel() {
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+    get() = _isLoading
     private val _isError: MutableLiveData<Boolean> = MutableLiveData(false)
     val isError: LiveData<Boolean>
         get() = _isError
 
-    fun uploadImage(token: String, image: File) {
+    fun uploadImage(image: File) {
         viewModelScope.launch {
             try {
-                isLoading.value = true
+                _isLoading.value = true
                 val licenseResp = licenseService.uploadLicense(
-                    token = "Bearer $token",
                     driverLicenseKey = MultipartBody.Part.createFormData(
                         "driverLicenseKey",
                         image.name,
@@ -39,8 +41,7 @@ class LicenseRegistrationViewModel(
                 logTag("IMAGE_RESPONSE", e.toString())
                 _isError.value = true
             } finally {
-                isLoading.value = false
-                _isError.value = false
+                _isLoading.value = false
             }
         }
     }

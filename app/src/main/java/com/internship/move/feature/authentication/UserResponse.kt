@@ -11,5 +11,5 @@ data class UserResponse(
     @Json(name = "token")
     val token: String,
     @Json(name = "user")
-    val user: User
+    val userDTO: UserDTO
 ) : Parcelable

@@ -4,17 +4,15 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ScooterResponse(
+data class ScooterResponseDTO(
     @Json(name = "location")
-    val location: Coordinates,
+    val location: CoordinatesDTO,
     @Json(name = "_id")
-    val _id: String,
+    val id: String,
     @Json(name = "scooterNumber")
     val scooterNumber: String,
     @Json(name = "battery")
     val battery: String,
-    @Json(name = "updatedAt")
-    val updatedAt: String,
     @Json(name = "bookedStatus")
     val bookedStatus: String,
     @Json(name = "lockedStatus")

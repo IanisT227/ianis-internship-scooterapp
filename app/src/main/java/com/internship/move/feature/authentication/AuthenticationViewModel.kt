@@ -1,5 +1,6 @@
 package com.internship.move.feature.authentication
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,13 +20,14 @@ class AuthenticationViewModel(
 
     val onUserLoggedIn: MutableLiveData<Int> = MutableLiveData(UNCHECKED)
     val userData: MutableLiveData<UserResponse> = MutableLiveData(null)
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
-
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
 
     fun logIn(user: UserLogin) {
         viewModelScope.launch {
             try {
-                isLoading.value = true
+                _isLoading.value = true
                 val response = authenticationApi.loginUser(userdata = user)
                 userData.value = response
                 onUserLoggedIn.value = LOGGED
@@ -33,7 +35,7 @@ class AuthenticationViewModel(
             } catch (e: Exception) {
                 onUserLoggedIn.value = ERROR
             } finally {
-                isLoading.value = false
+                _isLoading.value = false
             }
         }
     }
@@ -41,7 +43,7 @@ class AuthenticationViewModel(
     fun register(user: UserRegisterRequest) {
         viewModelScope.launch {
             try {
-                isLoading.value = true
+                _isLoading.value = true
                 val response = authenticationApi.registerUser(userdata = user)
                 userData.value = response
                 onUserLoggedIn.value = LOGGED
@@ -50,7 +52,7 @@ class AuthenticationViewModel(
                 logTag("REGISTER", e.toString())
                 onUserLoggedIn.value = ERROR
             } finally {
-                isLoading.value = false
+                _isLoading.value = false
             }
         }
     }

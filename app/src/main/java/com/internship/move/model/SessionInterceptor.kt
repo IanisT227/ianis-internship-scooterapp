@@ -7,20 +7,21 @@ import okhttp3.Response
 
 class SessionInterceptor(
     private val authenticationTokenProvider: AuthenticationTokenProvider
-//    private val internalStorageManager: UserDataInternalStorageManager
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
         val url = chain.request().url.toString()
         val token = authenticationTokenProvider.getAuthToken()
 
-        if (token != null && !url.contains("login") && !url.contains("register")) {
+        if (token != null && !url.contains(REQUEST_EXCEPTION_LOGIN) && !url.contains(REQUEST_EXCEPTION_REGISTER)) {
             builder.header(AUTHORIZATION_KEY, AUTHORIZATION_BEARER_PREFIX + token)
         }
         return chain.proceed(builder.build())
     }
 
     companion object {
+        private const val REQUEST_EXCEPTION_LOGIN = "login"
+        private const val REQUEST_EXCEPTION_REGISTER = "register"
         private const val AUTHORIZATION_KEY = "Authorization"
         private const val AUTHORIZATION_BEARER_PREFIX = "Bearer "
     }

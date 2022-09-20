@@ -26,9 +26,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         viewModel.userLoggedStatus.observe(viewLifecycleOwner) { onboardingStatusValue ->
             if (onboardingStatusValue == true) {
                 viewModel.getAuthData()
-                if (viewModel.userData.value != null) {
-                    if (viewModel.userData.value!!.user.driverLicenseKey.isNullOrEmpty()) {
-                        findNavController().navigate(SplashFragmentDirections.actionGlobalLicenseInstructionsFragment(viewModel.userData.value!!))
+                val userData = viewModel.userData.value
+                if (userData != null) {
+                    if (userData.userDTO.driverLicenseKey.isNullOrEmpty()) {
+                        findNavController().navigate(SplashFragmentDirections.actionGlobalLicenseInstructionsFragment(userData))
                     } else
                         findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment())
                 } else {

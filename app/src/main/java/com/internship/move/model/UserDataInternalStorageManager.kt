@@ -12,7 +12,7 @@ class UserDataInternalStorageManager(context: Context, private val moshi: Moshi)
 
     fun getOnboardingStatus(): Boolean = preferences.getBoolean(KEY_PASSED_ONBOARDING, false)
 
-    fun changeLogStatus(logValue: Boolean) = preferences.edit().putBoolean(KEY_PASSED_ONBOARDING, logValue).apply()
+    fun setIsUserLoggedIn(isLoggedIn: Boolean) = preferences.edit().putBoolean(KEY_PASSED_ONBOARDING, isLoggedIn).apply()
 
     fun getAuthPreferences(): UserResponse? {
         return if (preferences.getString(KEY_IS_AUTH, "").isNullOrEmpty() || preferences.getString(KEY_IS_AUTH, "").equals("null")) {
@@ -25,7 +25,7 @@ class UserDataInternalStorageManager(context: Context, private val moshi: Moshi)
 
     fun uploadLicensePicture(filepath: String) {
         val response: UserResponse? = getAuthPreferences()
-        response?.user?.driverLicenseKey = filepath
+        response?.userDTO?.driverLicenseKey = filepath
         changeAuthPreferences(userData = response)
     }
 

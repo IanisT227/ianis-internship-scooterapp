@@ -5,8 +5,8 @@ import com.internship.move.feature.authentication.AuthenticationService
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.feature.licenseRegistration.LicenseRegistrationViewModel
 import com.internship.move.feature.licenseRegistration.LicenseService
-import com.internship.move.feature.map.MapService
-import com.internship.move.feature.map.MapViewModel
+import com.internship.move.feature.map.ScooterService
+import com.internship.move.feature.map.ScooterViewModel
 import com.internship.move.feature.onboarding.OnboardingViewModel
 import com.internship.move.model.providers.AuthenticationTokenProvider
 import com.internship.move.model.providers.RuntimeAuthenticationTokenProvider
@@ -23,7 +23,7 @@ val viewModel = module {
     viewModel { OnboardingViewModel(repo = get()) }
     viewModel { AuthenticationViewModel(get(), get()) }
     viewModel { LicenseRegistrationViewModel(get(), get()) }
-    viewModel { MapViewModel(get()) }
+    viewModel { ScooterViewModel(get()) }
 }
 
 val onBoardingRepository = module {
@@ -36,7 +36,7 @@ val service = module {
     single<Retrofit> { provideRetrofit(get(), get()) }
     single<AuthenticationService> { provideAuthService(get()) }
     single<LicenseService> { provideLicenseService(get()) }
-    single<MapService> { provideMapService(get()) }
+    single<ScooterService> { provideMapService(get()) }
 }
 
 val tokenProvider = module { single<AuthenticationTokenProvider> { RuntimeAuthenticationTokenProvider(get()) } }
@@ -45,22 +45,22 @@ val internalStorage = module {
     single { UserDataInternalStorageManager(androidContext(), get()) }
 }
 
-fun provideAuthService(retrofit: Retrofit): AuthenticationService =
+private fun provideAuthService(retrofit: Retrofit): AuthenticationService =
     retrofit.create(AuthenticationService::class.java)
 
-fun provideLicenseService(retrofit: Retrofit): LicenseService = retrofit.create(LicenseService::class.java)
+private fun provideLicenseService(retrofit: Retrofit): LicenseService = retrofit.create(LicenseService::class.java)
 
-fun provideMapService(retrofit: Retrofit): MapService = retrofit.create(MapService::class.java)
+private fun provideMapService(retrofit: Retrofit): ScooterService = retrofit.create(ScooterService::class.java)
 
-fun provideRetrofit(moshi: Moshi, client: OkHttpClient) = Retrofit.Builder()
+private fun provideRetrofit(moshi: Moshi, client: OkHttpClient) = Retrofit.Builder()
     .baseUrl(SERVER_URL)
     .client(client)
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .build()
 
-fun provideMoshi(): Moshi = Moshi.Builder().build()
+private fun provideMoshi(): Moshi = Moshi.Builder().build()
 
-fun provideHttpClient(tokenProvider: AuthenticationTokenProvider): OkHttpClient {
+private fun provideHttpClient(tokenProvider: AuthenticationTokenProvider): OkHttpClient {
     val httpClient = OkHttpClient.Builder()
     if (BuildConfig.DEBUG) {
         httpClient.addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

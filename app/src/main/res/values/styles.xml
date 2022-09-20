@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!--region TextStyles-->
     <style name="Heading1">
         <item name="android:textSize">36sp</item>
         <item name="fontFamily">@font/bai_jamjuree_bold</item>
@@ -35,7 +35,9 @@
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/bai_jamjuree_bold</item>
     </style>
+    <!--endregion-->
 
+    <!--region ComponentStyles-->
     <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@null</item>
         <item name="android:background">@drawable/bg_primary_button</item>
@@ -67,9 +69,10 @@
         <item name="android:textCursorDrawable">@drawable/color_cursor</item>
     </style>
 
-    <style name="skipButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="TextButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/neutral_grey</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:textAppearance">@style/Body1</item>
     </style>
+    <!--    endregion-->
 </resources>

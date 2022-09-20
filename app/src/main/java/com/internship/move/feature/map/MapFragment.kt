@@ -6,6 +6,7 @@ import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.Canvas
 import android.location.Address
 import android.location.Geocoder
@@ -18,6 +19,7 @@ import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -38,12 +40,13 @@ import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
+import java.util.Locale
 
 class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
+
     private val binding by viewBinding(FragmentMapBinding::bind)
     private val authViewModel: AuthenticationViewModel by viewModel()
-    private val mapViewModel: MapViewModel by viewModel()
+    private val scooterViewModel: ScooterViewModel by viewModel()
     private lateinit var scooterMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val permissionId = NUMBER_OF_PERMISSIONS
@@ -68,7 +71,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     }
 
     private fun initObservers() {
-        mapViewModel.scooterList.observe(viewLifecycleOwner) { scooterList ->
+        scooterViewModel.scooterList.observe(viewLifecycleOwner) { scooterList ->
             if (scooterList.isNotEmpty())
                 scooterList.forEach { scooterItem ->
                     scooterMap.addMarker(
@@ -77,24 +80,24 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                                 scooterItem.location.coordinates[1],
                                 scooterItem.location.coordinates[0]
                             )
-                        ).title(scooterItem._id)
+                        ).title(scooterItem.id)
                             .icon(bitmapDescriptorFromVector(R.drawable.ic_map_pin))
                     )
                 }
         }
 
-        mapViewModel.currentLocation.observe(viewLifecycleOwner) { location ->
+        scooterViewModel.currentLocation.observe(viewLifecycleOwner) { location ->
             scooterMap.moveCamera(CameraUpdateFactory.newLatLng(location))
-            mapViewModel.getScooters(location.latitude.toFloat(), location.longitude.toFloat())
+            scooterViewModel.getScooters(location.latitude.toFloat(), location.longitude.toFloat())
         }
     }
 
     private fun bitmapDescriptorFromVector(vectorResId: Int): BitmapDescriptor {
         val vectorDrawable = ContextCompat.getDrawable(requireContext(), vectorResId)
-        vectorDrawable!!.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight())
-        val bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888)
+        vectorDrawable?.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
+        val bitmap = Bitmap.createBitmap(vectorDrawable?.intrinsicWidth ?: 0, vectorDrawable?.intrinsicHeight ?: 0, ARGB_8888)
         val canvas = Canvas(bitmap)
-        vectorDrawable.draw(canvas)
+        vectorDrawable?.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
@@ -106,16 +109,16 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             } else {
                 doubleBackPressed = true
                 Toast.makeText(requireContext(), getString(R.string.exit_app_button_text), Toast.LENGTH_SHORT).show()
-                Handler().postDelayed({
+                Handler(Looper.getMainLooper()).postDelayed({
                     doubleBackPressed = false
-                }, 3000L)
+                }, ON_BACK_RESET_DURATION)
             }
         }
     }
 
     private fun initScooterInfo(markerTitle: String) {
-        mapViewModel.scooterList.value?.forEach { scooter ->
-            if (scooter._id == markerTitle) {
+        scooterViewModel.scooterList.value?.forEach { scooter ->
+            if (scooter.id == markerTitle) {
                 binding.apply {
                     scooterInfo.scooterCV.isVisible = true
                     scooterInfo.unlockScooterBtn.text = getString(R.string.unlock_scooter_string)
@@ -123,19 +126,19 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                     scooterInfo.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
                     scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location)
                 }
-                setBatteryIcon(scooter.battery)
+                setBatteryIcon(scooter.battery.toInt())
             }
         }
     }
 
-    private fun setBatteryIcon(batteryLevel: String) {
-        val resource = when (batteryLevel.toInt()) {
-            in 81..100 -> R.drawable.ic_battery_100
-            in 61..80 -> R.drawable.ic_battery_80
-            in 41..60 -> R.drawable.ic_battery_60
-            in 21..40 -> R.drawable.ic_battery_40
-            in 3..20 -> R.drawable.ic_battery_20
-            in 0..3 -> R.drawable.ic_battery_0
+    private fun setBatteryIcon(batteryLevel: Int) {
+        val resource = when {
+            batteryLevel >= 81 -> R.drawable.ic_battery_100
+            batteryLevel >= 61 -> R.drawable.ic_battery_80
+            batteryLevel >= 41 -> R.drawable.ic_battery_60
+            batteryLevel >= 21 -> R.drawable.ic_battery_40
+            batteryLevel >= 4 -> R.drawable.ic_battery_20
+            batteryLevel >= 0 -> R.drawable.ic_battery_0
             else -> R.drawable.ic_battery_0
         }
         binding.scooterInfo.batteryIndicatorIV.setImageResource(resource)
@@ -149,12 +152,12 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CLUJANGELES, ZOOM_LEVEL))
         scooterMap.setOnCameraIdleListener {
             Handler(Looper.getMainLooper()).postDelayed({
-                mapViewModel.currentLocation.value = scooterMap.cameraPosition.target
-                logTag("COORDS", mapViewModel.currentLocation.value.toString())
-            }, 5000L)
+                scooterViewModel.currentLocation.value = scooterMap.cameraPosition.target
+                logTag("COORDS", scooterViewModel.currentLocation.value.toString())
+            }, CHECK_LIST_DELAY)
         }
         scooterMap.setOnMarkerClickListener {
-            initScooterInfo(it.title?: "0000")
+            initScooterInfo(it.title ?: "0000")
             return@setOnMarkerClickListener true
         }
 
@@ -174,10 +177,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private fun checkPermissions(): Boolean {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
@@ -187,25 +186,22 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     }
 
     private fun requestPermissions() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
+        locationPermissionRequest.launch(
             arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ),
-            permissionId
         )
     }
 
-    @SuppressLint("MissingSuperCall")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == permissionId) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+    private val locationPermissionRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
                 getLocation()
+            }
+            else -> {
+                Toast.makeText(requireContext(), "Permissions not given", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -220,17 +216,17 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                         val geocoder = Geocoder(requireContext(), Locale.getDefault())
                         val list: List<Address> =
                             geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                        mapViewModel.currentLocation.value = LatLng(list[0].latitude, list[0].longitude)
-                        val currentLocation = mapViewModel.currentLocation.value ?: CLUJANGELES
+                        scooterViewModel.currentLocation.value = LatLng(list[0].latitude, list[0].longitude)
+                        val currentLocation = scooterViewModel.currentLocation.value ?: CLUJANGELES
                         scooterMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
                         scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL))
-                        mapViewModel.getScooters(
+                        scooterViewModel.getScooters(
                             currentLocation.latitude.toFloat(), currentLocation.longitude.toFloat()
                         )
                     }
                 }
             } else {
-                Toast.makeText(requireContext(), "Please turn on location", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), getString(R.string.turn_location_message_string), Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
@@ -239,23 +235,28 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         }
     }
 
-    private fun getScooterAddress(scooterCoords: Coordinates): String {
-        return Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-            scooterCoords.coordinates[1],
-            scooterCoords.coordinates[0],
-            1
-        ).get(0).thoroughfare
-            .toString() + ", Nr. " + Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-            scooterCoords.coordinates[1],
-            scooterCoords.coordinates[0],
-            1
-        ).get(0).subThoroughfare
-            .toString()
+    private fun getScooterAddress(scooterCoords: CoordinatesDTO): String {
+        return getString(
+            R.string.scooter_address_string, Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
+                scooterCoords.coordinates[1],
+                scooterCoords.coordinates[0],
+                1
+            ).get(0).thoroughfare
+                .toString(), Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
+                scooterCoords.coordinates[1],
+                scooterCoords.coordinates[0],
+                1
+            ).get(0).subThoroughfare
+                .toString()
+        )
     }
 
     companion object {
         private val CLUJANGELES = LatLng(46.770439, 23.591423)
         private const val ZOOM_LEVEL = 18.0f
-        private const val NUMBER_OF_PERMISSIONS = 2
+        private const val NUMBER_OF_PERMISSIONS = 1
+        private const val CHECK_LIST_DELAY = 5000L
+        private const val ON_BACK_RESET_DURATION = 3000L
+
     }
 }

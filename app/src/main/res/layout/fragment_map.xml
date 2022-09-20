@@ -13,7 +13,7 @@
 
     <include
         android:id="@+id/scooterInfo"
-        layout="@layout/fragment_map_scooter_item"
+        layout="@layout/scooter_data_cardview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"

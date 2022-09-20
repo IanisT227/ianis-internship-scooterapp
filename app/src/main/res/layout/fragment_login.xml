@@ -147,6 +147,6 @@
             android:textColor="@color/secondary_text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/launchHomeBtn"
-            tools:text="@string/goToRegisterText" />
+            tools:text="@string/go_to_register_fill_text" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

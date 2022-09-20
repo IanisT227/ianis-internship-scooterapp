@@ -2,6 +2,7 @@ package com.internship.move.feature.licenseRegistration
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -26,7 +27,7 @@ class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
     }
 
     private fun uploadPicture() {
-        licenseRegistrationViewModel.uploadImage(args.licenseItem.token, File(args.licenseItem.imageUri.path.toString()))
+        licenseRegistrationViewModel.uploadImage(File(args.licenseItem.toUri().path.toString()))
     }
 
     private fun initObservers() {

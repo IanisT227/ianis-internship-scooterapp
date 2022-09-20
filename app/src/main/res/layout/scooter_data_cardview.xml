@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scooterCV"
-    android:layout_width="300dp"
-    android:layout_height="350dp"
+    android:layout_width="@dimen/scooter_cardview_width"
+    android:layout_height="@dimen/scooter_cardview_height"
     android:clickable="true"
     android:visibility="visible"
-    app:cardCornerRadius="28dp">
+    app:cardCornerRadius="@dimen/scooter_cardview_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginRight="@dimen/textView_secondary_margin_end"
-            android:textColor="@color/primary_dark_purple"
+            android:textColor="@color/card_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scooterTV"
             tools:text="#AB23" />
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginRight="@dimen/textView_secondary_margin_end"
-            android:textColor="@color/primary_dark_purple"
+            android:textColor="@color/card_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scooterNumberTV"
             tools:text="15%" />
@@ -70,7 +70,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/scooter_img"
+            android:src="@drawable/scooter_cardview"
             app:layout_constraintEnd_toStartOf="@+id/scooterNumberTV"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -92,7 +92,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_small_icon_btn"
-            android:backgroundTint="@color/neutral_white"
+            android:backgroundTint="@color/small_icon_button_tint"
             android:elevation="4dp"
             android:foreground="?selectableItemBackground"
             android:padding="6dp"
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_small_icon_btn"
-            android:backgroundTint="@color/neutral_white"
+            android:backgroundTint="@color/small_icon_button_tint"
             android:elevation="4dp"
             android:foreground="?selectableItemBackground"
             android:padding="6dp"
@@ -124,9 +124,9 @@
             style="@style/RegularText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="33dp"
-            android:textColor="@color/primary_dark_purple"
+            android:layout_marginTop="@dimen/scooter_data_card_address_margin_top"
+            android:layout_marginEnd="@dimen/scooter_card_address_margin_end"
+            android:textColor="@color/card_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/locationPinIV"
             app:layout_constraintTop_toBottomOf="@+id/scooterIV"
@@ -142,9 +142,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scooterLocationTV"
+            app:layout_constraintTop_toBottomOf="@id/scooterLocationTV"
             tools:text="Unlock" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.InputMethodManager.RESULT_UNCHANGED_SHOWN
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.google.android.material.textfield.TextInputEditText
@@ -29,9 +30,9 @@ class MainActivity : AppCompatActivity(), OnSkipButtonPressed {
         findNavController(R.id.navigationHost).navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
     }
 
-    fun View.hideKeyboard() {
+    private fun View.hideKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(windowToken, 0)
+        inputManager.hideSoftInputFromWindow(windowToken, RESULT_UNCHANGED_SHOWN)
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {

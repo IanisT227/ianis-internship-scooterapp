@@ -38,4 +38,17 @@
     <dimen name="body_bottom_margin_onboarding_page">24dp</dimen>
     <dimen name="license_instructions_button_margin_bottom">44dp</dimen>
     <dimen name="license_confirm_image_margin_top">120dp</dimen>
+    <dimen name="small_icon_btn_radius">14dp</dimen>
+    <dimen name="small_icon_btn_stroke_width">1dp</dimen>
+    <dimen name="cursor_width">2dp</dimen>
+    <dimen name="scooter_cardview_width">300dp</dimen>
+    <dimen name="scooter_cardview_height">350dp</dimen>
+    <dimen name="scooter_cardview_radius">28dp</dimen>
+    <dimen name="scooter_data_card_address_margin_top">24dp</dimen>
+    <dimen name="scooter_card_address_margin_end">33dp</dimen>
+    <dimen name="onboarding_item_margin_bottom">82dp</dimen>
+    <dimen name="dots_indicator_margin_bottom">58dp</dimen>
+    <dimen name="dots_indicator_radius">8dp</dimen>
+    <dimen name="dots_indicator_dot_size">8dp</dimen>
+    <dimen name="dots_indicator_dot_spacing">4dp</dimen>
 </resources>

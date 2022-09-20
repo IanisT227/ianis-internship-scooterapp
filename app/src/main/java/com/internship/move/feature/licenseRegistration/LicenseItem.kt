@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class LicenseItem(
     val token: String,
-    val imageUri: Uri
+    val imageUri: String
 ) : Parcelable

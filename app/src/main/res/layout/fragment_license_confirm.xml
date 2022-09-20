@@ -30,7 +30,7 @@
         android:text="@string/pre_license_check_text"
         android:textAlignment="center"
         android:textColor="@color/primary_text_color"
-        app:layout_constraintBottom_toTopOf="@+id/validationProcessSpn"
+        app:layout_constraintBottom_toTopOf="@id/validationProcessSpn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -47,7 +47,7 @@
         android:textColor="@color/primary_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/licenseConfirmIV"
+        app:layout_constraintTop_toBottomOf="@id/licenseConfirmIV"
         tools:visibility="invisible" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator

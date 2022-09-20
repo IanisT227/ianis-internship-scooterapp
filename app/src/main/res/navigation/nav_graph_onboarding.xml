@@ -143,13 +143,12 @@
         android:name="com.internship.move.feature.licenseRegistration.LicenseConfirmFragment"
         android:label="LicenseConfirmFragment">
 
-        <argument
-            android:name="licenseItem"
-            app:argType="com.internship.move.feature.licenseRegistration.LicenseItem" />
-
         <action
             android:id="@+id/action_licenseConfirmFragment_to_mapFragment"
             app:destination="@id/mapFragment"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <argument
+            android:name="licenseItem"
+            app:argType="string" />
     </fragment>
 </navigation>

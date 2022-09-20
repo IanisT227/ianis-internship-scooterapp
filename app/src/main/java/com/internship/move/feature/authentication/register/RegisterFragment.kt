@@ -120,30 +120,32 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initObservers() {
-        viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
+        viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { onUserLoggedIn ->
             val userResponse = viewModel.userData.value
-            if (logValue == LOGGED && userResponse != null) {
+            if (onUserLoggedIn == LOGGED && userResponse != null) {
                 findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLicenseInstructionsFragment(userData = userResponse))
-            } else if (logValue == ERROR) {
-                Alerter.create(requireActivity())
-                    .setTitle(getString(R.string.error_text_tapadoo_toast))
-                    .setText(getString(R.string.register_error_message))
-                    .setBackgroundColorRes(R.color.primary_dark_purple)
-                    .setDuration(ERROR_DURATION)
-                    .show()
+            } else if (onUserLoggedIn == ERROR) {
+                showAlerter(getString(R.string.register_error_message))
             }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner)
-        { logValue ->
+        { isLoading ->
             binding.apply {
-                validationProcessSpn.isVisible = logValue
-                emailInputET.isActivated = !logValue
-                passwordInputET.isActivated = !logValue
-                usernameInputET.isActivated = !logValue
-                launchHomeBtn.isActivated = !logValue
+                validationProcessSpn.isVisible = isLoading
+                emailInputET.isActivated = !isLoading
+                passwordInputET.isActivated = !isLoading
+                usernameInputET.isActivated = !isLoading
+                launchHomeBtn.isActivated = !isLoading
             }
 
         }
     }
+
+    fun showAlerter(bodyText: String) = Alerter.create(requireActivity())
+        .setTitle(getString(R.string.error_text_tapadoo_toast))
+        .setText(bodyText)
+        .setBackgroundColorRes(R.color.primary_dark_purple)
+        .setDuration(ERROR_DURATION)
+        .show()
 }
