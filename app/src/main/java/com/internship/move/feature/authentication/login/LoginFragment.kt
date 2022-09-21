@@ -16,6 +16,7 @@ import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
 import com.internship.move.utils.checkMail
 import com.internship.move.utils.checkUserOrPassword
+import com.internship.move.utils.showAlerter
 import com.tapadoo.alerter.Alerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -100,7 +101,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
                 }
             } else if (logValue == ERROR) {
-                showAlerter(getString(R.string.login_error_string))
+                showAlerter(getString(R.string.login_error_string), requireActivity())
             }
         }
 
@@ -113,11 +114,4 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
         }
     }
-
-    private fun showAlerter(bodyText: String) = Alerter.create(requireActivity())
-        .setTitle(getString(R.string.error_text_tapadoo_toast))
-        .setText(bodyText)
-        .setBackgroundColorRes(R.color.primary_dark_purple)
-        .setDuration(ERROR_DURATION)
-        .show()
 }

@@ -1,5 +1,9 @@
 package com.internship.move.utils
 
+import android.app.Activity
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.text.SpannableString
 import android.text.Spanned.SPAN_EXCLUSIVE_INCLUSIVE
 import android.text.TextPaint
@@ -8,8 +12,13 @@ import android.text.style.ClickableSpan
 import android.util.Patterns
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.textfield.TextInputEditText
 import com.internship.move.R
+import com.tapadoo.alerter.Alerter
 
 fun TextView.addClickableText(text: String, color: Int = context.getColor(R.color.neutral_white), callback: ClickCallBack) {
     val spannableString = SpannableString(this.text)
@@ -51,8 +60,23 @@ fun checkUserOrPassword(userOrPasswordText: String?): Boolean {
         false
 }
 
+fun showAlerter(bodyText: String, activity: Activity) = Alerter.create(activity)
+    .setTitle(R.string.error_text_tapadoo_toast)
+    .setText(bodyText)
+    .setBackgroundColorRes(R.color.primary_dark_purple)
+    .setDuration(ERROR_DURATION)
+    .show()
+
+
+ fun bitmapDescriptorFromVector(vectorResId: Int, context: Context): BitmapDescriptor {
+    val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
+    vectorDrawable?.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
+    val bitmap = Bitmap.createBitmap(vectorDrawable?.intrinsicWidth ?: 0, vectorDrawable?.intrinsicHeight ?: 0, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    vectorDrawable?.draw(canvas)
+    return BitmapDescriptorFactory.fromBitmap(bitmap)
+}
 const val UNCHECKED = 0
 const val LOGGED = 1
 const val ERROR = -1
-const val MAPS_API_KEY = "AIzaSyDjK7n4r_ENUgIKBNIsxMD8J09ADCOVUGk"
 const val ERROR_DURATION = 2500L

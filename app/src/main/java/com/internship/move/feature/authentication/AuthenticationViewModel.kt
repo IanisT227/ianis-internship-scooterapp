@@ -9,7 +9,6 @@ import com.internship.move.feature.authentication.register.UserRegisterRequest
 import com.internship.move.model.UserDataInternalStorageManager
 import com.internship.move.utils.ERROR
 import com.internship.move.utils.LOGGED
-import com.internship.move.utils.UNCHECKED
 import com.internship.move.utils.logTag
 import kotlinx.coroutines.launch
 
@@ -18,7 +17,7 @@ class AuthenticationViewModel(
     private val onBoardingInternalStorageManager: UserDataInternalStorageManager
 ) : ViewModel() {
 
-    val onUserLoggedIn: MutableLiveData<Int> = MutableLiveData(UNCHECKED)
+    val onUserLoggedIn: MutableLiveData<Int> = MutableLiveData()
     val userData: MutableLiveData<UserResponse> = MutableLiveData(null)
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean>

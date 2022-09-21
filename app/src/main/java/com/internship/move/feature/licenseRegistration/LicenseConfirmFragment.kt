@@ -39,7 +39,10 @@ class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
                 validationStatusTV.isVisible = loadingValue
                 validationConfirmTV.isVisible = !loadingValue
             }
-            if (licenseRegistrationViewModel.isError.equals(true)) {
+        }
+
+        licenseRegistrationViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError.equals(true)) {
                 binding.licenseConfirmIV.isVisible = false
                 binding.validationConfirmTV.isVisible = true
                 binding.validationConfirmTV.text = getString(R.string.license_registration_error_text)

@@ -15,11 +15,12 @@ class UserDataInternalStorageManager(context: Context, private val moshi: Moshi)
     fun setIsUserLoggedIn(isLoggedIn: Boolean) = preferences.edit().putBoolean(KEY_PASSED_ONBOARDING, isLoggedIn).apply()
 
     fun getAuthPreferences(): UserResponse? {
-        return if (preferences.getString(KEY_IS_AUTH, "").isNullOrEmpty() || preferences.getString(KEY_IS_AUTH, "").equals("null")) {
+        val user = preferences.getString(KEY_IS_AUTH, null)
+        return if (user.isNullOrEmpty()) {
             null
         } else {
             val userJsonAdapter = moshi.adapter(UserResponse::class.java)
-            userJsonAdapter.fromJson(preferences.getString(KEY_IS_AUTH, ""))
+            userJsonAdapter.fromJson(user)
         }
     }
 
@@ -35,13 +36,13 @@ class UserDataInternalStorageManager(context: Context, private val moshi: Moshi)
         preferences.edit().putString(KEY_IS_AUTH, userStringData).apply()
     }
 
-    fun logOutUser() = preferences.edit().putString(KEY_IS_AUTH, "null").apply()
+    fun logOutUser() = preferences.edit().putString(KEY_IS_AUTH, null).apply()
 
     fun getUserToken(): String? = getAuthPreferences()?.token
 
     companion object {
         private const val KEY_PREFERENCES = "com.internship.move.KEY_PREFERENCES"
-        private const val KEY_PASSED_ONBOARDING = "IS_LOGGED"
-        private const val KEY_IS_AUTH = "IS_AUTH"
+        private const val KEY_PASSED_ONBOARDING = "KEY_PASSED_ONBOARDING"
+        private const val KEY_IS_AUTH = "KEY_IS_AUTH"
     }
 }

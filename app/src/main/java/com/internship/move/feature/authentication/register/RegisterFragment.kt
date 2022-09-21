@@ -12,12 +12,11 @@ import com.internship.move.R
 import com.internship.move.databinding.FragmentRegisterBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.utils.ERROR
-import com.internship.move.utils.ERROR_DURATION
 import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
 import com.internship.move.utils.checkMail
 import com.internship.move.utils.checkUserOrPassword
-import com.tapadoo.alerter.Alerter
+import com.internship.move.utils.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -125,7 +124,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             if (onUserLoggedIn == LOGGED && userResponse != null) {
                 findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLicenseInstructionsFragment(userData = userResponse))
             } else if (onUserLoggedIn == ERROR) {
-                showAlerter(getString(R.string.register_error_message))
+                showAlerter(getString(R.string.register_error_message), requireActivity())
             }
         }
 
@@ -141,11 +140,4 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
         }
     }
-
-    fun showAlerter(bodyText: String) = Alerter.create(requireActivity())
-        .setTitle(getString(R.string.error_text_tapadoo_toast))
-        .setText(bodyText)
-        .setBackgroundColorRes(R.color.primary_dark_purple)
-        .setDuration(ERROR_DURATION)
-        .show()
 }

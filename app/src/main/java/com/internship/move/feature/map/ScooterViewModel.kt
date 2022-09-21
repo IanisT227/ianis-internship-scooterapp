@@ -25,4 +25,27 @@ class ScooterViewModel(private val scooterService: ScooterService) : ViewModel()
             }
         }
     }
+
+    fun getScooterById(id: String): ScooterResponseDTO? {
+        _scooterList.value?.forEach { scooter ->
+            if (scooter.id == id)
+                return scooter
+        }
+        return null
+    }
+
+    fun getMarkerItemsList(): List<MarkerItem> {
+        val list: MutableList<MarkerItem> = mutableListOf()
+        _scooterList.value?.forEach { scooterItem ->
+            val markerItem = MarkerItem(
+                scooterItem.location.coordinates[1],
+                scooterItem.location.coordinates[0],
+                scooterItem.scooterNumber,
+                scooterItem.id
+            )
+            list.add(markerItem)
+        }
+        logTag("ScooterList", list.toString())
+        return list
+    }
 }
