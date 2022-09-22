@@ -84,5 +84,11 @@
     <string name="turn_location_message_string">Please turn on location</string>
     <string name="scooter_address_string"> %1$s, Nr. %2$s</string>
     <string name="bottom_sheet_card_instructions">You can unlock this scooter through these methods:</string>
+    <string name="bottom_sheet_scooter_title_text">Scooter</string>
+    <string name="small_icon_ring_text">Ring</string>
+    <string name="unlock_by_nfc_btn_text">NFC</string>
+    <string name="unlock_by_qr_btn_text">QR</string>
+    <string name="unlock_by_code_btn_text">123</string>
+    <string name="small_icon_missing_text">Missing</string>
     <!--    endregion-->
 </resources>
