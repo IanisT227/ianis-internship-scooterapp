@@ -51,4 +51,7 @@
     <dimen name="dots_indicator_radius">8dp</dimen>
     <dimen name="dots_indicator_dot_size">8dp</dimen>
     <dimen name="dots_indicator_dot_spacing">4dp</dimen>
+    <dimen name="bottom_sheet_padding_horizontal">10dp</dimen>
+    <dimen name="bottom_sheet_padding_vertical">20dp</dimen>
+    <dimen name="unlock_instructions_margin_horizontal">70dp</dimen>
 </resources>

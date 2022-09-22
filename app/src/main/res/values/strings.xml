@@ -83,5 +83,6 @@
     <string name="scooter_battery_level_text">%1$s%%</string>
     <string name="turn_location_message_string">Please turn on location</string>
     <string name="scooter_address_string"> %1$s, Nr. %2$s</string>
+    <string name="bottom_sheet_card_instructions">You can unlock this scooter through these methods:</string>
     <!--    endregion-->
 </resources>

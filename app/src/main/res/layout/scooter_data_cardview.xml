@@ -70,7 +70,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/scooter_cardview"
+            android:src="@drawable/ic_scooter_cardview"
             app:layout_constraintEnd_toStartOf="@+id/scooterNumberTV"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

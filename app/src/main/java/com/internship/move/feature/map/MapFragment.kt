@@ -16,6 +16,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,10 +30,15 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.maps.android.clustering.ClusterManager
 import com.internship.move.R
+import com.internship.move.databinding.BottomSheetScooterCardBinding
 import com.internship.move.databinding.FragmentMapBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
+import com.internship.move.utils.bitmapDescriptorFromVector
 import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,6 +53,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var doubleBackPressed = false
     private lateinit var clusterManager: ClusterManager<MarkerItem>
+    private val locationPermissionRequest = initPermissions()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,21 +73,22 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         binding.scooterMapView.getMapAsync(this)
     }
 
-    private fun initClusterManager() {
+    private fun initClustering() {
         clusterManager = ClusterManager<MarkerItem>(requireContext(), scooterMap)
-        addClusteredMarkers()
-        logTag("scooterList", clusterManager.clusterMarkerCollection.toString())
+        clusterManager.setAnimation(false)
+        clusterManager.renderer = ScooterClusterRenderer(requireContext(), scooterMap, clusterManager)
         clusterManager.setOnClusterItemClickListener {
+//            Marker(it.position).remove()
+//            MarkerOptions().title(it.title).position(it.position).icon(bitmapDescriptorFromVector(R.drawable.ic_selected_map_pin, requireContext()))
             initScooterInfoCardView(it.title)
-            return@setOnClusterItemClickListener true
+            return@setOnClusterItemClickListener false
         }
     }
 
     private fun initObservers() {
         scooterViewModel.scooterList.observe(viewLifecycleOwner) { scooterList ->
             if (scooterList.isNotEmpty()) {
-                clusterManager.clearItems()
-                clusterManager.addItems(scooterViewModel.getMarkerItemsList())
+                addClusteredMarkers(scooterList)
             }
         }
 
@@ -106,9 +114,20 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         }
     }
 
-    private fun addClusteredMarkers() {
-        clusterManager.renderer = ScooterClusterRenderer(requireContext(), scooterMap, clusterManager)
-        clusterManager.addItems(scooterViewModel.getMarkerItemsList())
+    private fun showBottomSheetDialog(scooter: ScooterResponseDTO) {
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
+        val dialogBinding = BottomSheetScooterCardBinding.inflate(layoutInflater, null, false)
+        dialogBinding.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
+        dialogBinding.batteryLevelTV.text = scooter.battery
+        setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
+
+        bottomSheetDialog.setContentView(dialogBinding.root)
+        bottomSheetDialog.show()
+    }
+
+    private fun addClusteredMarkers(scooterList: List<ScooterResponseDTO>) {
+        clusterManager.clearItems()
+        clusterManager.addItems(scooterViewModel.getMarkerItemsList(scooterList))
         clusterManager.cluster()
     }
 
@@ -121,15 +140,18 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 scooterInfo.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
                 scooterInfo.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
                 scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location)
+                binding.scooterInfo.unlockScooterBtn.setOnClickListener {
+                    showBottomSheetDialog(scooter)
+                }
             }
-            setBatteryIcon(scooter.battery.toInt())
+            setBatteryIcon(scooter.battery.toInt(), binding.scooterInfo.batteryIndicatorIV)
         } else {
             binding.scooterInfo.scooterCV.isVisible = false
             Toast.makeText(requireContext(), "No scooter here!", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun setBatteryIcon(batteryLevel: Int) {
+    private fun setBatteryIcon(batteryLevel: Int, imageView: ImageView) {
         val resource = when {
             batteryLevel >= 81 -> R.drawable.ic_battery_100
             batteryLevel >= 61 -> R.drawable.ic_battery_80
@@ -139,26 +161,18 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             batteryLevel >= 0 -> R.drawable.ic_battery_0
             else -> R.drawable.ic_battery_0
         }
-        binding.scooterInfo.batteryIndicatorIV.setImageResource(resource)
+        imageView.setImageResource(resource)
     }
 
     @SuppressLint("PotentialBehaviorOverride")
     override fun onMapReady(googleMap: GoogleMap) {
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
         scooterMap = googleMap
-        initClusterManager()
-        addClusteredMarkers()
+        initClustering()
         scooterMap.moveCamera(CameraUpdateFactory.newLatLng(CLUJANGELES))
         scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CLUJANGELES, ZOOM_LEVEL))
-        scooterMap.setOnCameraIdleListener {
-            Handler(Looper.getMainLooper()).postDelayed({
-                scooterViewModel.currentLocation.value = scooterMap.cameraPosition.target
-                logTag("COORDS", scooterViewModel.currentLocation.value.toString())
-            }, CHECK_LIST_DELAY)
-        }
-
         scooterMap.setOnMarkerClickListener(clusterManager)
-
+        scooterMap.setOnCameraIdleListener { clusterManager.onCameraIdle() }
         scooterMap.setOnMapClickListener {
             binding.scooterInfo.scooterCV.visibility = View.GONE
         }
@@ -191,7 +205,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         )
     }
 
-    private val locationPermissionRequest = registerForActivityResult(
+    private fun initPermissions() = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         when {
@@ -239,12 +253,12 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 scooterCoords.coordinates[1],
                 scooterCoords.coordinates[0],
                 1
-            ).get(0).thoroughfare
+            )[0].thoroughfare
                 .toString(), Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
                 scooterCoords.coordinates[1],
                 scooterCoords.coordinates[0],
                 1
-            ).get(0).subThoroughfare
+            )[0].subThoroughfare
                 .toString()
         )
     }
@@ -252,7 +266,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     companion object {
         private val CLUJANGELES = LatLng(46.770439, 23.591423)
         private const val ZOOM_LEVEL = 18.0f
-        private const val CHECK_LIST_DELAY = 5000L
         private const val ON_BACK_RESET_DURATION = 3000L
 
     }
