@@ -42,7 +42,7 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
             takeImage()
         }
 
-        binding.bar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             if (doubleBackPressed) {
                 authenticationViewModel.logOut()
                 requireActivity().finish()
@@ -62,7 +62,7 @@ class LicenseInstructionsFragment : Fragment(R.layout.fragment_license_instructi
             latestTmpUri?.let {
                 findNavController().navigate(
                     LicenseInstructionsFragmentDirections.actionLicenseInstructionsFragmentToLicenseConfirmFragment(
-                         imageUri
+                        imageUri
                     )
                 )
             }

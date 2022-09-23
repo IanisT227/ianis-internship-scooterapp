@@ -22,6 +22,10 @@
     <color name="primary_neutral_grey_70_opacity">#B39D9D9D</color>
     <color name="card_text_color">@color/primary_dark_purple</color>
     <color name="small_icon_button_tint">@color/neutral_white</color>
+    <color name="map_title_text_color">@color/primary_dark_purple</color>
+    <color name="map_location_circle_color">#02210B50</color>
+    <color name="unlock_by_number_title_color">@color/neutral_white</color>
+    <color name="unlock_by_number_subtitle_color">@color/neutral_grey</color>
     <!--endregion-->
 
     <!--   region Standard android colors-->

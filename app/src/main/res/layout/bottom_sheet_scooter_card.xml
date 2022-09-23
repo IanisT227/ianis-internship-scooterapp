@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/bottom_sheet_padding_horizontal"
-        android:paddingVertical="@dimen/bottom_sheet_padding_vertical">
+        android:paddingTop="@dimen/bottom_sheet_padding_top"
+        android:paddingBottom="@dimen/bottom_sheet_padding_bottom">
 
         <TextView
             android:id="@+id/unlockInstructionsTV"
@@ -92,11 +93,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/bottom_sheet_small_icon_margin_start"
             android:layout_marginTop="@dimen/bottom_sheet_small_icon_margin_top"
-            android:background="@drawable/bg_small_icon_btn"
-            android:backgroundTint="@color/small_icon_button_tint"
-            android:elevation="@dimen/bottom_sheet_small_icon_elevation"
-            android:foreground="?selectableItemBackground"
-            android:padding="@dimen/bottom_sheet_small_icon_padding"
             android:src="@drawable/ic_ping"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/batteryIndicatorIV" />
@@ -119,11 +115,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/bottom_sheet_small_icon_margin_start"
             android:layout_marginTop="@dimen/bottom_sheet_small_icon_missing_margin_top"
-            android:background="@drawable/bg_small_icon_btn"
-            android:backgroundTint="@color/small_icon_button_tint"
-            android:elevation="@dimen/bottom_sheet_small_icon_elevation"
-            android:foreground="?selectableItemBackground"
-            android:padding="@dimen/bottom_sheet_small_icon_padding"
             android:src="@drawable/ic_missing_pin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pingScooterIBtn" />

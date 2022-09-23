@@ -90,5 +90,7 @@
     <string name="unlock_by_qr_btn_text">QR</string>
     <string name="unlock_by_code_btn_text">123</string>
     <string name="small_icon_missing_text">Missing</string>
+    <string name="unlock_by_code_title_text">Enter the scoter’s serial number</string>
+    <string name="unlock_by_code_subtitle_text">You can find it on the \nscooter’s front panel</string>
     <!--    endregion-->
 </resources>

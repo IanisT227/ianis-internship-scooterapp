@@ -10,5 +10,5 @@ interface LicenseService {
 
     @PUT("users/upload")
     @Multipart
-    suspend fun uploadLicense( @Part driverLicenseKey: MultipartBody.Part): UserDTO
+    suspend fun uploadLicense(@Part driverLicenseKey: MultipartBody.Part): UserDTO
 }

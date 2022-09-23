@@ -12,7 +12,6 @@ import android.text.style.ClickableSpan
 import android.util.Patterns
 import android.view.View
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -68,7 +67,7 @@ fun showAlerter(bodyText: String, activity: Activity) = Alerter.create(activity)
     .show()
 
 
- fun bitmapDescriptorFromVector(vectorResId: Int, context: Context): BitmapDescriptor {
+fun bitmapDescriptorFromVector(vectorResId: Int, context: Context): BitmapDescriptor {
     val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
     vectorDrawable?.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
     val bitmap = Bitmap.createBitmap(vectorDrawable?.intrinsicWidth ?: 0, vectorDrawable?.intrinsicHeight ?: 0, Bitmap.Config.ARGB_8888)
@@ -76,6 +75,7 @@ fun showAlerter(bodyText: String, activity: Activity) = Alerter.create(activity)
     vectorDrawable?.draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bitmap)
 }
+
 const val UNCHECKED = 0
 const val LOGGED = 1
 const val ERROR = -1

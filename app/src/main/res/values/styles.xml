@@ -76,6 +76,24 @@
         <item name="iconTint">@color/neutral_grey</item>
     </style>
 
+    <style name="CodeInputLayoutStyle" parent="TextInputLayoutStyle">
+        <item name="boxCornerRadiusBottomEnd">18dp</item>
+        <item name="boxCornerRadiusBottomStart">18dp</item>
+        <item name="boxCornerRadiusTopEnd">18dp</item>
+        <item name="boxCornerRadiusTopStart">18dp</item>
+        <item name="strokeColor">#00ffffff</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="android:background">@drawable/bg_code_input</item>
+    </style>
+
+    <style name="CodeInputEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bg_code_input</item>
+        <item name="android:textColor">@color/neutral_white</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">14dp</item>
+    </style>
+
     <style name="TextInputEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="boxStrokeColor">@color/neutral_grey</item>
         <item name="backgroundTint">@android:color/transparent</item>
@@ -93,14 +111,20 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
-    <style name="AppBottomSheetDialogTheme"
-        parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
-    <style name="AppModalStyle"
-        parent="Widget.Design.BottomSheet.Modal">
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+
+    <style name="ImageButton">
+        <item name="android:background">@drawable/bg_small_icon_btn</item>
+        <item name="android:backgroundTint">@color/small_icon_button_tint</item>
+        <item name="android:elevation">@dimen/bottom_sheet_small_icon_elevation</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:padding">@dimen/bottom_sheet_small_icon_padding</item>
     </style>
 
     <style name="SheetDialog" parent="Theme.Design.Light.BottomSheetDialog">

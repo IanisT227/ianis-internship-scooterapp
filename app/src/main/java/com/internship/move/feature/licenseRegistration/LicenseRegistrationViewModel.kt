@@ -19,7 +19,7 @@ class LicenseRegistrationViewModel(
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
-    get() = _isLoading
+        get() = _isLoading
     private val _isError: MutableLiveData<Boolean> = MutableLiveData(false)
     val isError: LiveData<Boolean>
         get() = _isError

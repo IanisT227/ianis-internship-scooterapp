@@ -52,7 +52,6 @@
     <dimen name="dots_indicator_dot_size">8dp</dimen>
     <dimen name="dots_indicator_dot_spacing">4dp</dimen>
     <dimen name="bottom_sheet_padding_horizontal">10dp</dimen>
-    <dimen name="bottom_sheet_padding_vertical">20dp</dimen>
     <dimen name="unlock_instructions_margin_horizontal">70dp</dimen>
     <dimen name="bottom_sheet_corner_radius">30dp</dimen>
     <dimen name="bottom_sheet_scooter_margin_start">164dp</dimen>
@@ -76,4 +75,18 @@
     <dimen name="bottom_sheet_button_margin_top">24dp</dimen>
     <dimen name="bottom_sheet_button_margin_start">24dp</dimen>
     <dimen name="bottom_sheet_button_margin_end">24dp</dimen>
+    <dimen name="bottom_sheet_padding_top">20dp</dimen>
+    <dimen name="bottom_sheet_padding_bottom">30dp</dimen>
+    <dimen name="scooter_info_IBtn_margin_top">8dp</dimen>
+    <dimen name="scooter_info_IBtn_margin_start">8dp</dimen>
+    <dimen name="scooter_cardview_location_pin_margin_start">24dp</dimen>
+    <dimen name="scooter_cardview_location_pin_margin_top">24dp</dimen>
+    <dimen name="scooter_number_margin_top">4dp</dimen>
+    <dimen name="battery_level_margin_top">8dp</dimen>
+    <dimen name="battery_level_margin_end">24dp</dimen>
+    <dimen name="battery_level_margin_start">24dp</dimen>
+    <dimen name="scooter_cardview_image_margin_top">8dp</dimen>
+    <dimen name="scooter_cardview_image_margin_end">14dp</dimen>
+    <dimen name="scooter_cardview_unlock_btn_margin_vertical">24dp</dimen>
+    <dimen name="map_city_title_margin_horizontal">60dp</dimen>
 </resources>

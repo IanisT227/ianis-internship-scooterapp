@@ -21,19 +21,23 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.internship.move.R
 import com.internship.move.databinding.BottomSheetScooterCardBinding
 import com.internship.move.databinding.FragmentMapBinding
@@ -54,6 +58,8 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private var doubleBackPressed = false
     private lateinit var clusterManager: ClusterManager<MarkerItem>
     private val locationPermissionRequest = initPermissions()
+    private var selectedMarker: Marker? = null
+    private lateinit var currentLocation: LatLng
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,12 +83,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         clusterManager = ClusterManager<MarkerItem>(requireContext(), scooterMap)
         clusterManager.setAnimation(false)
         clusterManager.renderer = ScooterClusterRenderer(requireContext(), scooterMap, clusterManager)
-        clusterManager.setOnClusterItemClickListener {
-//            Marker(it.position).remove()
-//            MarkerOptions().title(it.title).position(it.position).icon(bitmapDescriptorFromVector(R.drawable.ic_selected_map_pin, requireContext()))
-            initScooterInfoCardView(it.title)
-            return@setOnClusterItemClickListener false
-        }
+        clusterManager.setOnClusterItemClickListener(initOnClusterItemClickListener())
     }
 
     private fun initObservers() {
@@ -90,12 +91,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             if (scooterList.isNotEmpty()) {
                 addClusteredMarkers(scooterList)
             }
-        }
-
-        scooterViewModel.currentLocation.observe(viewLifecycleOwner)
-        { location ->
-            scooterMap.moveCamera(CameraUpdateFactory.newLatLng(location))
-            scooterViewModel.getScooters(location.latitude.toFloat(), location.longitude.toFloat())
         }
     }
 
@@ -112,6 +107,35 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 }, ON_BACK_RESET_DURATION)
             }
         }
+
+        binding.updateLocationBtn.setOnClickListener {
+            getLocation()
+        }
+
+        binding.openMenuBtn.setOnClickListener {
+            Toast.makeText(requireContext(), "Work in progress", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun initOnClusterItemClickListener() = ClusterManager.OnClusterItemClickListener<MarkerItem> { item ->
+        try {
+            if (selectedMarker != null) {
+                selectedMarker?.setIcon(bitmapDescriptorFromVector(R.drawable.ic_map_pin, requireContext()))
+            }
+        } catch (e: IllegalArgumentException) {
+            logTag("IN_CLUSTER", e.toString())
+        }
+
+        selectedMarker = (clusterManager.renderer as DefaultClusterRenderer<MarkerItem>).getMarker(item)
+        if (selectedMarker != null) {
+            scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedMarker!!.position, ZOOM_LEVEL))
+            selectedMarker?.setIcon(bitmapDescriptorFromVector(R.drawable.ic_selected_map_pin, requireContext()))
+
+            if (item != null) {
+                initScooterInfoCardView(item.title)
+            }
+        }
+        true
     }
 
     private fun showBottomSheetDialog(scooter: ScooterResponseDTO) {
@@ -120,6 +144,10 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         dialogBinding.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
         dialogBinding.batteryLevelTV.text = scooter.battery
         setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
+        dialogBinding.unlockByCodeBtn.setOnClickListener {
+            bottomSheetDialog.hide()
+            findNavController().navigate(MapFragmentDirections.actionMapFragmentToUnlockByCodeFragment())
+        }
 
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
@@ -169,12 +197,13 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
         scooterMap = googleMap
         initClustering()
-        scooterMap.moveCamera(CameraUpdateFactory.newLatLng(CLUJANGELES))
         scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CLUJANGELES, ZOOM_LEVEL))
         scooterMap.setOnMarkerClickListener(clusterManager)
         scooterMap.setOnCameraIdleListener { clusterManager.onCameraIdle() }
         scooterMap.setOnMapClickListener {
-            binding.scooterInfo.scooterCV.visibility = View.GONE
+            if (binding.scooterInfo.scooterCV.isVisible) {
+                binding.scooterInfo.scooterCV.visibility = View.GONE
+            }
         }
     }
 
@@ -228,13 +257,8 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                         val geocoder = Geocoder(requireContext(), Locale.getDefault())
                         val list: List<Address> =
                             geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                        scooterViewModel.currentLocation.value = LatLng(list[0].latitude, list[0].longitude)
-                        val currentLocation = scooterViewModel.currentLocation.value ?: CLUJANGELES
-                        scooterMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
-                        scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL))
-                        scooterViewModel.getScooters(
-                            currentLocation.latitude.toFloat(), currentLocation.longitude.toFloat()
-                        )
+                        currentLocation = LatLng(list[0].latitude, list[0].longitude)
+                        updateLocationComponents(currentLocation)
                     }
                 }
             } else {
@@ -245,6 +269,26 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         } else {
             requestPermissions()
         }
+    }
+
+    private fun updateLocationComponents(location: LatLng) {
+        scooterMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, ZOOM_LEVEL))
+        scooterViewModel.getScooters(
+            location.latitude.toFloat(), location.longitude.toFloat()
+        )
+
+        binding.cityTv.text =
+            Geocoder(requireContext(), Locale.getDefault()).getFromLocation(location.latitude, location.longitude, 1)[0].locality.toString()
+
+        scooterMap.addCircle(
+            CircleOptions().center(location)
+                .fillColor(ColorUtils.setAlphaComponent(resources.getColor(R.color.primary_dark_purple, null), 26)).radius(30.0)
+                .strokeWidth(0.0f)
+        )
+
+        scooterMap.addMarker(
+            MarkerOptions().position(location).icon(bitmapDescriptorFromVector(R.drawable.ic_live_location, requireContext()))
+        )
     }
 
     private fun getScooterAddress(scooterCoords: CoordinatesDTO): String {

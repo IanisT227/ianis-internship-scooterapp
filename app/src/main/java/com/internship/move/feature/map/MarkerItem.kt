@@ -7,7 +7,7 @@ class MarkerItem(
     private val lat: Double,
     private val long: Double,
     private val title: String,
-    private val snippet: String
+    private val snippet: String,
 ) : ClusterItem {
 
     override fun getPosition() = LatLng(lat, long)

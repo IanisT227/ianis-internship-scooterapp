@@ -11,13 +11,11 @@ import com.internship.move.R
 import com.internship.move.databinding.FragmentLoginBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.utils.ERROR
-import com.internship.move.utils.ERROR_DURATION
 import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
 import com.internship.move.utils.checkMail
 import com.internship.move.utils.checkUserOrPassword
 import com.internship.move.utils.showAlerter
-import com.tapadoo.alerter.Alerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.maps.model.LatLng
 import com.internship.move.utils.logTag
 import kotlinx.coroutines.launch
 
@@ -13,7 +12,6 @@ class ScooterViewModel(private val scooterService: ScooterService) : ViewModel()
     private val _scooterList: MutableLiveData<List<ScooterResponseDTO>> = MutableLiveData()
     val scooterList: LiveData<List<ScooterResponseDTO>>
         get() = _scooterList
-    val currentLocation: MutableLiveData<LatLng> = MutableLiveData()
 
     fun getScooters(latitude: Float, longitude: Float) {
         viewModelScope.launch {
@@ -34,9 +32,13 @@ class ScooterViewModel(private val scooterService: ScooterService) : ViewModel()
     }
 
     fun getMarkerItemsList(scooters: List<ScooterResponseDTO>): List<MarkerItem> {
-        return scooters.map { scooterItem -> MarkerItem( scooterItem.location.coordinates[1],
-            scooterItem.location.coordinates[0],
-            scooterItem.id,
-            scooterItem.scooterNumber) }
+        return scooters.map { scooterItem ->
+            MarkerItem(
+                scooterItem.location.coordinates[1],
+                scooterItem.location.coordinates[0],
+                scooterItem.id,
+                scooterItem.scooterNumber
+            )
+        }
     }
 }

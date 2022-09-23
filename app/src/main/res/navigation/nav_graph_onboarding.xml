@@ -106,6 +106,9 @@
             android:id="@+id/action_mapFragment_to_navigation_intro"
             app:destination="@id/navigation_intro"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_mapFragment_to_unlockByCodeFragment"
+            app:destination="@id/unlockByCodeFragment" />
     </fragment>
 
     <fragment
@@ -150,5 +153,13 @@
         <argument
             android:name="licenseItem"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/unlockByCodeFragment"
+        android:name="com.internship.move.feature.map.scooter_unlock.UnlockByCodeFragment"
+        android:label="UnlockByCodeFragment">
+        <action
+            android:id="@+id/action_unlockByCodeFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>
