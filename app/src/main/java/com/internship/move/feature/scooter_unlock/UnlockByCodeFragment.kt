@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.internship.move.R
 import com.internship.move.databinding.FragmentUnlockByCodeBinding
@@ -13,7 +12,6 @@ import com.internship.move.utils.logTag
 import com.internship.move.utils.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class UnlockByCodeFragment : Fragment(R.layout.fragment_unlock_by_code) {
@@ -50,7 +48,7 @@ class UnlockByCodeFragment : Fragment(R.layout.fragment_unlock_by_code) {
         }
 
         scooterStateViewModel.isError.observe(viewLifecycleOwner) { isError ->
-            if (isError.isNotEmpty())
+            if (!isError.isNullOrEmpty())
                 showAlerter(isError.toString(), requireActivity())
         }
 

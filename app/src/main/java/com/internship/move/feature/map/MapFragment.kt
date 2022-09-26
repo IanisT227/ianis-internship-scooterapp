@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
@@ -161,7 +162,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             bottomSheetDialog.hide()
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToUnlockByCodeFragment())
         }
-
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
     }
@@ -177,7 +177,12 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         }
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
+
+        if (bottomSheetDialog.behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+            scooterStateViewModel.resetScooterState()
+        }
     }
+
 
     private fun addClusteredMarkers(scooterList: List<ScooterResponseDTO>) {
         clusterManager.clearItems()
