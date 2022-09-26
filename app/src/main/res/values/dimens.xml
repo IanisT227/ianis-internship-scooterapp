@@ -89,4 +89,8 @@
     <dimen name="scooter_cardview_image_margin_end">14dp</dimen>
     <dimen name="scooter_cardview_unlock_btn_margin_vertical">24dp</dimen>
     <dimen name="map_city_title_margin_horizontal">60dp</dimen>
+    <dimen name="pin_view_size">60dp</dimen>
+    <dimen name="round_corner_radius">18dp</dimen>
+    <dimen name="pin_view_spacing">16dp</dimen>
+    <dimen name="loading_indicator_size">60dp</dimen>
 </resources>

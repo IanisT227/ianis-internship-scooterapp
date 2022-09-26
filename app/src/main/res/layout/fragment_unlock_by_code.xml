@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_app">
@@ -44,76 +45,90 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/unlockByCodeTitleTV" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputFirstDigitTIL"
-        android:layout_width="0dp"
+    <com.chaos.view.PinView
+        android:id="@+id/codePinView"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="104dp"
-        app:layout_constraintEnd_toStartOf="@id/inputSecondDigitTIL"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeSubtitleTV">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/CodeInputEditTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="1" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputSecondDigitTIL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        app:layout_constraintEnd_toStartOf="@id/inputThirdDigitTIL"
-        app:layout_constraintStart_toEndOf="@id/inputFirstDigitTIL"
-        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeSubtitleTV">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/CodeInputEditTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="1" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputThirdDigitTIL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        app:layout_constraintEnd_toStartOf="@id/inputFourthDigitTIL"
-        app:layout_constraintStart_toEndOf="@id/inputSecondDigitTIL"
-        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeSubtitleTV">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/CodeInputEditTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="1" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputFourthDigitTIL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="24dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="108dp"
+        android:cursorVisible="true"
+        android:gravity="center"
+        android:inputType="number"
+        android:itemBackground="@color/pin_view_default"
+        android:textColor="@color/primary_text_color"
+        app:cursorColor="@color/primary_text_color"
+        app:itemHeight="@dimen/pin_view_size"
+        app:itemRadius="@dimen/round_corner_radius"
+        app:itemSpacing="@dimen/pin_view_spacing"
+        app:itemWidth="@dimen/pin_view_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/inputThirdDigitTIL"
-        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeSubtitleTV">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeSubtitleTV"
+        app:lineColor="@drawable/bg_pin_view"
+        app:viewType="rectangle" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/CodeInputEditTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/unlockLoadingIndicatorCPI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/loading_indicator_color"
+        app:indicatorSize="@dimen/loading_indicator_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
+    <TextView
+        android:id="@+id/textView"
+        style="@style/Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginTop="106dp"
+        android:gravity="center_horizontal"
+        android:text="@string/unlock_suggestions_text"
+        android:textColor="@color/unlock_by_number_title_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/codePinView" />
 
+    <Button
+        android:id="@+id/launchQRBtn"
+        style="@style/SmallButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/qr_btn_text"
+        app:layout_constraintEnd_toStartOf="@id/orTV"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/orTV"
+        style="@style/Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="@string/scan_alternate_options_text"
+        android:textColor="@color/unlock_by_number_title_color"
+        app:layout_constraintBottom_toBottomOf="@+id/launchQRBtn"
+        app:layout_constraintEnd_toStartOf="@+id/launchNFCBtn"
+        app:layout_constraintStart_toEndOf="@+id/launchQRBtn"
+        app:layout_constraintTop_toTopOf="@+id/launchQRBtn" />
+
+    <Button
+        android:id="@+id/launchNFCBtn"
+        style="@style/SmallButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/nfc_btn_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/orTV"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

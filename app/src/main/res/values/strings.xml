@@ -92,5 +92,11 @@
     <string name="small_icon_missing_text">Missing</string>
     <string name="unlock_by_code_title_text">Enter the scoter’s serial number</string>
     <string name="unlock_by_code_subtitle_text">You can find it on the \nscooter’s front panel</string>
+    <string name="unlock_suggestions_text">Alternately you can unlock using</string>
+    <string name="qr_btn_text">QR</string>
+    <string name="scan_alternate_options_text">or</string>
+    <string name="nfc_btn_text">NFC</string>
+    <string name="scooter_success_safety_request_text">Please respect all the driving regulations\nand other participants in traffic while using\nour scooters.</string>
+    <string name="scooter_unlock_successful_text">Unlock\nSuccessful</string>
     <!--    endregion-->
 </resources>

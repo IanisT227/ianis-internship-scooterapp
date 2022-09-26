@@ -18,7 +18,7 @@
             android:visibility="invisible"
             app:flow_horizontalAlign="center"
             app:flow_verticalAlign="center"
-            app:indicatorColor="@color/primary_text_color"
+            app:indicatorColor="@color/loading_indicator_color"
             app:indicatorSize="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -17,7 +17,10 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.textfield.TextInputEditText
 import com.internship.move.R
+import com.internship.move.model.ErrorResponse
+import com.squareup.moshi.JsonAdapter
 import com.tapadoo.alerter.Alerter
+import retrofit2.HttpException
 
 fun TextView.addClickableText(text: String, color: Int = context.getColor(R.color.neutral_white), callback: ClickCallBack) {
     val spannableString = SpannableString(this.text)
@@ -75,6 +78,14 @@ fun bitmapDescriptorFromVector(vectorResId: Int, context: Context): BitmapDescri
     vectorDrawable?.draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bitmap)
 }
+
+fun Exception.toErrorResponse(errorResponseDtoJsonAdapter: JsonAdapter<ErrorResponse>): ErrorResponse =
+    if (this is HttpException) {
+        errorResponseDtoJsonAdapter.fromJson(response()?.errorBody()?.string().toString())
+            ?: ErrorResponse(message.toString())
+    } else {
+        ErrorResponse(message.toString())
+    }
 
 const val UNCHECKED = 0
 const val LOGGED = 1

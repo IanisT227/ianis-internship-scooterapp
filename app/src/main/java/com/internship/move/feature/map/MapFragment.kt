@@ -40,11 +40,14 @@ import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.internship.move.R
 import com.internship.move.databinding.BottomSheetScooterCardBinding
+import com.internship.move.databinding.BottomSheetScooterStartRideBinding
 import com.internship.move.databinding.FragmentMapBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
+import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
 import com.internship.move.utils.bitmapDescriptorFromVector
 import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -53,6 +56,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private val binding by viewBinding(FragmentMapBinding::bind)
     private val authViewModel: AuthenticationViewModel by viewModel()
     private val scooterViewModel: ScooterViewModel by viewModel()
+    private val scooterStateViewModel: ScooterStateViewModel by sharedViewModel()
     private lateinit var scooterMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var doubleBackPressed = false
@@ -73,6 +77,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         initViews()
         initButtons()
         initObservers()
+        println()
     }
 
     private fun initViews() {
@@ -90,6 +95,14 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         scooterViewModel.scooterList.observe(viewLifecycleOwner) { scooterList ->
             if (scooterList.isNotEmpty()) {
                 addClusteredMarkers(scooterList)
+            }
+        }
+
+        scooterStateViewModel.scooterResult.observe(viewLifecycleOwner) { scooterResult ->
+            logTag("SCOOTER_RESULT", scooterResult.toString())
+            if (scooterResult != null) {
+                logTag("SCOOTER_RESULT", scooterResult.toString())
+                showStartRideBottomSheetDialog(scooterResult)
             }
         }
     }
@@ -138,7 +151,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         true
     }
 
-    private fun showBottomSheetDialog(scooter: ScooterResponseDTO) {
+    private fun showUnlockScooterBottomSheetDialog(scooter: ScooterResponseDTO) {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
         val dialogBinding = BottomSheetScooterCardBinding.inflate(layoutInflater, null, false)
         dialogBinding.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
@@ -149,6 +162,19 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToUnlockByCodeFragment())
         }
 
+        bottomSheetDialog.setContentView(dialogBinding.root)
+        bottomSheetDialog.show()
+    }
+
+    private fun showStartRideBottomSheetDialog(scooter: ScooterResponseDTO) {
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
+        val dialogBinding = BottomSheetScooterStartRideBinding.inflate(layoutInflater, null, false)
+        dialogBinding.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
+        dialogBinding.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
+        setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
+        dialogBinding.startRideBtn.setOnClickListener {
+
+        }
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
     }
@@ -169,7 +195,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 scooterInfo.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
                 scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location)
                 binding.scooterInfo.unlockScooterBtn.setOnClickListener {
-                    showBottomSheetDialog(scooter)
+                    showUnlockScooterBottomSheetDialog(scooter)
                 }
             }
             setBatteryIcon(scooter.battery.toInt(), binding.scooterInfo.batteryIndicatorIV)

@@ -2,7 +2,7 @@ package com.internship.move
 
 import android.app.Application
 import com.internship.move.model.internalStorage
-import com.internship.move.model.onBoardingRepository
+import com.internship.move.model.repository
 import com.internship.move.model.service
 import com.internship.move.model.tokenProvider
 import com.internship.move.model.viewModel
@@ -18,7 +18,7 @@ class MoveApp : Application() {
             modules(
                 listOf(
                     internalStorage,
-                    onBoardingRepository,
+                    repository,
                     viewModel,
                     service,
                     tokenProvider
