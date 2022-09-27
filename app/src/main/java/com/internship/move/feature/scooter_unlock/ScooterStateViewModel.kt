@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.internship.move.feature.map.ScooterResponseDTO
 import com.internship.move.model.ErrorResponse
+import com.internship.move.utils.logTag
 import com.internship.move.utils.toErrorResponse
 import com.squareup.moshi.JsonAdapter
 import kotlinx.coroutines.launch
@@ -60,7 +61,9 @@ class ScooterStateViewModel(
                     longitude = _scooterResult.value?.location!!.coordinates[0].toString(),
                     latitude = _scooterResult.value?.location!!.coordinates[1].toString()
                 )
+                logTag("StartScooterDTO", startScooterDTO.toString())
                 rideResult = scooterStateService.startRide(startScooterDTO)
+                logTag("RideResult", rideResult.toString())
             } catch (e: Exception) {
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
             } finally {
