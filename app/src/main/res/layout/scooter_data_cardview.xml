@@ -7,6 +7,7 @@
     android:layout_width="@dimen/scooter_cardview_width"
     android:layout_height="@dimen/scooter_cardview_height"
     android:clickable="true"
+    android:focusable="true"
     android:visibility="visible"
     app:cardCornerRadius="@dimen/scooter_cardview_radius">
 

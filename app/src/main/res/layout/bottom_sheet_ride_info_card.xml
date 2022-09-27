@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetCV"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/bottom_sheet_corner_radius">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/bottom_sheet_padding_horizontal"
+        android:paddingTop="@dimen/bottom_sheet_padding_top"
+        android:paddingBottom="@dimen/bottom_sheet_padding_bottom">
+
+        <TextView
+            android:id="@+id/tripDetailsTitleTV"
+            style="@style/Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/unlock_instructions_margin_horizontal"
+            android:gravity="center_horizontal"
+            android:text="Trip details"
+            android:textColor="@color/ride_card_info_primary_text_color"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/batteryIndicatorIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/bottom_sheet_battery_icon_margin_start"
+            android:layout_marginTop="@dimen/bottom_sheet_scooter_battery_icon_margin_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tripDetailsTitleTV"
+            tools:src="@drawable/ic_battery_100" />
+
+        <TextView
+            android:id="@+id/batteryLevelTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/bottom_sheet_battery_level_margin_start"
+            app:layout_constraintBottom_toBottomOf="@+id/batteryIndicatorIV"
+            app:layout_constraintStart_toEndOf="@+id/batteryIndicatorIV"
+            app:layout_constraintTop_toTopOf="@+id/batteryIndicatorIV"
+            tools:text="69%" />
+
+        <ImageView
+            android:id="@+id/travelTimeIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_ride_duration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/batteryIndicatorIV" />
+
+        <TextView
+            android:id="@+id/travelTimeTitleTV"
+            style="@style/Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Travel time"
+            android:textColor="@color/ride_card_info_secondary_text_color"
+            app:layout_constraintBottom_toBottomOf="@+id/travelTimeIV"
+            app:layout_constraintStart_toEndOf="@+id/travelTimeIV"
+            app:layout_constraintTop_toTopOf="@+id/travelTimeIV" />
+
+        <ImageView
+            android:id="@+id/distanceIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="66dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_distance"
+            app:layout_constraintStart_toEndOf="@id/travelTimeTitleTV"
+            app:layout_constraintTop_toBottomOf="@+id/batteryIndicatorIV" />
+
+        <TextView
+            android:id="@+id/distanceTitleTV"
+            style="@style/Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Distance"
+            android:textColor="@color/ride_card_info_secondary_text_color"
+            app:layout_constraintBottom_toBottomOf="@+id/travelTimeIV"
+            app:layout_constraintStart_toEndOf="@+id/distanceIV"
+            app:layout_constraintTop_toTopOf="@+id/travelTimeIV" />
+
+        <TextView
+            android:id="@+id/travelTimeTV"
+            style="@style/Heading1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ride_card_info_primary_text_color"
+            app:layout_constraintStart_toStartOf="@+id/travelTimeIV"
+            app:layout_constraintTop_toBottomOf="@+id/travelTimeTitleTV"
+            tools:text="00:12 min" />
+
+        <TextView
+            android:id="@+id/distanceTV"
+            style="@style/Heading1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ride_card_info_primary_text_color"
+
+            app:layout_constraintStart_toStartOf="@+id/distanceIV"
+            app:layout_constraintTop_toBottomOf="@+id/distanceIV"
+            tools:text="2.7 km" />
+
+        <Button
+            app:layout_goneMarginBottom="20dp"
+            android:id="@+id/pauseRideBtn"
+            style="@style/OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="36sp"
+            android:layout_marginEnd="20dp"
+            android:drawableLeft="@drawable/ic_lock"
+            android:text="Lock"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/endRideBtn"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/travelTimeTV" />
+
+        <Button
+            android:id="@+id/endRideBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="End Ride"
+            app:layout_constraintBottom_toBottomOf="@+id/pauseRideBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pauseRideBtn"
+            app:layout_constraintTop_toTopOf="@+id/pauseRideBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
