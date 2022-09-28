@@ -2,9 +2,8 @@ package com.internship.move.feature.authentication.login
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,6 +15,7 @@ import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
 import com.internship.move.utils.checkMail
 import com.internship.move.utils.checkUserOrPassword
+import com.internship.move.utils.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -61,20 +61,20 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.forgotPasswordTV.addClickableText(text = getString(R.string.forgot_password)) {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
         }
-        binding.goToRegisterTV.addClickableText(getString(R.string.goToRegisterLink)) {
+        binding.goToRegisterTV.addClickableText(getString(R.string.go_to_register_link)) {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
         }
 
         binding.emailInputET.doOnTextChanged { _, _, _, _ ->
-            updateLoginButtonState(binding.emailInputET)
+            updateLoginButtonState()
         }
 
         binding.passwordInputET.doOnTextChanged { _, _, _, _ ->
-            updateLoginButtonState(binding.passwordInputET)
+            updateLoginButtonState()
         }
     }
 
-    private fun updateLoginButtonState(editText: EditText) {
+    private fun updateLoginButtonState() {
         if (binding.emailInputET.text?.isNotEmpty() == true && binding.passwordInputET.text?.isNotEmpty() == true) {
             binding.launchHomeBtn.isEnabled = true
             binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))
@@ -85,21 +85,30 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun initViews() {
-        binding.forgotPasswordTV.text = getString(R.string.forgot_password)
-        binding.goToRegisterTV.text = "${getString(R.string.goToRegisterText)} ${getString(R.string.goToRegisterLink)}"
+        binding.goToRegisterTV.text =
+            getString(R.string.go_to_register_text, getString(R.string.go_to_register_fill_text), getString(R.string.go_to_register_link))
     }
 
     private fun initObservers() {
         viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
             val userResponse = viewModel.userData.value
             if (logValue == LOGGED && userResponse != null) {
-                if (userResponse.user.driverLicenseKey == null) {
+                if (userResponse.userDTO.driverLicenseKey == null) {
                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLicenseInstructionsFragment(userData = userResponse))
                 } else {
                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
                 }
             } else if (logValue == ERROR) {
-                Toast.makeText(context, getString(R.string.login_error_string), Toast.LENGTH_SHORT).show()
+                showAlerter(getString(R.string.login_error_string), requireActivity())
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.apply {
+                validationProcessSpn.isVisible = isLoading
+                emailInputET.isActivated = !isLoading
+                passwordInputET.isActivated = !isLoading
+                launchHomeBtn.isActivated = !isLoading
             }
         }
     }

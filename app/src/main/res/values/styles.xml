@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!--region TextStyles-->
     <style name="Heading1">
         <item name="android:textSize">36sp</item>
         <item name="fontFamily">@font/bai_jamjuree_bold</item>
@@ -35,7 +35,9 @@
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/bai_jamjuree_bold</item>
     </style>
+    <!--endregion-->
 
+    <!--region ComponentStyles-->
     <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@null</item>
         <item name="android:background">@drawable/bg_primary_button</item>
@@ -46,23 +48,93 @@
         <item name="android:outlineProvider">none</item>
         <item name="android:minHeight">@dimen/button_height</item>
         <item name="android:textAppearance">@style/Button1</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/accent_pink</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/bg_outlined_btn</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:outlineProvider">none</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:textAppearance">@style/Button1</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="backgroundTint">@null</item>
         <item name="android:textAppearance">@style/Body1</item>
-        <item name="boxStrokeColor">@color/neutral_white</item>
+        <item name="boxStrokeColor">@color/edit_text_box_stroke</item>
+        <item name="boxStrokeWidth">2dp</item>
         <item name="hintTextColor">@color/neutral_grey</item>
         <item name="android:textColorHint">@color/neutral_grey</item>
-        <item name="endIconTint">@color/neutral_grey</item>
         <item name="android:textColor">@color/neutral_grey</item>
-        <item name="android:textCursorDrawable">@null</item>
+        <item name="iconTint">@color/neutral_grey</item>
+    </style>
+
+    <style name="CodeInputLayoutStyle" parent="TextInputLayoutStyle">
+        <item name="boxCornerRadiusBottomEnd">18dp</item>
+        <item name="boxCornerRadiusBottomStart">18dp</item>
+        <item name="boxCornerRadiusTopEnd">18dp</item>
+        <item name="boxCornerRadiusTopStart">18dp</item>
+        <item name="strokeColor">#00ffffff</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="android:background">@drawable/bg_code_input</item>
+    </style>
+
+    <style name="CodeInputEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bg_code_input</item>
+        <item name="android:textColor">@color/neutral_white</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">14dp</item>
     </style>
 
     <style name="TextInputEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="boxStrokeColor">@color/neutral_grey</item>
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:textColor">@color/neutral_white</item>
-        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
     </style>
+
+    <style name="TextButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/neutral_grey</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:textAppearance">@style/Body1</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+
+    <style name="ImageButton">
+        <item name="android:background">@drawable/bg_small_icon_btn</item>
+        <item name="android:backgroundTint">@color/small_icon_button_tint</item>
+        <item name="android:elevation">@dimen/bottom_sheet_small_icon_elevation</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:padding">@dimen/bottom_sheet_small_icon_padding</item>
+    </style>
+
+    <style name="SheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+    <!--    endregion-->
 </resources>

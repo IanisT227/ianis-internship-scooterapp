@@ -8,41 +8,38 @@
         android:id="@+id/onboardingVP2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/onboarding_item_margin_bottom"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/nextItemBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/nextItemBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="74dp"
-        android:backgroundTint="@color/accent_pink"
+        android:layout_marginEnd="@dimen/button_margin_end"
         android:drawableEnd="@drawable/ic_arrow_right"
         android:text="@string/text_button_onboarding_page"
-        android:textColor="@color/primary_text_color"
-        app:cornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/dots_indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dots_indicator" />
 
     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
         android:id="@+id/dots_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="98dp"
+        android:layout_marginStart="@dimen/dots_indicator_margin_start"
+        android:layout_marginBottom="@dimen/dots_indicator_margin_bottom"
         app:dotsColor="@color/neutral_light_gray"
-        app:dotsCornerRadius="8dp"
-        app:dotsSize="12dp"
-        app:dotsSpacing="4dp"
-        app:dotsStrokeColor="@color/neutral_grey"
+        app:dotsCornerRadius="@dimen/dots_indicator_radius"
+        app:dotsSize="@dimen/dots_indicator_dot_size"
+        app:dotsSpacing="@dimen/dots_indicator_dot_spacing"
+        app:dotsStrokeColor="@color/primary_dark_purple"
         app:dotsWidthFactor="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:progressMode="true"
-        app:selectedDotColor="@color/neutral_grey" />
+        app:selectedDotColor="@color/primary_dark_purple" />
 </androidx.constraintlayout.widget.ConstraintLayout>

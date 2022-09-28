@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_app">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_close"
+        app:navigationIconTint="@color/neutral_white"
+        app:title="Enter serial number"
+        app:titleCentered="true"
+        app:titleTextColor="@color/unlock_by_number_title_color" />
+
+    <TextView
+        android:id="@+id/unlockByCodeTitleTV"
+        style="@style/Heading1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:gravity="center_horizontal"
+        android:text="@string/unlock_by_code_title_text"
+        android:textColor="@color/unlock_by_number_title_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/unlockByCodeSubtitleTV"
+        style="@style/Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:text="@string/unlock_by_code_subtitle_text"
+        android:textColor="@color/unlock_by_number_subtitle_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeTitleTV" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputFirstDigitTIL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="104dp"
+        app:layout_constraintEnd_toStartOf="@id/inputSecondDigitTIL"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeSubtitleTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/CodeInputEditTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputSecondDigitTIL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        app:layout_constraintEnd_toStartOf="@id/inputThirdDigitTIL"
+        app:layout_constraintStart_toEndOf="@id/inputFirstDigitTIL"
+        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeSubtitleTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/CodeInputEditTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputThirdDigitTIL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        app:layout_constraintEnd_toStartOf="@id/inputFourthDigitTIL"
+        app:layout_constraintStart_toEndOf="@id/inputSecondDigitTIL"
+        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeSubtitleTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/CodeInputEditTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputFourthDigitTIL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/inputThirdDigitTIL"
+        app:layout_constraintTop_toBottomOf="@+id/unlockByCodeSubtitleTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/CodeInputEditTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

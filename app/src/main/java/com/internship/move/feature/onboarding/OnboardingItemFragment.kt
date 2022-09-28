@@ -8,7 +8,7 @@ import com.internship.move.R
 import com.internship.move.databinding.FragmentOnboardingPageBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
-class OnboardingItemFragment() : Fragment(R.layout.fragment_onboarding_page) {
+class OnboardingItemFragment : Fragment(R.layout.fragment_onboarding_page) {
 
     private val binding by viewBinding(FragmentOnboardingPageBinding::bind)
     private var onboardingItem: OnboardingItem =

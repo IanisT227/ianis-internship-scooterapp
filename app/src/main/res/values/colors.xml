@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Project colors -->
+    <!--region Project colors -->
     <color name="primary_light_purple">#3B1159</color>
     <color name="primary_dark_purple">#210B50</color>
     <color name="accent_pink">#E53062</color>
@@ -9,12 +9,26 @@
     <color name="neutral_light_purple">#B2AAC2</color>
     <color name="neutral_light_gray">#F4F2F6</color>
     <color name="neutral_white">#FFFFFF</color>
+    <!--    endregion-->
+
+    <!--region Components color values-->
     <color name="primary_text_color">@color/neutral_white</color>
     <color name="secondary_text_color">@color/neutral_grey</color>
     <color name="principal_icon_tint">@color/neutral_white</color>
     <color name="driving_instructions_accent_color">@color/primary_dark_purple</color>
+    <color name="icon_button_color">@color/accent_pink</color>
+    <color name="cursor_color">@color/neutral_white</color>
+    <color name="primary_dark_purple_70_opacity">#B3210B50</color>
+    <color name="primary_neutral_grey_70_opacity">#B39D9D9D</color>
+    <color name="card_text_color">@color/primary_dark_purple</color>
+    <color name="small_icon_button_tint">@color/neutral_white</color>
+    <color name="map_title_text_color">@color/primary_dark_purple</color>
+    <color name="map_location_circle_color">#02210B50</color>
+    <color name="unlock_by_number_title_color">@color/neutral_white</color>
+    <color name="unlock_by_number_subtitle_color">@color/neutral_grey</color>
+    <!--endregion-->
 
-    <!--   Standard android colors-->
+    <!--   region Standard android colors-->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -22,4 +36,5 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!--    endregion-->
 </resources>

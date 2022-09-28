@@ -1,15 +1,14 @@
 package com.internship.move.feature.licenseRegistration
 
-import com.internship.move.feature.authentication.User
+import com.internship.move.feature.authentication.UserDTO
 import okhttp3.MultipartBody
-import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.PUT
 import retrofit2.http.Part
 
 interface LicenseService {
 
-    @PUT("user/upload")
+    @PUT("users/upload")
     @Multipart
-    suspend fun uploadLicense(@Header("Authorization") token: String, @Part driverLicenseKey: MultipartBody.Part): User
+    suspend fun uploadLicense(@Part driverLicenseKey: MultipartBody.Part): UserDTO
 }

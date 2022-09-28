@@ -4,6 +4,7 @@ import android.app.Application
 import com.internship.move.model.internalStorage
 import com.internship.move.model.onBoardingRepository
 import com.internship.move.model.service
+import com.internship.move.model.tokenProvider
 import com.internship.move.model.viewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -19,7 +20,8 @@ class MoveApp : Application() {
                     internalStorage,
                     onBoardingRepository,
                     viewModel,
-                    service
+                    service,
+                    tokenProvider
                 )
             )
         }

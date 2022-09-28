@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/title_margin_onboarding_page"
         android:layout_marginTop="@dimen/title_margin_onboarding_page"
+        android:textColor="@color/primary_dark_purple"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bannerIV"
         tools:text="Safety" />
@@ -34,14 +35,17 @@
         android:layout_marginStart="@dimen/body_start_margin_onboarding_page"
         android:layout_marginTop="@dimen/body_margin_top_onboarding_page"
         android:layout_marginEnd="@dimen/body_margin_end_onboarding_page"
+        android:layout_marginBottom="@dimen/body_bottom_margin_onboarding_page"
+        android:textColor="@color/primary_dark_purple_70_opacity"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTV"
-        tools:text="Please wear a helmet and protect yourself while driving" />
+        tools:text="@string/onboarding_5_body" />
 
-    <TextView
+    <Button
         android:id="@+id/skipTV"
-        style="@style/RegularText"
+        style="@style/TextButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/skip_margin_start_onboarding_page"

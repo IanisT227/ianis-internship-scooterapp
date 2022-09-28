@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class User(
+data class UserDTO(
     @Json(name = "_id")
     val id: String,
     @Json(name = "email")

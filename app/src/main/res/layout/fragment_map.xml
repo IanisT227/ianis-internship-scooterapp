@@ -1,40 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
-    <TextView
-        android:id="@+id/mapTV"
-        style="@style/TextAppearance.MaterialComponents.Headline4"
+    <ImageButton
+        android:id="@+id/updateLocationBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Map Fragment"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="26dp"
+        android:src="@drawable/ic_current_location"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/openMenuBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_map_menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logoutBtn"
-        style="@style/RegularText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/button_margin_top_map_fragment"
-        android:text="Log Out"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapTV" />
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/scooterMapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/clear_btn"
-        style="@style/RegularText"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/cityTv"
+        style="@style/Heading3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/button_margin_top_map_fragment"
-        android:text="Clear All"
+        android:layout_marginHorizontal="@dimen/map_city_title_margin_horizontal"
+        android:gravity="center_horizontal"
+        android:textColor="@color/map_title_text_color"
+        app:layout_constraintBottom_toBottomOf="@+id/openMenuBtn"
+        app:layout_constraintEnd_toStartOf="@+id/updateLocationBtn"
+        app:layout_constraintStart_toEndOf="@+id/openMenuBtn"
+        app:layout_constraintTop_toTopOf="@+id/openMenuBtn"
+        tools:text="ClujAngeles" />
+
+    <include
+        android:id="@+id/scooterInfo"
+        layout="@layout/scooter_data_cardview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginBottom="24dp"
+        android:elevation="4dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/scooterMapView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoutBtn" />
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

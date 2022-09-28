@@ -26,8 +26,12 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         viewModel.userLoggedStatus.observe(viewLifecycleOwner) { onboardingStatusValue ->
             if (onboardingStatusValue == true) {
                 viewModel.getAuthData()
-                if (viewModel.userData.value != null) {
-                    findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment())
+                val userData = viewModel.userData.value
+                if (userData != null) {
+                    if (userData.userDTO.driverLicenseKey.isNullOrEmpty()) {
+                        findNavController().navigate(SplashFragmentDirections.actionGlobalLicenseInstructionsFragment(userData))
+                    } else
+                        findNavController().navigate(SplashFragmentDirections.actionGlobalMapFragment())
                 } else {
                     findNavController().navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
                 }
@@ -39,6 +43,5 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     companion object {
         private const val SPLASH_NAV_DELAY = 2000L
-
     }
 }

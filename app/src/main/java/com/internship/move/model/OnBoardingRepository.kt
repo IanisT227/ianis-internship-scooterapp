@@ -4,11 +4,9 @@ import com.internship.move.feature.authentication.UserResponse
 
 class OnBoardingRepository(private val userDataInternalStorageManager: UserDataInternalStorageManager) {
 
-    suspend fun getOnboardingStatus() = userDataInternalStorageManager.getOnboardingStatus()
+    fun getOnboardingStatus() = userDataInternalStorageManager.getOnboardingStatus()
 
-    suspend fun changeLoggedStatus(logValue: Boolean) = userDataInternalStorageManager.changeLogStatus(logValue)
+    fun changeLoggedStatus(logValue: Boolean) = userDataInternalStorageManager.setIsUserLoggedIn(logValue)
 
-    suspend fun getAuthStatus(): UserResponse? {
-        return userDataInternalStorageManager.getAuthPreferences()
-    }
+    fun getAuthStatus(): UserResponse? = userDataInternalStorageManager.getAuthPreferences()
 }

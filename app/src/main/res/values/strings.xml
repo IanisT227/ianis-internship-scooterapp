@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Move</string>
+
+    <!-- region   ONBOARDING STRINGS-->
     <string name="onboarding_button_start_text">Get started</string>
     <string name="onboarding_1_title">Safety</string>
     <string name="onboarding_1_body">Please wear a helmet and protect yourself while riding</string>
@@ -13,23 +15,30 @@
     <string name="onboarding_5_body">You must be 18 years or and older with a valid driving licence to operate a scooter. Please follow all street signs, signals and markings, and obey local traffic laws.</string>
     <string name="skip_button_text">Skip</string>
     <string name="text_button_onboarding_page">Next</string>
+    <!--    endregion-->
 
-    <!--    LOGIN TO REGISTER  -->
-    <string name="goToRegisterText">Don\'t have an account? You can</string>
-    <string name="goToRegisterLink"><a href="">start with one here</a></string>
+    <!--   region  LOGIN TO REGISTER STRINGS  -->
+    <string name="go_to_register_fill_text">Don\'t have an account? You can</string>
+    <string name="go_to_register_link"><a href="">start with one here</a></string>
+    <string name="go_to_register_text">%1$s %2$s</string>
+    <!--    endregion-->
 
-    <!--    LOGIN TO FORGOT PASSWORD  -->
+    <!--  region  LOGIN TO FORGOT PASSWORD STRINGS -->
     <string name="forgot_password"><a href="">Forgot password?</a></string>
+    <!--    endregion-->
 
-    <!--    REGISTER TERMS AND CONDITIONS  -->
-    <string name="terms_and_conditions_text">By continuing you agree to Move’s\n</string>
+    <!-- region   REGISTER TERMS AND CONDITIONS STRINGS -->
+    <string name="terms_and_conditions_intro_text">By continuing you agree to Move’s\n</string>
     <string name="t_and_c_link"><a href="">Terms and Conditions</a></string>
     <string name="just_and">and</string>
     <string name="privacy_policy_link"><a href="">Privacy Policy</a></string>
+    <string name="terms_and_conditions_text">%1$s %2$s %3$s %4$s</string>
+    <!--    endregion-->
 
-    <!--  REGISTER TO LOGIN  -->
+    <!--region  REGISTER TO LOGIN STRINGS-->
     <string name="launch_login_Text">You already have an account? You can </string>
-    <string name="launch_login_link"><a href="">log in here</a></string>
+    <string name="launch_login_link">log in here</string>
+    <string name="launch_login">%1$s %2$s</string>
     <string name="register_subtitle">Sign up or login and start riding right away</string>
     <string name="register_title">Let\'s get started</string>
     <string name="login_btn_string">Login</string>
@@ -45,12 +54,43 @@
     <string name="register_email_address_hint_string">Email address</string>
     <string name="register_username_hint_string">Username</string>
     <string name="register_password_hint_string">Password</string>
+    <!--    endregion-->
+
+    <!--  region  AUTHENTICATION ERRORS STRINGS-->
+    <string name="login_error_string">Incorrect credentials</string>
+    <string name="invalid_email_string">Invalid email</string>
+    <string name="invalid_password_string">At least 5 characters</string>
+    <string name="register_error_message">Email already exists</string>
+    <string name="error_text_tapadoo_toast">Error</string>
+    <!--    endregion-->
+
+    <!--  region  LICENSE STRINGS-->
     <string name="license_disclaimer_title_string">Before you can start riding</string>
     <string name="disclaimer_instructions_string">Please take a photo or upload the front side of your driving license so we can make sure that it is valid.</string>
     <string name="driving_license_title">Driving License</string>
     <string name="add_license_button_string">Add driving license</string>
-    <string name="login_error_string">Incorrect credentials</string>
-    <string name="invalid_email_string">Invalid email</string>
-    <string name="invalid_password_string">At least 5 characters</string>
+    <string name="pre_license_check_text">We are currently verifying your driving license</string>
+    <string name="post_license_verification_text">We’ve successfully validated your driving license</string>
+    <string name="license_registration_error_text">Something went wrong!</string>
+    <!--    endregion-->
+
+    <!--  region SCOOTER MAP STRINGS-->
     <string name="find_scooters_btn_string">Find scooters</string>
+    <string name="exit_app_button_text">Press again to exit</string>
+    <string name="unlock_scooter_string">Unlock</string>
+    <string name="scooter_text">Scooter</string>
+    <string name="scooter_number_text">#%1$s</string>
+    <string name="scooter_battery_level_text">%1$s%%</string>
+    <string name="turn_location_message_string">Please turn on location</string>
+    <string name="scooter_address_string"> %1$s, Nr. %2$s</string>
+    <string name="bottom_sheet_card_instructions">You can unlock this scooter through these methods:</string>
+    <string name="bottom_sheet_scooter_title_text">Scooter</string>
+    <string name="small_icon_ring_text">Ring</string>
+    <string name="unlock_by_nfc_btn_text">NFC</string>
+    <string name="unlock_by_qr_btn_text">QR</string>
+    <string name="unlock_by_code_btn_text">123</string>
+    <string name="small_icon_missing_text">Missing</string>
+    <string name="unlock_by_code_title_text">Enter the scoter’s serial number</string>
+    <string name="unlock_by_code_subtitle_text">You can find it on the \nscooter’s front panel</string>
+    <!--    endregion-->
 </resources>

@@ -3,45 +3,46 @@ package com.internship.move.model
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.google.gson.Gson
 import com.internship.move.feature.authentication.UserResponse
+import com.squareup.moshi.Moshi
 
-class UserDataInternalStorageManager(context: Context) {
+class UserDataInternalStorageManager(context: Context, private val moshi: Moshi) {
 
     private val preferences: SharedPreferences = context.getSharedPreferences(KEY_PREFERENCES, MODE_PRIVATE)
 
-    fun getOnboardingStatus(): Boolean {
-        return preferences.getBoolean(KEY_PASSED_ONBOARDING, false)
-    }
+    fun getOnboardingStatus(): Boolean = preferences.getBoolean(KEY_PASSED_ONBOARDING, false)
 
-    fun changeLogStatus(logValue: Boolean) {
-        preferences.edit().putBoolean(KEY_PASSED_ONBOARDING, logValue).apply()
-    }
+    fun setIsUserLoggedIn(isLoggedIn: Boolean) = preferences.edit().putBoolean(KEY_PASSED_ONBOARDING, isLoggedIn).apply()
 
     fun getAuthPreferences(): UserResponse? {
-        return if (preferences.getString(KEY_IS_AUTH, "").isNullOrEmpty() || preferences.getString(KEY_IS_AUTH, "").equals(NULL_USER))
+        val user = preferences.getString(KEY_IS_AUTH, null)
+        return if (user.isNullOrEmpty()) {
             null
-        else
-            Gson().fromJson(preferences.getString(KEY_IS_AUTH, ""), UserResponse::class.java)
+        } else {
+            val userJsonAdapter = moshi.adapter(UserResponse::class.java)
+            userJsonAdapter.fromJson(user)
+        }
     }
 
     fun uploadLicensePicture(filepath: String) {
         val response: UserResponse? = getAuthPreferences()
-        response?.user?.driverLicenseKey = filepath
+        response?.userDTO?.driverLicenseKey = filepath
         changeAuthPreferences(userData = response)
-
     }
 
     fun changeAuthPreferences(userData: UserResponse?) {
-        val userStringData: String = Gson().toJson(userData)
+        val userJsonAdapter = moshi.adapter(UserResponse::class.java)
+        val userStringData = userJsonAdapter.toJson(userData)
         preferences.edit().putString(KEY_IS_AUTH, userStringData).apply()
     }
 
+    fun logOutUser() = preferences.edit().putString(KEY_IS_AUTH, null).apply()
+
+    fun getUserToken(): String? = getAuthPreferences()?.token
+
     companion object {
         private const val KEY_PREFERENCES = "com.internship.move.KEY_PREFERENCES"
-        private const val KEY_PASSED_ONBOARDING = "IS_LOGGED"
-        private const val KEY_IS_AUTH = "IS_AUTH"
-        private const val NULL_USER =
-            "{\"token\":\"\",\"user\":{\"driverLicenseKey\":\"\",\"email\":\"\",\"id\":\"\",\"status\":\"\",\"username\":\"\"}}"
+        private const val KEY_PASSED_ONBOARDING = "KEY_PASSED_ONBOARDING"
+        private const val KEY_IS_AUTH = "KEY_IS_AUTH"
     }
 }

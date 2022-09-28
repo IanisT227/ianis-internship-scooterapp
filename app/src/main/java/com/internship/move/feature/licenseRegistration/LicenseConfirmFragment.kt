@@ -2,20 +2,21 @@ package com.internship.move.feature.licenseRegistration
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.internship.move.R
 import com.internship.move.databinding.FragmentLicenseConfirmBinding
-import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 
 class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
 
     private val binding by viewBinding(FragmentLicenseConfirmBinding::bind)
     private val licenseRegistrationViewModel: LicenseRegistrationViewModel by viewModel()
-    private val authenticationViewModel: AuthenticationViewModel by viewModel()
     private val args: LicenseConfirmFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,21 +27,27 @@ class LicenseConfirmFragment : Fragment(R.layout.fragment_license_confirm) {
     }
 
     private fun uploadPicture() {
-        licenseRegistrationViewModel.uploadImage(args.licenseItem.token, args.licenseItem.image)
+        licenseRegistrationViewModel.uploadImage(File(args.licenseItem.toUri().path.toString()))
     }
 
     private fun initObservers() {
         licenseRegistrationViewModel.isLoading.observe(viewLifecycleOwner) { loadingValue ->
-            if (loadingValue == true) {
-                binding.validationProcessSpn.visibility = View.VISIBLE
-                binding.validationStatusTV.text = "We are currently verifying your driving license"
-                binding.imageView.visibility = View.GONE
-                binding.launchMapBtn.visibility = View.INVISIBLE
-            } else {
-                binding.validationProcessSpn.visibility = View.GONE
-                binding.validationStatusTV.text = "We’ve succesfuly validated your driving license"
-                binding.imageView.visibility = View.VISIBLE
-                binding.launchMapBtn.visibility = View.VISIBLE
+            binding.apply {
+                validationProcessSpn.isVisible = loadingValue
+                launchMapBtn.isVisible = !loadingValue
+                licenseConfirmIV.isVisible = !loadingValue
+                validationStatusTV.isVisible = loadingValue
+                validationConfirmTV.isVisible = !loadingValue
+            }
+        }
+
+        licenseRegistrationViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError.equals(true)) {
+                binding.licenseConfirmIV.isVisible = false
+                binding.validationConfirmTV.isVisible = true
+                binding.validationConfirmTV.text = getString(R.string.license_registration_error_text)
+                binding.launchMapBtn.isVisible = true
+                binding.launchMapBtn.isEnabled = false
             }
         }
     }

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scooterCV"
+    android:layout_width="@dimen/scooter_cardview_width"
+    android:layout_height="@dimen/scooter_cardview_height"
+    android:clickable="true"
+    android:visibility="visible"
+    app:cardCornerRadius="@dimen/scooter_cardview_radius">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_cardview">
+
+        <TextView
+            android:id="@+id/scooterTV"
+            style="@style/Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/textView_margin_top"
+            android:layout_marginRight="@dimen/textView_secondary_margin_end"
+            android:text="@string/scooter_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/scooterNumberTV"
+            style="@style/Heading2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/scooter_number_margin_top"
+            android:layout_marginRight="@dimen/textView_secondary_margin_end"
+            android:textColor="@color/card_text_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scooterTV"
+            tools:text="#AB23" />
+
+        <TextView
+            android:id="@+id/batteryLevelTV"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/battery_level_margin_top"
+            android:layout_marginRight="@dimen/battery_level_margin_end"
+            android:textColor="@color/card_text_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scooterNumberTV"
+            tools:text="15%" />
+
+        <ImageView
+            android:id="@+id/batteryIndicatorIV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/battery_level_margin_start"
+            android:layout_marginTop="@dimen/battery_level_margin_top"
+            app:layout_constraintBottom_toBottomOf="@+id/batteryLevelTV"
+            app:layout_constraintEnd_toStartOf="@+id/batteryLevelTV"
+            app:layout_constraintStart_toEndOf="@+id/scooterIV"
+            app:layout_constraintTop_toBottomOf="@+id/scooterNumberTV"
+            tools:src="@drawable/ic_battery_100" />
+
+        <ImageView
+            android:id="@+id/scooterIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/scooter_cardview_image_margin_top"
+            android:layout_marginEnd="@dimen/scooter_cardview_image_margin_end"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_scooter_cardview"
+            app:layout_constraintEnd_toStartOf="@+id/scooterNumberTV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/locationPinIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/scooter_cardview_location_pin_margin_start"
+            android:layout_marginTop="@dimen/scooter_cardview_location_pin_margin_top"
+            android:src="@drawable/ic_location_pin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scooterIV" />
+
+        <ImageButton
+            android:id="@+id/pingScooterIBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/scooter_info_IBtn_margin_start"
+            android:layout_marginTop="@dimen/scooter_info_IBtn_margin_top"
+            android:src="@drawable/ic_ping"
+            app:layout_constraintBottom_toTopOf="@+id/scooterLocationTV"
+            app:layout_constraintEnd_toStartOf="@id/goToScooterIBtn"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/scooterIV"
+            app:layout_constraintTop_toBottomOf="@+id/batteryIndicatorIV" />
+
+        <ImageButton
+            android:id="@+id/goToScooterIBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/scooter_info_IBtn_margin_top"
+            android:src="@drawable/ic_get_directions"
+            app:layout_constraintBottom_toTopOf="@+id/scooterLocationTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pingScooterIBtn"
+            app:layout_constraintTop_toBottomOf="@+id/batteryIndicatorIV" />
+
+        <TextView
+            android:id="@+id/scooterLocationTV"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/scooter_data_card_address_margin_top"
+            android:layout_marginEnd="@dimen/scooter_card_address_margin_end"
+            android:textColor="@color/card_text_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/locationPinIV"
+            app:layout_constraintTop_toBottomOf="@+id/scooterIV"
+            tools:text="Str. Avram Iancu nr. 26\nCladirea 2" />
+
+        <Button
+            android:id="@+id/unlockScooterBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/button_margin_horizontal"
+            android:layout_marginVertical="@dimen/scooter_cardview_unlock_btn_margin_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scooterLocationTV"
+            tools:text="Unlock" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

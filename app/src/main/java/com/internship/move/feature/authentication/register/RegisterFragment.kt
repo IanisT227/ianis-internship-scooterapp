@@ -2,9 +2,9 @@ package com.internship.move.feature.authentication.register
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,7 +16,7 @@ import com.internship.move.utils.LOGGED
 import com.internship.move.utils.addClickableText
 import com.internship.move.utils.checkMail
 import com.internship.move.utils.checkUserOrPassword
-import com.internship.move.utils.logTag
+import com.internship.move.utils.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -83,19 +83,19 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
 
         binding.emailInputET.doOnTextChanged { _, _, _, _ ->
-            updateRegisterButtonState(binding.emailInputET)
+            updateRegisterButtonState()
         }
 
         binding.passwordInputET.doOnTextChanged { _, _, _, _ ->
-            updateRegisterButtonState(binding.passwordInputET)
+            updateRegisterButtonState()
         }
 
         binding.usernameInputET.doOnTextChanged { _, _, _, _ ->
-            updateRegisterButtonState(binding.usernameInputET)
+            updateRegisterButtonState()
         }
     }
 
-    private fun updateRegisterButtonState(editText: EditText) {
+    private fun updateRegisterButtonState() {
         if (binding.emailInputET.text?.isNotEmpty() == true && binding.passwordInputET.text?.isNotEmpty() == true && binding.usernameInputET.text?.isNotEmpty() == true) {
             binding.launchHomeBtn.isEnabled = true
             binding.launchHomeBtn.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))
@@ -107,19 +107,37 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initViews() {
-        binding.goToLoginTV.text = "${getString(R.string.launch_login_Text)} ${getString(R.string.launch_login_link)}"
-        binding.termsAndConditionsTV.text =
-            "${getString(R.string.t_and_c_link)}  ${getString(R.string.just_and)} ${getString(R.string.privacy_policy_link)}"
+        binding.goToLoginTV.text =
+            getString(R.string.launch_login, getString(R.string.launch_login_Text), getString(R.string.launch_login_link))
+        binding.termsAndConditionsTV.text = getString(
+            R.string.terms_and_conditions_text,
+            getString(R.string.terms_and_conditions_intro_text),
+            getString(R.string.t_and_c_link),
+            getString(R.string.just_and),
+            getString(R.string.privacy_policy_link)
+        )
     }
 
     private fun initObservers() {
-        viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { logValue ->
+        viewModel.onUserLoggedIn.observe(viewLifecycleOwner) { onUserLoggedIn ->
             val userResponse = viewModel.userData.value
-            if (logValue == LOGGED && userResponse != null) {
+            if (onUserLoggedIn == LOGGED && userResponse != null) {
                 findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLicenseInstructionsFragment(userData = userResponse))
-            } else if (logValue == ERROR) {
-                Toast.makeText(context, "Email already exists", Toast.LENGTH_SHORT).show()
+            } else if (onUserLoggedIn == ERROR) {
+                showAlerter(getString(R.string.register_error_message), requireActivity())
             }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner)
+        { isLoading ->
+            binding.apply {
+                validationProcessSpn.isVisible = isLoading
+                emailInputET.isActivated = !isLoading
+                passwordInputET.isActivated = !isLoading
+                usernameInputET.isActivated = !isLoading
+                launchHomeBtn.isActivated = !isLoading
+            }
+
         }
     }
 }
