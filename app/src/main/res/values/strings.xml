@@ -103,6 +103,8 @@
     <string name="distance_subtitle_text">Distance</string>
     <string name="travel_time_subtitle_text">Travel time</string>
     <string name="lock_ride_btn_text">Lock</string>
+    <string name="unlock_ride_btn_text">Unlock</string>
     <string name="end_ride_btn_text">End Ride</string>
+    <string name="cronometer_format_string">%s min</string>
     <!--    endregion-->
 </resources>

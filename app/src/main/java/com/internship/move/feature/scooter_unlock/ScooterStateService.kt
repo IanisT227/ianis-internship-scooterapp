@@ -14,9 +14,15 @@ interface ScooterStateService {
     @PUT("scooters/lock/{scooterNumber}")
     suspend fun lockScooter(@Path(value = "scooterNumber") scooterNumber: Int): ScooterResponseDTO
 
+    @PUT("scooters/unlock/{scooterNumber}")
+    suspend fun unlockScooter(@Path(value = "scooterNumber") scooterNumber: Int): ScooterResponseDTO
+
     @POST("rides")
     suspend fun startRide(@Body startScooterDto: StartScooterDTO): RideDTO
 
     @PUT("rides/{idRide}")
     suspend fun endRide(@Path(value = "idRide") rideId: String, @Body location: LocationDTO)
+
+    @PUT("rides")
+    suspend fun updateRideLocation(@Body location: LocationDTO): RideDTO
 }

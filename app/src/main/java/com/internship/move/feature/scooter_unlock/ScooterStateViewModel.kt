@@ -26,6 +26,9 @@ class ScooterStateViewModel(
     private val _isError: MutableLiveData<String?> = MutableLiveData()
     val isError: LiveData<String?>
         get() = _isError
+    private val _rideDistance: MutableLiveData<Int> = MutableLiveData()
+    val rideDistance: LiveData<Int>
+        get() = _rideDistance
     private lateinit var rideResult: RideDTO
 
     fun startScooterUnlock(scooterCode: Int) {
@@ -105,6 +108,33 @@ class ScooterStateViewModel(
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
             }
 
+        }
+    }
+
+    fun unlockScooterRide() {
+        viewModelScope.launch {
+            try {
+                scooterStateService.unlockScooter(_scooterResult.value?.scooterNumber?.toInt() ?: 1000)
+                _isError.value = null
+            } catch (e: Exception) {
+                _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
+            }
+        }
+    }
+
+    fun updateRideLocation(currentLocation: LatLng) {
+        viewModelScope.launch {
+            try {
+                _rideDistance.value = scooterStateService.updateRideLocation(
+                    LocationDTO(
+                        currentLocation.longitude,
+                        currentLocation.latitude
+                    )
+                ).distance.toInt()
+                _isError.value = null
+            } catch (e: Exception) {
+                _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
+            }
         }
     }
 

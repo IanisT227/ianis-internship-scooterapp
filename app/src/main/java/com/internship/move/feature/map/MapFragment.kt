@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Typeface.BOLD
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -14,13 +15,17 @@ import android.location.LocationManager.NETWORK_PROVIDER
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.provider.Settings
 import android.view.View
+import android.widget.Chronometer
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -72,6 +77,9 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private var selectedMarker: Marker? = null
     private lateinit var currentLocation: LatLng
     private var rideStarted = false
+    private var ongoingRide = false
+    private var pauseOffset: Long = 0
+    private var currentRideDistance: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -115,6 +123,10 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         scooterStateViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (!isError.isNullOrEmpty())
                 showAlerter(isError.toString(), requireActivity())
+        }
+
+        scooterStateViewModel.rideDistance.observe(viewLifecycleOwner) { rideDistance ->
+            currentRideDistance = rideDistance
         }
     }
 
@@ -218,16 +230,73 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             dialogBinding.endRideBtn.setOnClickListener {
                 scooterStateViewModel.endScooterRIde()
                 bottomSheetDialog.dismiss()
+                dialogBinding.travelTimeChrono.base = SystemClock.elapsedRealtime()
                 getLocation()
             }
             dialogBinding.pauseRideBtn.setOnClickListener {
-                scooterStateViewModel.lockScooterRide()
+                if (ongoingRide) {
+                    dialogBinding.pauseRideBtn.text = getString(R.string.unlock_ride_btn_text)
+                    dialogBinding.pauseRideBtn.setCompoundDrawables(
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_unlock),
+                        null,
+                        null,
+                        null
+                    )
+                    startChronometer(dialogBinding.travelTimeChrono)
+                    scooterStateViewModel.unlockScooterRide()
+                } else {
+                    pauseChronometer(dialogBinding.travelTimeChrono)
+                    scooterStateViewModel.lockScooterRide()
+                    dialogBinding.pauseRideBtn.text = getString(R.string.lock_ride_btn_text)
+                    dialogBinding.pauseRideBtn.setCompoundDrawables(
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_lock),
+                        null,
+                        null,
+                        null
+                    )
+                }
             }
-
             bottomSheetDialog.setContentView(dialogBinding.root)
             bottomSheetDialog.show()
+            initChronometer(dialogBinding.travelTimeChrono, dialogBinding.distanceTV)
+            startChronometer(dialogBinding.travelTimeChrono)
         }
 
+    }
+
+    private fun initChronometer(chronometer: Chronometer, distanceTv: TextView) {
+        chronometer.setOnChronometerTickListener {
+            val time: Long = SystemClock.elapsedRealtime() - it.base
+            val h = (time / 3600000).toInt()
+            val m = (time - h * 3600000).toInt() / 60000
+            val s = (time - h * 3600000 - m * 60000).toInt() / 1000
+            val hh = if (h < 10) "0$h" else h.toString() + ""
+            val mm = if (m < 10) "0$m" else m.toString() + ""
+            val ss = if (s < 10) "0$s" else s.toString() + ""
+            it.text = "$mm:$ss min" // will leave this as mm:ss format for now to check if it works
+            if (ss.toInt() % 10 == 0) {
+                getLocation()
+                scooterStateViewModel.updateRideLocation(currentLocation)
+                distanceTv.setTypeface(distanceTv.typeface, BOLD)
+                distanceTv.text = currentRideDistance.toString()
+            }
+        }
+    }
+
+    private fun startChronometer(chronometer: Chronometer) {
+        if (!ongoingRide) {
+            chronometer.base = SystemClock.elapsedRealtime() - pauseOffset
+            chronometer.start()
+            ongoingRide = true
+        }
+    }
+
+    private fun pauseChronometer(chronometer: Chronometer) {
+        if (ongoingRide) {
+            chronometer.stop()
+            pauseOffset = SystemClock.elapsedRealtime() - chronometer.base
+            ongoingRide = false
+        }
     }
 
     private fun addClusteredMarkers(scooterList: List<ScooterResponseDTO>) {
@@ -388,7 +457,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             logTag("GetAddressException", e.toString())
             return getString(R.string.address_exception_location_text)
         }
-
     }
 
     companion object {
