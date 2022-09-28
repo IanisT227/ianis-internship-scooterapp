@@ -234,10 +234,10 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 getLocation()
             }
             dialogBinding.pauseRideBtn.setOnClickListener {
-                if (ongoingRide) {
-                    dialogBinding.pauseRideBtn.text = getString(R.string.unlock_ride_btn_text)
+                if (!ongoingRide) {
+                    dialogBinding.pauseRideBtn.text = getString(R.string.lock_ride_btn_text)
                     dialogBinding.pauseRideBtn.setCompoundDrawables(
-                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_unlock),
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_lock),
                         null,
                         null,
                         null
@@ -247,9 +247,9 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 } else {
                     pauseChronometer(dialogBinding.travelTimeChrono)
                     scooterStateViewModel.lockScooterRide()
-                    dialogBinding.pauseRideBtn.text = getString(R.string.lock_ride_btn_text)
+                    dialogBinding.pauseRideBtn.text = getString(R.string.unlock_ride_btn_text)
                     dialogBinding.pauseRideBtn.setCompoundDrawables(
-                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_lock),
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_unlock),
                         null,
                         null,
                         null
