@@ -40,8 +40,8 @@ import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.internship.move.R
 import com.internship.move.databinding.BottomSheetRideInfoCardBinding
-import com.internship.move.databinding.BottomSheetScooterCardBinding
 import com.internship.move.databinding.BottomSheetScooterStartRideBinding
+import com.internship.move.databinding.BottomSheetScooterUnlockOptionsCardBinding
 import com.internship.move.databinding.FragmentMapBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
@@ -166,7 +166,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     private fun showUnlockScooterBottomSheetDialog(scooter: ScooterResponseDTO) {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
-        val dialogBinding = BottomSheetScooterCardBinding.inflate(layoutInflater, null, false)
+        val dialogBinding = BottomSheetScooterUnlockOptionsCardBinding.inflate(layoutInflater, null, false)
         dialogBinding.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
         dialogBinding.batteryLevelTV.text = scooter.battery
         setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
@@ -362,19 +362,28 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     }
 
     private fun getScooterAddress(scooterCoords: CoordinatesDTO): String {
-        return getString(
-            R.string.scooter_address_string, Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-                scooterCoords.coordinates[1],
-                scooterCoords.coordinates[0],
-                1
-            )[0].thoroughfare
-                .toString(), Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-                scooterCoords.coordinates[1],
-                scooterCoords.coordinates[0],
-                1
-            )[0].subThoroughfare
-                .toString()
-        )
+        try
+        {
+            return getString(
+                R.string.scooter_address_string, Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
+                    scooterCoords.coordinates[1],
+                    scooterCoords.coordinates[0],
+                    1
+                )[0].thoroughfare
+                    .toString(), Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
+                    scooterCoords.coordinates[1],
+                    scooterCoords.coordinates[0],
+                    1
+                )[0].subThoroughfare
+                    .toString()
+            )
+        }
+        catch (e: Exception)
+        {
+            logTag("GetAddressException", e.toString())
+            return getString(R.string.address_exception_location_text)
+        }
+
     }
 
     companion object {

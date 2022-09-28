@@ -98,5 +98,11 @@
     <string name="nfc_btn_text">NFC</string>
     <string name="scooter_success_safety_request_text">Please respect all the driving regulations\nand other participants in traffic while using\nour scooters.</string>
     <string name="scooter_unlock_successful_text">Unlock\nSuccessful</string>
+    <string name="address_exception_location_text">Galati, Romania</string>
+    <string name="card_trip_details_title_text">Trip details</string>
+    <string name="distance_subtitle_text">Distance</string>
+    <string name="travel_time_subtitle_text">Travel time</string>
+    <string name="lock_ride_btn_text">Lock</string>
+    <string name="end_ride_btn_text">End Ride</string>
     <!--    endregion-->
 </resources>
