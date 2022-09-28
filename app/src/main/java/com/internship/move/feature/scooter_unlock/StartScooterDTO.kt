@@ -6,11 +6,11 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class StartScooterDTO(
     @Json(name = "longitude")
-    val longitude: String,
+    val longitude: Double,
     @Json(name = "latitude")
-    val latitude: String,
+    val latitude: Double,
     @Json(name = "scooterNumber")
-    val scooterNumber: String,
+    val scooterNumber: Int,
     @Json(name = "startMode")
     val startMode: String = "PIN"
 )

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
 import com.internship.move.feature.map.ScooterResponseDTO
 import com.internship.move.model.ErrorResponse
 import com.internship.move.utils.logTag
@@ -57,14 +58,16 @@ class ScooterStateViewModel(
             try {
                 _isLoading.value = true
                 val startScooterDTO = StartScooterDTO(
-                    scooterNumber = _scooterResult.value?.scooterNumber.toString(),
-                    longitude = _scooterResult.value?.location?.coordinates?.get(0).toString(),
-                    latitude = _scooterResult.value?.location?.coordinates?.get(1).toString()
+                    scooterNumber = _scooterResult.value?.scooterNumber?.toInt() ?: 1000,
+                    longitude = _scooterResult.value?.location?.coordinates?.get(0) ?: CLUJANGELES.longitude,
+                    latitude = _scooterResult.value?.location?.coordinates?.get(1) ?: CLUJANGELES.latitude
                 )
-                logTag("StartScooterDTO", startScooterDTO.toString())
+                logTag("StartRide", startScooterDTO.toString())
                 rideResult = scooterStateService.startRide(startScooterDTO)
-                logTag("RideResult", rideResult.toString())
+                logTag("StartRide", rideResult.toString())
             } catch (e: Exception) {
+                logTag("StartRideError", e.toErrorResponse(errorJsonAdapter).message)
+                resetScooterState()
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
             } finally {
                 _isLoading.value = false
@@ -79,8 +82,8 @@ class ScooterStateViewModel(
                 scooterStateService.endRide(
                     rideId = rideResult.rideId.toInt(),
                     LocationDTO(
-                        _scooterResult.value?.location?.coordinates?.get(0).toString(),
-                        _scooterResult.value?.location?.coordinates?.get(1).toString()
+                        _scooterResult.value?.location?.coordinates?.get(0) ?: CLUJANGELES.longitude,
+                        _scooterResult.value?.location?.coordinates?.get(1) ?: CLUJANGELES.latitude
                     )
                 )
             } catch (e: Exception) {
@@ -89,5 +92,10 @@ class ScooterStateViewModel(
                 _isLoading.value = false
             }
         }
+    }
+
+    companion object {
+        private val CLUJANGELES = LatLng(46.770439, 23.591423)
+
     }
 }

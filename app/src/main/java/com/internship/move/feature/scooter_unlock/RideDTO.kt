@@ -12,9 +12,11 @@ data class RideDTO(
     @Json(name = "status")
     val status: String,
     @Json(name = "startTime")
-    val startingTime: String,
+    val startingTime: Long,
     @Json(name = "_id")
     val rideId: String,
     @Json(name = "coordinates")
-    val coordinates: List<LocationDTO>
+    val coordinates: List<LocationDTO>,
+    @Json(name = "endTime")
+    val duration: Long
 )

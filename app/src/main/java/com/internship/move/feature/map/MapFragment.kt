@@ -211,15 +211,18 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     }
 
     private fun showOngoingRideCardView(scooter: ScooterResponseDTO) {
-        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
-        val dialogBinding = BottomSheetRideInfoCardBinding.inflate(layoutInflater, null, false)
-        dialogBinding.batteryLevelTV.text = scooter.battery
-        setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
-        dialogBinding.endRideBtn.setOnClickListener {
-            scooterStateViewModel.endScooterRIde()
+        if (scooterStateViewModel.isError.value.isNullOrEmpty()) {
+            val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
+            val dialogBinding = BottomSheetRideInfoCardBinding.inflate(layoutInflater, null, false)
+            dialogBinding.batteryLevelTV.text = scooter.battery
+            setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
+            dialogBinding.endRideBtn.setOnClickListener {
+                scooterStateViewModel.endScooterRIde()
+            }
+            bottomSheetDialog.setContentView(dialogBinding.root)
+            bottomSheetDialog.show()
         }
-        bottomSheetDialog.setContentView(dialogBinding.root)
-        bottomSheetDialog.show()
+
     }
 
     private fun addClusteredMarkers(scooterList: List<ScooterResponseDTO>) {
@@ -362,8 +365,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     }
 
     private fun getScooterAddress(scooterCoords: CoordinatesDTO): String {
-        try
-        {
+        try {
             return getString(
                 R.string.scooter_address_string, Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
                     scooterCoords.coordinates[1],
@@ -377,9 +379,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 )[0].subThoroughfare
                     .toString()
             )
-        }
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
             logTag("GetAddressException", e.toString())
             return getString(R.string.address_exception_location_text)
         }
