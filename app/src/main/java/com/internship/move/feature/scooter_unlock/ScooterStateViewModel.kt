@@ -58,8 +58,8 @@ class ScooterStateViewModel(
                 _isLoading.value = true
                 val startScooterDTO = StartScooterDTO(
                     scooterNumber = _scooterResult.value?.scooterNumber.toString(),
-                    longitude = _scooterResult.value?.location!!.coordinates[0].toString(),
-                    latitude = _scooterResult.value?.location!!.coordinates[1].toString()
+                    longitude = _scooterResult.value?.location?.coordinates?.get(0).toString(),
+                    latitude = _scooterResult.value?.location?.coordinates?.get(1).toString()
                 )
                 logTag("StartScooterDTO", startScooterDTO.toString())
                 rideResult = scooterStateService.startRide(startScooterDTO)
@@ -79,8 +79,8 @@ class ScooterStateViewModel(
                 scooterStateService.endRide(
                     rideId = rideResult.rideId.toInt(),
                     LocationDTO(
-                        _scooterResult.value?.location!!.coordinates[0].toString(),
-                        _scooterResult.value?.location!!.coordinates[1].toString()
+                        _scooterResult.value?.location?.coordinates?.get(0).toString(),
+                        _scooterResult.value?.location?.coordinates?.get(1).toString()
                     )
                 )
             } catch (e: Exception) {
