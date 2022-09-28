@@ -107,9 +107,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         }
 
         scooterStateViewModel.scooterResult.observe(viewLifecycleOwner) { scooterResult ->
-            logTag("SCOOTER_RESULT", scooterResult.toString())
             if (scooterResult != null) {
-                logTag("SCOOTER_RESULT", scooterResult.toString())
                 showStartRideBottomSheetDialog(scooterResult)
             }
         }
@@ -216,9 +214,16 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             val dialogBinding = BottomSheetRideInfoCardBinding.inflate(layoutInflater, null, false)
             dialogBinding.batteryLevelTV.text = scooter.battery
             setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
+
             dialogBinding.endRideBtn.setOnClickListener {
                 scooterStateViewModel.endScooterRIde()
+                bottomSheetDialog.dismiss()
+                getLocation()
             }
+            dialogBinding.pauseRideBtn.setOnClickListener {
+                scooterStateViewModel.lockScooterRide()
+            }
+
             bottomSheetDialog.setContentView(dialogBinding.root)
             bottomSheetDialog.show()
         }

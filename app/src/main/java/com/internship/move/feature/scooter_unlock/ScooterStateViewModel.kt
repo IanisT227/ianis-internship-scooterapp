@@ -80,17 +80,31 @@ class ScooterStateViewModel(
             try {
                 _isLoading.value = true
                 scooterStateService.endRide(
-                    rideId = rideResult.rideId.toInt(),
+                    rideId = rideResult.rideId,
                     LocationDTO(
                         _scooterResult.value?.location?.coordinates?.get(0) ?: CLUJANGELES.longitude,
                         _scooterResult.value?.location?.coordinates?.get(1) ?: CLUJANGELES.latitude
                     )
                 )
+                resetScooterState()
             } catch (e: Exception) {
+                logTag("ENDRIDE", e.toErrorResponse(errorJsonAdapter).message)
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
             } finally {
                 _isLoading.value = false
             }
+        }
+    }
+
+    fun lockScooterRide() {
+        viewModelScope.launch {
+            try {
+                scooterStateService.lockScooter(_scooterResult.value?.scooterNumber?.toInt() ?: 1000)
+                _isError.value = null
+            } catch (e: Exception) {
+                _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
+            }
+
         }
     }
 
