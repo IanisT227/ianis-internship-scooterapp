@@ -106,5 +106,6 @@
     <string name="unlock_ride_btn_text">Unlock</string>
     <string name="end_ride_btn_text">End Ride</string>
     <string name="cronometer_format_string">%s min</string>
+    <string name="expired_reservation_text">Your reservation has expired!</string>
     <!--    endregion-->
 </resources>

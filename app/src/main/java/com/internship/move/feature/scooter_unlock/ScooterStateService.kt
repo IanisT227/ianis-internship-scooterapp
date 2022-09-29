@@ -25,4 +25,7 @@ interface ScooterStateService {
 
     @PUT("rides")
     suspend fun updateRideLocation(@Body location: LocationDTO): RideDTO
+
+    @POST("tcp/{scooterNumber}")
+    suspend fun pingScooter(@Path(value = "scooterNumber") scooterNumber: Int, @Body location: LocationDTO)
 }

@@ -11,6 +11,7 @@ import com.internship.move.utils.logTag
 import com.internship.move.utils.toErrorResponse
 import com.squareup.moshi.JsonAdapter
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 class ScooterStateViewModel(
     private val scooterStateService: ScooterStateService,
@@ -51,6 +52,7 @@ class ScooterStateViewModel(
                 _scooterResult.value = null
                 _isError.value = null
             } catch (e: Exception) {
+                logTag("ENDRIDE_RESET", e.toErrorResponse(errorJsonAdapter).message)
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
             }
         }
@@ -90,6 +92,7 @@ class ScooterStateViewModel(
                     )
                 )
                 resetScooterState()
+                lockScooterRide()
             } catch (e: Exception) {
                 logTag("ENDRIDE", e.toErrorResponse(errorJsonAdapter).message)
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
@@ -106,8 +109,8 @@ class ScooterStateViewModel(
                 _isError.value = null
             } catch (e: Exception) {
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
+                logTag("ENDRIDE_LOCK", e.toErrorResponse(errorJsonAdapter).message)
             }
-
         }
     }
 
@@ -133,6 +136,17 @@ class ScooterStateViewModel(
                 ).distance.toInt()
                 _isError.value = null
             } catch (e: Exception) {
+                _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
+            }
+        }
+    }
+
+    fun pingScooter(scooterNumber: String, currentLocation: LocationDTO) {
+        viewModelScope.launch {
+            try {
+                scooterStateService.pingScooter(scooterNumber = scooterNumber.toInt(), currentLocation)
+            } catch (e: Exception) {
+                logTag("PING_ERROR", e.toErrorResponse(errorJsonAdapter).message)
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
             }
         }

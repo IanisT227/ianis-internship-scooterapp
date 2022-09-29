@@ -70,11 +70,11 @@
             app:layout_constraintTop_toTopOf="@+id/travelTimeIV" />
 
         <ImageView
+            android:layout_marginTop="@dimen/bottom_sheet_ride_icon_margin_top"
             android:id="@+id/distanceIV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/bottom_sheet_ride_distance_icon_margin_start"
-            android:layout_marginTop="@dimen/bottom_sheet_ride_icon_margin_top"
             android:src="@drawable/ic_distance"
             app:layout_constraintStart_toEndOf="@id/travelTimeTitleTV"
             app:layout_constraintTop_toBottomOf="@+id/batteryIndicatorIV" />
@@ -97,7 +97,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:format="@string/cronometer_format_string"
+            android:paddingVertical="4dp"
             android:textColor="@color/ride_card_info_primary_text_color"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/travelTimeIV"
             app:layout_constraintTop_toBottomOf="@+id/travelTimeTitleTV" />
 
@@ -107,8 +109,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/ride_card_info_primary_text_color"
+            app:layout_constraintBottom_toBottomOf="@+id/travelTimeChrono"
             app:layout_constraintStart_toStartOf="@+id/distanceIV"
-            app:layout_constraintTop_toBottomOf="@+id/distanceIV"
+            app:layout_constraintTop_toTopOf="@+id/travelTimeChrono"
             tools:text="2.7 km" />
 
         <Button

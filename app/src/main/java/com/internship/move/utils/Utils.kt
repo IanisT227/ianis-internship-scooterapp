@@ -87,7 +87,6 @@ fun Exception.toErrorResponse(errorResponseDtoJsonAdapter: JsonAdapter<ErrorResp
         ErrorResponse(message.toString())
     }
 
-const val UNCHECKED = 0
 const val LOGGED = 1
 const val ERROR = -1
 const val ERROR_DURATION = 2500L

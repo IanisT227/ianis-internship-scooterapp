@@ -35,6 +35,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
@@ -49,6 +50,7 @@ import com.internship.move.databinding.BottomSheetScooterStartRideBinding
 import com.internship.move.databinding.BottomSheetScooterUnlockOptionsCardBinding
 import com.internship.move.databinding.FragmentMapBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
+import com.internship.move.feature.scooter_unlock.LocationDTO
 import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
 import com.internship.move.utils.bitmapDescriptorFromVector
 import com.internship.move.utils.logTag
@@ -80,6 +82,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private var ongoingRide = false
     private var pauseOffset: Long = 0
     private var currentRideDistance: Int = 0
+    private var scooterCircle: Circle? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -190,6 +193,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     private fun showStartRideBottomSheetDialog(scooter: ScooterResponseDTO) {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
+        bottomSheetDialog.setCanceledOnTouchOutside(true)
         val dialogBinding = BottomSheetScooterStartRideBinding.inflate(layoutInflater, null, false)
         dialogBinding.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
         dialogBinding.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
@@ -199,7 +203,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             bottomSheetDialog.dismiss()
             scooterStateViewModel.startScooterRide()
             if (scooterStateViewModel.isError.value.isNullOrEmpty() && scooterStateViewModel.scooterResult.value != null) {
-                showOngoingRideCardView(scooterStateViewModel.scooterResult.value!!)
+                showOngoingRideBottomSheet(scooterStateViewModel.scooterResult.value!!)
             }
         }
         bottomSheetDialog.setContentView(dialogBinding.root)
@@ -207,7 +211,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         val job = GlobalScope.launch(Dispatchers.Main) {
             coroutineScope {
                 delay(30000L)
-                showAlerter("Your reservation has expired!", requireActivity())
+                showAlerter(getString(R.string.expired_reservation_text), requireActivity())
                 scooterStateViewModel.resetScooterState()
                 bottomSheetDialog.hide()
             }
@@ -220,9 +224,10 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         }
     }
 
-    private fun showOngoingRideCardView(scooter: ScooterResponseDTO) {
+    private fun showOngoingRideBottomSheet(scooter: ScooterResponseDTO) {
         if (scooterStateViewModel.isError.value.isNullOrEmpty()) {
             val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
+            bottomSheetDialog.setCancelable(false)
             val dialogBinding = BottomSheetRideInfoCardBinding.inflate(layoutInflater, null, false)
             dialogBinding.batteryLevelTV.text = scooter.battery
             setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
@@ -273,7 +278,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             val hh = if (h < 10) "0$h" else h.toString() + ""
             val mm = if (m < 10) "0$m" else m.toString() + ""
             val ss = if (s < 10) "0$s" else s.toString() + ""
-            it.text = "$mm:$ss min" // will leave this as mm:ss format for now to check if it works
+            it.text = "$hh:$mm min"
             if (ss.toInt() % 10 == 0) {
                 getLocation()
                 scooterStateViewModel.updateRideLocation(currentLocation)
@@ -314,8 +319,14 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 scooterInfo.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
                 scooterInfo.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
                 scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location)
-                binding.scooterInfo.unlockScooterBtn.setOnClickListener {
+                scooterInfo.unlockScooterBtn.setOnClickListener {
                     showUnlockScooterBottomSheetDialog(scooter)
+                }
+                scooterInfo.pingScooterIBtn.setOnClickListener {
+                    scooterStateViewModel.pingScooter(
+                        scooter.scooterNumber,
+                        LocationDTO(currentLocation.longitude, currentLocation.latitude)
+                    )
                 }
             }
             setBatteryIcon(scooter.battery.toInt(), binding.scooterInfo.batteryIndicatorIV)
@@ -425,12 +436,14 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
         binding.cityTv.text =
             Geocoder(requireContext(), Locale.getDefault()).getFromLocation(location.latitude, location.longitude, 1)[0].locality.toString()
-
-        scooterMap.addCircle(
-            CircleOptions().center(location)
-                .fillColor(ColorUtils.setAlphaComponent(resources.getColor(R.color.primary_dark_purple, null), 26)).radius(30.0)
-                .strokeWidth(0.0f)
-        )
+        if (scooterCircle?.center != location) {
+            scooterCircle?.remove()
+            scooterCircle = scooterMap.addCircle(
+                CircleOptions().center(location)
+                    .fillColor(ColorUtils.setAlphaComponent(resources.getColor(R.color.primary_dark_purple, null), 26)).radius(30.0)
+                    .strokeWidth(0.0f)
+            )
+        }
 
         scooterMap.addMarker(
             MarkerOptions().position(location).icon(bitmapDescriptorFromVector(R.drawable.ic_live_location, requireContext()))
