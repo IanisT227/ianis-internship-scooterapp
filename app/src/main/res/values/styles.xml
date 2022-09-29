@@ -112,6 +112,12 @@
         <item name="android:textAppearance">@style/Body1</item>
     </style>
 
+    <style name="MenuTextButtonStyle" parent="TextButtonStyle">
+        <item name="android:textAppearance">@style/RegularText</item>
+        <item name="android:textColor">@color/primary_dark_purple</item>
+        <item name="android:gravity">left</item>
+    </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>

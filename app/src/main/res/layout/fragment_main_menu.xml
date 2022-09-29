@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:clickable="false"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/bg_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/driving_instructions_accent_color"
+        app:titleCentered="true"
+        app:titleTextColor="@color/driving_instructions_accent_color"
+        tools:title="The legend 27" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_app"
+        app:cardCornerRadius="29dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_app">
+
+            <TextView
+                android:id="@+id/menuCardviewTitleTV"
+                style="@style/Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:text="History"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="32dp"
+                android:text="Total rides: 55"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/menuCardviewTitleTV" />
+
+            <Button
+                android:id="@+id/seeAllRidesBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:drawableEnd="@drawable/ic_right_small_arrow"
+                android:text="See all"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/LegalSubtitleIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_legal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changePasswordBtn" />
+
+    <TextView
+        android:id="@+id/legalSubtitleTV"
+        style="@style/Button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Legal"
+        android:textColor="@color/primary_dark_purple"
+        app:layout_constraintBottom_toBottomOf="@+id/LegalSubtitleIV"
+        app:layout_constraintStart_toEndOf="@+id/LegalSubtitleIV"
+        app:layout_constraintTop_toTopOf="@+id/LegalSubtitleIV" />
+
+    <Button
+        android:id="@+id/termsAndConditionsBtn"
+        style="@style/MenuTextButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Terms and condition"
+        app:layout_constraintStart_toStartOf="@+id/settingSubtitleTV"
+        app:layout_constraintTop_toBottomOf="@+id/legalSubtitleTV" />
+
+    <Button
+        android:id="@+id/privacyBtn"
+        style="@style/MenuTextButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Privacy Policy"
+        app:layout_constraintStart_toStartOf="@+id/settingSubtitleTV"
+        app:layout_constraintTop_toBottomOf="@+id/termsAndConditionsBtn" />
+
+    <ImageView
+        android:id="@+id/settingsSubtitleIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <TextView
+        android:id="@+id/settingSubtitleTV"
+        style="@style/Button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="General Settings"
+        android:textColor="@color/primary_dark_purple"
+        app:layout_constraintBottom_toBottomOf="@+id/settingsSubtitleIV"
+        app:layout_constraintStart_toEndOf="@+id/settingsSubtitleIV"
+        app:layout_constraintTop_toTopOf="@+id/settingsSubtitleIV" />
+
+    <Button
+        android:id="@+id/accessAccountBtn"
+        style="@style/MenuTextButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Account"
+        app:layout_constraintStart_toStartOf="@+id/settingSubtitleTV"
+        app:layout_constraintTop_toBottomOf="@+id/settingSubtitleTV" />
+
+    <Button
+        android:id="@+id/changePasswordBtn"
+        style="@style/MenuTextButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        app:layout_constraintStart_toStartOf="@+id/settingSubtitleTV"
+        app:layout_constraintTop_toBottomOf="@+id/accessAccountBtn" />
+
+    <ImageView
+        android:id="@+id/rateUsIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_rate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/privacyBtn" />
+
+    <TextView
+        android:id="@+id/rateUsTV"
+        style="@style/Button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Rate Us"
+        android:textColor="@color/primary_dark_purple"
+        app:layout_constraintBottom_toBottomOf="@+id/rateUsIV"
+        app:layout_constraintStart_toEndOf="@+id/rateUsIV"
+        app:layout_constraintTop_toTopOf="@+id/rateUsIV" />
+</androidx.constraintlayout.widget.ConstraintLayout>

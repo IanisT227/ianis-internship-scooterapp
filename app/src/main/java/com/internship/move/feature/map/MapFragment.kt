@@ -154,7 +154,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         }
 
         binding.openMenuBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "Work in progress", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(MapFragmentDirections.actionMapFragmentToMainMenuFragment())
         }
     }
 

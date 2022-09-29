@@ -109,6 +109,9 @@
         <action
             android:id="@+id/action_mapFragment_to_unlockByCodeFragment"
             app:destination="@id/unlockByCodeFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
     </fragment>
 
     <fragment
@@ -176,4 +179,8 @@
             app:destination="@id/mapFragment"
             app:enterAnim="@anim/nav_default_enter_anim" />
     </fragment>
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="com.internship.move.feature.menu.MainMenuFragment"
+        android:label="MainMenuFragment" />
 </navigation>

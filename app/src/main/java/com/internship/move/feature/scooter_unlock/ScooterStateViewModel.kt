@@ -92,7 +92,6 @@ class ScooterStateViewModel(
                     )
                 )
                 resetScooterState()
-                lockScooterRide()
             } catch (e: Exception) {
                 logTag("ENDRIDE", e.toErrorResponse(errorJsonAdapter).message)
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
