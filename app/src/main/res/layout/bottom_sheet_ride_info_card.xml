@@ -7,12 +7,23 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/bottom_sheet_corner_radius">
 
+    <ImageView
+        android:id="@+id/top_bar_IV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pink_rectangle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center_horizontal"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/bottom_sheet_padding_horizontal"
         android:paddingTop="@dimen/bottom_sheet_padding_top"
         android:paddingBottom="@dimen/bottom_sheet_padding_bottom">
+
 
         <TextView
             android:id="@+id/tripDetailsTitleTV"

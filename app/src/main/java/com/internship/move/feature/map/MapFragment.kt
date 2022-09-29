@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Typeface.BOLD
 import android.location.Address
 import android.location.Geocoder
@@ -41,6 +42,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
@@ -238,6 +240,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 dialogBinding.travelTimeChrono.base = SystemClock.elapsedRealtime()
                 getLocation()
             }
+
             dialogBinding.pauseRideBtn.setOnClickListener {
                 if (!ongoingRide) {
                     dialogBinding.pauseRideBtn.text = getString(R.string.lock_ride_btn_text)
@@ -261,10 +264,17 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                     )
                 }
             }
+            dialogBinding.topBarIV.setOnClickListener {
+                BottomSheetBehavior.from(dialogBinding.bottomSheetCV).state = BottomSheetBehavior.STATE_EXPANDED
+                BottomSheetBehavior.from(dialogBinding.bottomSheetCV).peekHeight = Resources.getSystem().displayMetrics.heightPixels
+            }
+
             bottomSheetDialog.setContentView(dialogBinding.root)
             bottomSheetDialog.show()
             initChronometer(dialogBinding.travelTimeChrono, dialogBinding.distanceTV)
             startChronometer(dialogBinding.travelTimeChrono)
+
+
         }
 
     }
