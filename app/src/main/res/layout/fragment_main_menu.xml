@@ -4,12 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:id="@+id/menuWrapperCL">
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/getUserProcessSpn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:indicatorColor="@color/primary_dark_purple"
+        app:indicatorSize="@dimen/loading_indicator_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <ImageView
-        android:clickable="false"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clickable="false"
         android:src="@drawable/bg_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +43,15 @@
         app:navigationIconTint="@color/driving_instructions_accent_color"
         app:titleCentered="true"
         app:titleTextColor="@color/driving_instructions_accent_color"
-        tools:title="The legend 27" />
+        tools:title="The legend 27">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="right"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/ic_user_profile" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -47,28 +71,29 @@
             android:background="@drawable/bg_app">
 
             <TextView
-                android:id="@+id/menuCardviewTitleTV"
+                android:id="@+id/rideHistoryTitleTV"
                 style="@style/Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
-                android:text="History"
+                android:text="@string/ride_history_title_text"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/rideHistorySubtitleTV"
                 style="@style/Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginBottom="32dp"
-                android:text="Total rides: 55"
+                tools:text="Total rides: 55"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/menuCardviewTitleTV" />
+                app:layout_constraintTop_toBottomOf="@id/rideHistoryTitleTV" />
 
             <Button
                 android:id="@+id/seeAllRidesBtn"
@@ -76,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
                 android:drawableEnd="@drawable/ic_right_small_arrow"
-                android:text="See all"
+                android:text="@string/see_all_button_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -99,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Legal"
+        android:text="@string/menu_legal_subtitle_text"
         android:textColor="@color/primary_dark_purple"
         app:layout_constraintBottom_toBottomOf="@+id/LegalSubtitleIV"
         app:layout_constraintStart_toEndOf="@+id/LegalSubtitleIV"
@@ -111,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Terms and condition"
+        android:text="@string/menu_terms_and_conditions_btn_text"
         app:layout_constraintStart_toStartOf="@+id/settingSubtitleTV"
         app:layout_constraintTop_toBottomOf="@+id/legalSubtitleTV" />
 
@@ -120,7 +145,7 @@
         style="@style/MenuTextButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Privacy Policy"
+        android:text="@string/menu_privacy_policy_btn_text"
         app:layout_constraintStart_toStartOf="@+id/settingSubtitleTV"
         app:layout_constraintTop_toBottomOf="@+id/termsAndConditionsBtn" />
 
@@ -140,7 +165,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="General Settings"
+        android:text="@string/menu_general_settings_subtitle_text"
         android:textColor="@color/primary_dark_purple"
         app:layout_constraintBottom_toBottomOf="@+id/settingsSubtitleIV"
         app:layout_constraintStart_toEndOf="@+id/settingsSubtitleIV"
@@ -152,7 +177,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Account"
+        android:text="@string/menu_account_btn_text"
         app:layout_constraintStart_toStartOf="@+id/settingSubtitleTV"
         app:layout_constraintTop_toBottomOf="@+id/settingSubtitleTV" />
 
@@ -161,7 +186,7 @@
         style="@style/MenuTextButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Password"
+        android:text="@string/menu_change_password_text"
         app:layout_constraintStart_toStartOf="@+id/settingSubtitleTV"
         app:layout_constraintTop_toBottomOf="@+id/accessAccountBtn" />
 
@@ -175,13 +200,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/privacyBtn" />
 
-    <TextView
+    <Button
         android:id="@+id/rateUsTV"
-        style="@style/Button1"
+        android:textAppearance="@style/Button1"
+        style="@style/MenuTextButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Rate Us"
+        android:text="@string/menu_rate_us_subtitle_text"
         android:textColor="@color/primary_dark_purple"
         app:layout_constraintBottom_toBottomOf="@+id/rateUsIV"
         app:layout_constraintStart_toEndOf="@+id/rateUsIV"

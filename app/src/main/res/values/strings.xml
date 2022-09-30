@@ -107,5 +107,21 @@
     <string name="end_ride_btn_text">End Ride</string>
     <string name="cronometer_format_string">%s min</string>
     <string name="expired_reservation_text">Your reservation has expired!</string>
+    <string name="ride_history_title_text">History</string>
+    <string name="ride_history_subtitle_text">Total rides:%d</string>
+    <string name="menu_account_btn_text">Account</string>
+    <string name="menu_change_password_text">Change Password</string>
+    <string name="menu_general_settings_subtitle_text">General Settings</string>
+    <string name="menu_legal_subtitle_text">Legal</string>
+    <string name="menu_terms_and_conditions_btn_text">Terms and conditions</string>
+    <string name="menu_privacy_policy_btn_text">Privacy Policy</string>
+    <string name="menu_rate_us_subtitle_text">Rate Us</string>
+    <string name="start_address_subtitle_text">From</string>
+    <string name="end_address_subtitle_text">From</string>
+    <string name="trave_time_subtitle_text">Travel Time</string>
+    <string name="travel_distance_subtitle_text">Distance</string>
+    <string name="travel_time_title_format_text">%d:%02d min</string>
+    <string name="ride_distance_format_text">%.1f km </string>
+    <string name="see_all_button_text">See all</string>>
     <!--    endregion-->
 </resources>

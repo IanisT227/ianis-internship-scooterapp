@@ -35,6 +35,11 @@
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/bai_jamjuree_bold</item>
     </style>
+
+    <style name="RegularTextBold">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/bai_jamjuree_bold</item>
+    </style>
     <!--endregion-->
 
     <!--region ComponentStyles-->

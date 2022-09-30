@@ -55,6 +55,7 @@ import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.feature.scooter_unlock.LocationDTO
 import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
 import com.internship.move.utils.bitmapDescriptorFromVector
+import com.internship.move.utils.getScooterAddress
 import com.internship.move.utils.logTag
 import com.internship.move.utils.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -328,7 +329,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 scooterInfo.unlockScooterBtn.text = getString(R.string.unlock_scooter_string)
                 scooterInfo.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
                 scooterInfo.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
-                scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location)
+                scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location, requireContext())
                 scooterInfo.unlockScooterBtn.setOnClickListener {
                     showUnlockScooterBottomSheetDialog(scooter)
                 }
@@ -459,27 +460,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             MarkerOptions().position(location).icon(bitmapDescriptorFromVector(R.drawable.ic_live_location, requireContext()))
                 .anchor(.5f, .5f)
         )
-    }
-
-    private fun getScooterAddress(scooterCoords: CoordinatesDTO): String {
-        try {
-            return getString(
-                R.string.scooter_address_string, Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-                    scooterCoords.coordinates[1],
-                    scooterCoords.coordinates[0],
-                    1
-                )[0].thoroughfare
-                    .toString(), Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-                    scooterCoords.coordinates[1],
-                    scooterCoords.coordinates[0],
-                    1
-                )[0].subThoroughfare
-                    .toString()
-            )
-        } catch (e: Exception) {
-            logTag("GetAddressException", e.toString())
-            return getString(R.string.address_exception_location_text)
-        }
     }
 
     companion object {

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:layout_marginVertical="12dp"
+    app:cardCornerRadius="29dp"
+    app:strokeColor="@color/primary_dark_purple"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/addressCardview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="29dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/addressCardViewCL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/neutral_light_gray"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="40dp">
+
+                <TextView
+                    android:id="@+id/startAddressSubtitleTV"
+                    style="@style/Caption1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/start_address_subtitle_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/startAddressTV"
+                    style="@style/RegularTextBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary_dark_purple"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/startAddressSubtitleTV"
+                    app:layout_constraintTop_toBottomOf="@id/startAddressSubtitleTV"
+                    tools:text="9776 Gutkowski Shores\nSuite 420" />
+
+                <TextView
+                    android:id="@+id/endAddressSubtitleTV"
+                    style="@style/Caption1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/end_address_subtitle_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/startAddressTV" />
+
+                <TextView
+                    android:id="@+id/endAddressTV"
+                    style="@style/RegularTextBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary_dark_purple"
+                    app:layout_constraintStart_toStartOf="@id/startAddressSubtitleTV"
+                    app:layout_constraintTop_toBottomOf="@id/endAddressSubtitleTV"
+                    tools:text="9776 Gutkowski Shores\nSuite 420" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/travelTimeSubtitleTV"
+            style="@style/Caption1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/trave_time_subtitle_text"
+            android:textColor="@color/neutral_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/addressCardview"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/travelTimeTV"
+            style="@style/RegularTextBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_dark_purple"
+            app:layout_constraintStart_toStartOf="@id/travelTimeSubtitleTV"
+            app:layout_constraintTop_toBottomOf="@id/travelTimeSubtitleTV"
+            tools:text="00:42 min" />
+
+        <TextView
+            android:id="@+id/travelDistanceSubtitleTV"
+            style="@style/Caption1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/travel_distance_subtitle_text"
+            android:textColor="@color/neutral_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/addressCardview"
+            app:layout_constraintTop_toBottomOf="@id/travelTimeTV" />
+
+        <TextView
+            android:id="@+id/travelDistanceTV"
+            style="@style/RegularTextBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_dark_purple"
+            app:layout_constraintStart_toStartOf="@id/travelDistanceSubtitleTV"
+            app:layout_constraintTop_toBottomOf="@id/travelDistanceSubtitleTV"
+            tools:text="420 km" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

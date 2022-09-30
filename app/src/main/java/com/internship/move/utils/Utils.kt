@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Geocoder
 import android.text.SpannableString
 import android.text.Spanned.SPAN_EXCLUSIVE_INCLUSIVE
 import android.text.TextPaint
@@ -17,10 +18,12 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.textfield.TextInputEditText
 import com.internship.move.R
+import com.internship.move.feature.map.CoordinatesDTO
 import com.internship.move.model.ErrorResponse
 import com.squareup.moshi.JsonAdapter
 import com.tapadoo.alerter.Alerter
 import retrofit2.HttpException
+import java.util.*
 
 fun TextView.addClickableText(text: String, color: Int = context.getColor(R.color.neutral_white), callback: ClickCallBack) {
     val spannableString = SpannableString(this.text)
@@ -86,6 +89,27 @@ fun Exception.toErrorResponse(errorResponseDtoJsonAdapter: JsonAdapter<ErrorResp
     } else {
         ErrorResponse(message.toString())
     }
+
+ fun getScooterAddress(scooterCoords: CoordinatesDTO, context:Context): String {
+    try {
+        return context.getString(
+            R.string.scooter_address_string, Geocoder(context, Locale.getDefault()).getFromLocation(
+                scooterCoords.coordinates[1],
+                scooterCoords.coordinates[0],
+                1
+            )[0].thoroughfare
+                .toString(), Geocoder(context, Locale.getDefault()).getFromLocation(
+                scooterCoords.coordinates[1],
+                scooterCoords.coordinates[0],
+                1
+            )[0].subThoroughfare
+                .toString()
+        )
+    } catch (e: Exception) {
+        logTag("GetAddressException", e.toString())
+        return context.getString(R.string.address_exception_location_text)
+    }
+}
 
 const val LOGGED = 1
 const val ERROR = -1
