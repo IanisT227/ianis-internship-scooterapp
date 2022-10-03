@@ -204,7 +204,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         dialogBinding.startRideBtn.setOnClickListener {
             rideStarted = true
             bottomSheetDialog.dismiss()
-            scooterStateViewModel.startScooterRide()
+            scooterStateViewModel.startScooterRide(requireContext())
             if (scooterStateViewModel.isError.value.isNullOrEmpty() && scooterStateViewModel.scooterResult.value != null) {
                 showOngoingRideBottomSheet(scooterStateViewModel.scooterResult.value!!)
             }
@@ -232,11 +232,12 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
             bottomSheetDialog.setCancelable(false)
             val dialogBinding = BottomSheetRideInfoCardBinding.inflate(layoutInflater, null, false)
-            dialogBinding.batteryLevelTV.text = scooter.battery
+            dialogBinding.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
             setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
 
             dialogBinding.endRideBtn.setOnClickListener {
-                scooterStateViewModel.endScooterRIde()
+                scooterStateViewModel.endScooterRIde(requireContext())
+                currentRideDistance = 0
                 bottomSheetDialog.dismiss()
                 dialogBinding.travelTimeChrono.base = SystemClock.elapsedRealtime()
                 getLocation()
@@ -289,12 +290,12 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             val hh = if (h < 10) "0$h" else h.toString() + ""
             val mm = if (m < 10) "0$m" else m.toString() + ""
             val ss = if (s < 10) "0$s" else s.toString() + ""
-            it.text = "$hh:$mm min"
+            it.text = getString(R.string.live_ride_duration_format_string, hh, mm)
             if (ss.toInt() % 10 == 0) {
                 getLocation()
                 scooterStateViewModel.updateRideLocation(currentLocation)
                 distanceTv.setTypeface(distanceTv.typeface, BOLD)
-                distanceTv.text = currentRideDistance.toString()
+                distanceTv.text = getString(R.string.ride_cardview_distance_format_text, currentRideDistance)
             }
         }
     }

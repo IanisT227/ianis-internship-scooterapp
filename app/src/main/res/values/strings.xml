@@ -106,9 +106,10 @@
     <string name="unlock_ride_btn_text">Unlock</string>
     <string name="end_ride_btn_text">End Ride</string>
     <string name="cronometer_format_string">%s min</string>
+    <string name="live_ride_duration_format_string">%s:%s min</string>
     <string name="expired_reservation_text">Your reservation has expired!</string>
     <string name="ride_history_title_text">History</string>
-    <string name="ride_history_subtitle_text">Total rides:%d</string>
+    <string name="ride_history_subtitle_text">Total rides: %d</string>
     <string name="menu_account_btn_text">Account</string>
     <string name="menu_change_password_text">Change Password</string>
     <string name="menu_general_settings_subtitle_text">General Settings</string>
@@ -123,5 +124,16 @@
     <string name="travel_time_title_format_text">%d:%02d min</string>
     <string name="ride_distance_format_text">%.1f km </string>
     <string name="see_all_button_text">See all</string>>
+    <string name="ride_cardview_distance_format_text">%d m</string>
+    <string name="start_ride_text">Start ride</string>
+    <string name="email_input_hint">Email</string>
+    <string name="username_input_hint">Username</string>
+    <string name="log_out_btn_text">Log out</string>
+    <string name="save_changes_text">Save changes</string>
+    <string name="change_password_title">Change password</string>
+    <string name="account_title_text">Account</string>
+    <string name="old_password_text">Old password</string>
+    <string name="new_password_text">New password</string>
+    <string name="confirm_new_password_text">Confirm new password</string>
     <!--    endregion-->
 </resources>

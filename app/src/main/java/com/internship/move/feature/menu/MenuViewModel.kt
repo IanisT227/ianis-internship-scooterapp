@@ -34,6 +34,7 @@ class MenuViewModel(
     fun getUser() {
         viewModelScope.launch {
             try {
+                _isError.postValue(null)
                 _isLoading.value = true
                 _userData.value = mainMenuService.getUserByToken()
             } catch (e: Exception) {
@@ -48,12 +49,12 @@ class MenuViewModel(
     fun getUserRides() {
         viewModelScope.launch {
             try {
+                _isError.postValue(null)
                 _isLoading.value = true
                 _ridesList.value = mainMenuService.getRidesByUser(pageSize = 8)
             } catch (e: Exception) {
                 logTag("ENDRIDE_RESET", e.toErrorResponse(errorJsonAdapter).message)
                 _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
-
             } finally {
                 _isLoading.value = false
             }

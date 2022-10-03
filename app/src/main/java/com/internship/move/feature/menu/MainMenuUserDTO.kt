@@ -8,5 +8,7 @@ data class MainMenuUserDTO(
     @Json(name = "username")
     val username: String,
     @Json(name = "numberRides")
-    val numberRides: Int
+    val numberRides: Int,
+    @Json(name = "email")
+    val email: String
 )

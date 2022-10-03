@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.internship.move.R
 import com.internship.move.databinding.FragmentMainMenuBinding
 import com.internship.move.utils.logTag
+import com.internship.move.utils.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -31,6 +32,14 @@ class MainMenuFragment : Fragment(R.layout.fragment_main_menu) {
         binding.seeAllRidesBtn.setOnClickListener {
             findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragmentToRidesHistoryFragment())
         }
+
+        binding.accessAccountBtn.setOnClickListener {
+            findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragmentToAccountDetailsFragment())
+        }
+
+        binding.changePasswordBtn.setOnClickListener {
+            findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragmentToAccountResetPasswordFragment())
+        }
     }
 
     private fun initObservers() {
@@ -43,6 +52,11 @@ class MainMenuFragment : Fragment(R.layout.fragment_main_menu) {
             logTag("USERDATA_MAIN_MENU", userData.toString())
             binding.toolbar.title = userData.username
             binding.rideHistorySubtitleTV.text = getString(R.string.ride_history_subtitle_text, userData.numberRides)
+        }
+
+        menuViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (!isError.isNullOrEmpty())
+                showAlerter(isError.toString(), requireActivity())
         }
     }
 

@@ -1,19 +1,17 @@
 package com.internship.move.feature.scooter_unlock
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @JsonClass(generateAdapter = true)
-data class StartScooterDTO(
+data class endRideDTO(
     @Json(name = "longitude")
     val longitude: Double,
     @Json(name = "latitude")
     val latitude: Double,
-    @Json(name = "scooterNumber")
-    val scooterNumber: Int,
-    @Json(name = "startMode")
-    val startMode: String = "PIN",
-    @Json(name = "startAddress")
-    val startAddress: String
-)
-
+    @Json(name = "endAddress")
+    val endAddress: String
+) : Parcelable
