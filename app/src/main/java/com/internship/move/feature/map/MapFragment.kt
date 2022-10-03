@@ -99,7 +99,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         initViews()
         initButtons()
         initObservers()
-        println()
     }
 
     private fun initViews() {
@@ -133,6 +132,11 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
         scooterStateViewModel.rideDistance.observe(viewLifecycleOwner) { rideDistance ->
             currentRideDistance = rideDistance
+        }
+
+        scooterStateViewModel.lastRide.observe(viewLifecycleOwner)
+        {
+            findNavController().navigate(MapFragmentDirections.actionMapFragmentToTripDetailsFragment())
         }
     }
 
@@ -239,8 +243,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 scooterStateViewModel.endScooterRIde(requireContext())
                 currentRideDistance = 0
                 bottomSheetDialog.dismiss()
-                dialogBinding.travelTimeChrono.base = SystemClock.elapsedRealtime()
-                getLocation()
             }
 
             dialogBinding.pauseRideBtn.setOnClickListener {

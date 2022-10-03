@@ -121,7 +121,7 @@
     <string name="menu_privacy_policy_btn_text">Privacy Policy</string>
     <string name="menu_rate_us_subtitle_text">Rate Us</string>
     <string name="start_address_subtitle_text">From</string>
-    <string name="end_address_subtitle_text">From</string>
+    <string name="end_address_subtitle_text">To</string>
     <string name="trave_time_subtitle_text">Travel Time</string>
     <string name="travel_distance_subtitle_text">Distance</string>
     <string name="travel_time_title_format_text">%d:%02d min</string>
@@ -138,5 +138,6 @@
     <string name="old_password_text">Old password</string>
     <string name="new_password_text">New password</string>
     <string name="confirm_new_password_text">Confirm new password</string>
+    <string name="pay_with_text">Pay with</string>
     <!--    endregion-->
 </resources>

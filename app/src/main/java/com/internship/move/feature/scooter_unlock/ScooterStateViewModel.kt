@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import com.internship.move.feature.map.CoordinatesDTO
 import com.internship.move.feature.map.ScooterResponseDTO
+import com.internship.move.feature.menu.rideHistory.RideHistoryItemDTO
 import com.internship.move.model.ErrorResponse
 import com.internship.move.utils.getScooterAddress
 import com.internship.move.utils.logTag
@@ -33,10 +34,14 @@ class ScooterStateViewModel(
     val rideDistance: LiveData<Int>
         get() = _rideDistance
     private lateinit var rideResult: RideDTO
+    private val _lastRide: MutableLiveData<RideHistoryItemDTO> = MutableLiveData()
+    val lastRide: LiveData<RideHistoryItemDTO>
+        get() = _lastRide
 
     fun startScooterUnlock(scooterCode: Int) {
         viewModelScope.launch {
             try {
+                _isError.postValue(null)
                 _isLoading.value = true
                 _scooterResult.value = scooterStateService.startUnlock(scooterNumber = scooterCode)
             } catch (e: Exception) {
@@ -97,7 +102,7 @@ class ScooterStateViewModel(
             try {
                 _isError.postValue(null)
                 _isLoading.value = true
-                scooterStateService.endRide(
+                _lastRide.value = scooterStateService.endRide(
                     rideId = rideResult.rideId,
                     location = endRideDTO(
                         _scooterResult.value?.location?.coordinates?.get(0) ?: CLUJANGELES.longitude,
