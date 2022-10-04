@@ -102,4 +102,9 @@
     <dimen name="bottom_sheet_ride_btn_margin_top">36dp</dimen>
     <dimen name="bottom_sheet_ride_btn_margin_end">20dp</dimen>
     <dimen name="bottom_sheet_ride_end_btn_margin_end">24dp</dimen>
+    <dimen name="logout_btn_margin_bottom">106dp</dimen>
+    <dimen name="account_data_margin_horizontal">24dp</dimen>
+    <dimen name="account_data_margin_top">44dp</dimen>
+    <dimen name="save_changes_margin_horizontal">24dp</dimen>
+    <dimen name="reset_password_btn_margin_bottom">106dp</dimen>
 </resources>

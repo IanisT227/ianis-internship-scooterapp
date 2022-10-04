@@ -55,6 +55,7 @@ import com.internship.move.feature.authentication.AuthenticationViewModel
 import com.internship.move.feature.scooter_unlock.LocationDTO
 import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
 import com.internship.move.utils.bitmapDescriptorFromVector
+import com.internship.move.utils.getScooterAddress
 import com.internship.move.utils.logTag
 import com.internship.move.utils.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -154,7 +155,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         }
 
         binding.openMenuBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "Work in progress", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(MapFragmentDirections.actionMapFragmentToMainMenuFragment())
         }
     }
 
@@ -203,7 +204,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         dialogBinding.startRideBtn.setOnClickListener {
             rideStarted = true
             bottomSheetDialog.dismiss()
-            scooterStateViewModel.startScooterRide()
+            scooterStateViewModel.startScooterRide(requireContext())
             if (scooterStateViewModel.isError.value.isNullOrEmpty() && scooterStateViewModel.scooterResult.value != null) {
                 showOngoingRideBottomSheet(scooterStateViewModel.scooterResult.value!!)
             }
@@ -231,11 +232,12 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
             bottomSheetDialog.setCancelable(false)
             val dialogBinding = BottomSheetRideInfoCardBinding.inflate(layoutInflater, null, false)
-            dialogBinding.batteryLevelTV.text = scooter.battery
+            dialogBinding.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
             setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
 
             dialogBinding.endRideBtn.setOnClickListener {
-                scooterStateViewModel.endScooterRIde()
+                scooterStateViewModel.endScooterRIde(requireContext())
+                currentRideDistance = 0
                 bottomSheetDialog.dismiss()
                 dialogBinding.travelTimeChrono.base = SystemClock.elapsedRealtime()
                 getLocation()
@@ -288,12 +290,12 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             val hh = if (h < 10) "0$h" else h.toString() + ""
             val mm = if (m < 10) "0$m" else m.toString() + ""
             val ss = if (s < 10) "0$s" else s.toString() + ""
-            it.text = "$hh:$mm min"
+            it.text = getString(R.string.live_ride_duration_format_string, hh, mm)
             if (ss.toInt() % 10 == 0) {
                 getLocation()
                 scooterStateViewModel.updateRideLocation(currentLocation)
                 distanceTv.setTypeface(distanceTv.typeface, BOLD)
-                distanceTv.text = currentRideDistance.toString()
+                distanceTv.text = getString(R.string.ride_cardview_distance_format_text, currentRideDistance)
             }
         }
     }
@@ -328,7 +330,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 scooterInfo.unlockScooterBtn.text = getString(R.string.unlock_scooter_string)
                 scooterInfo.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
                 scooterInfo.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
-                scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location)
+                scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location, requireContext())
                 scooterInfo.unlockScooterBtn.setOnClickListener {
                     showUnlockScooterBottomSheetDialog(scooter)
                 }
@@ -459,27 +461,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             MarkerOptions().position(location).icon(bitmapDescriptorFromVector(R.drawable.ic_live_location, requireContext()))
                 .anchor(.5f, .5f)
         )
-    }
-
-    private fun getScooterAddress(scooterCoords: CoordinatesDTO): String {
-        try {
-            return getString(
-                R.string.scooter_address_string, Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-                    scooterCoords.coordinates[1],
-                    scooterCoords.coordinates[0],
-                    1
-                )[0].thoroughfare
-                    .toString(), Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-                    scooterCoords.coordinates[1],
-                    scooterCoords.coordinates[0],
-                    1
-                )[0].subThoroughfare
-                    .toString()
-            )
-        } catch (e: Exception) {
-            logTag("GetAddressException", e.toString())
-            return getString(R.string.address_exception_location_text)
-        }
     }
 
     companion object {

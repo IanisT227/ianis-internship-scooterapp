@@ -35,6 +35,11 @@
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/bai_jamjuree_bold</item>
     </style>
+
+    <style name="RegularTextBold">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/bai_jamjuree_bold</item>
+    </style>
     <!--endregion-->
 
     <!--region ComponentStyles-->
@@ -110,6 +115,12 @@
         <item name="android:textColor">@color/neutral_grey</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:textAppearance">@style/Body1</item>
+    </style>
+
+    <style name="MenuTextButtonStyle" parent="TextButtonStyle">
+        <item name="android:textAppearance">@style/RegularText</item>
+        <item name="android:textColor">@color/primary_dark_purple</item>
+        <item name="android:gravity">left</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">

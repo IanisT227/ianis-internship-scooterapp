@@ -44,7 +44,7 @@
         tools:text="@string/onboarding_5_body" />
 
     <Button
-        android:id="@+id/skipTV"
+        android:id="@+id/skipBtn"
         style="@style/TextButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

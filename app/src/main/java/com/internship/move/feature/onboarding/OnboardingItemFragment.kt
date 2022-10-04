@@ -25,8 +25,8 @@ class OnboardingItemFragment : Fragment(R.layout.fragment_onboarding_page) {
         binding.bodyTV.text = getString(onboardingItem.bodyText)
         binding.titleTV.text = getString(onboardingItem.titleText)
         binding.bannerIV.setImageResource(onboardingItem.imageRes)
-        binding.skipTV.isVisible = onboardingItem.isLastPage
-        binding.skipTV.setOnClickListener {
+        binding.skipBtn.isVisible = onboardingItem.isLastPage
+        binding.skipBtn.setOnClickListener {
             (requireActivity() as? OnSkipButtonPressed)?.onPressed()
         }
     }

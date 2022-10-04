@@ -7,9 +7,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class LocationDTO(
+data class endRideDTO(
     @Json(name = "longitude")
     val longitude: Double,
     @Json(name = "latitude")
-    val latitude: Double
-): Parcelable
+    val latitude: Double,
+    @Json(name = "endAddress")
+    val endAddress: String
+) : Parcelable

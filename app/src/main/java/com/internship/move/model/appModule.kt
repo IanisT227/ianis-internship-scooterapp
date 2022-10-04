@@ -7,6 +7,8 @@ import com.internship.move.feature.licenseRegistration.LicenseRegistrationViewMo
 import com.internship.move.feature.licenseRegistration.LicenseService
 import com.internship.move.feature.map.ScooterService
 import com.internship.move.feature.map.ScooterViewModel
+import com.internship.move.feature.menu.MainMenuService
+import com.internship.move.feature.menu.MenuViewModel
 import com.internship.move.feature.onboarding.OnboardingViewModel
 import com.internship.move.feature.scooter_unlock.ScooterStateService
 import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
@@ -29,6 +31,7 @@ val viewModel = module {
     viewModel { LicenseRegistrationViewModel(get(), get()) }
     viewModel { ScooterViewModel(get()) }
     viewModel { ScooterStateViewModel(get(), get()) }
+    viewModel { MenuViewModel(get(), get()) }
 }
 
 val repository = module {
@@ -44,6 +47,7 @@ val service = module {
     single<LicenseService> { provideLicenseService(get()) }
     single<ScooterService> { provideMapService(get()) }
     single<ScooterStateService> { provideScooterStateService(get()) }
+    single<MainMenuService> { provideMainMenuService(get()) }
 }
 
 val tokenProvider = module { single<AuthenticationTokenProvider> { RuntimeAuthenticationTokenProvider(get()) } }
@@ -60,6 +64,8 @@ private fun provideLicenseService(retrofit: Retrofit): LicenseService = retrofit
 private fun provideMapService(retrofit: Retrofit): ScooterService = retrofit.create(ScooterService::class.java)
 
 private fun provideScooterStateService(retrofit: Retrofit): ScooterStateService = retrofit.create(ScooterStateService::class.java)
+
+private fun provideMainMenuService(retrofit: Retrofit): MainMenuService = retrofit.create(MainMenuService::class.java)
 
 private fun provideErrorResponseJsonAdapter(moshi: Moshi): JsonAdapter<ErrorResponse> =
     moshi.adapter(ErrorResponse::class.java).lenient()

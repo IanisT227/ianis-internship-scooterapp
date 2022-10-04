@@ -12,6 +12,8 @@ data class StartScooterDTO(
     @Json(name = "scooterNumber")
     val scooterNumber: Int,
     @Json(name = "startMode")
-    val startMode: String = "PIN"
+    val startMode: String = "PIN",
+    @Json(name = "startAddress")
+    val startAddress: String
 )
 
