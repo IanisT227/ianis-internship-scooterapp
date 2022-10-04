@@ -17,5 +17,6 @@
         <item name="editTextStyle">@style/TextInputEditTextStyle</item>
         <item name="textInputStyle">@style/TextInputLayoutStyle</item>
         <item name="imageButtonStyle">@style/ImageButton</item>
+        <item name="materialAlertDialogTheme">@style/MaterialAlertDialog</item>
     </style>
 </resources>

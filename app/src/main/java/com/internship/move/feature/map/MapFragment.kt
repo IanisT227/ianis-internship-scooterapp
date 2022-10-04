@@ -296,10 +296,13 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             val ss = if (s < 10) "0$s" else s.toString() + ""
             it.text = getString(R.string.live_ride_duration_format_string, hh, mm)
             if (ss.toInt() % 10 == 0) {
-                getLocation()
-                scooterStateViewModel.updateRideLocation(currentLocation)
-                distanceTv.setTypeface(distanceTv.typeface, BOLD)
-                distanceTv.text = getString(R.string.ride_cardview_distance_format_text, currentRideDistance)
+                if (ongoingRide){
+                    getLocation()
+                    scooterStateViewModel.updateRideLocation(currentLocation)
+                    distanceTv.setTypeface(distanceTv.typeface, BOLD)
+                    distanceTv.text = getString(R.string.ride_cardview_distance_format_text, currentRideDistance)
+                }
+
             }
         }
     }

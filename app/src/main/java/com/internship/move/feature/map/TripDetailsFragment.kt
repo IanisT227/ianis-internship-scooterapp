@@ -10,6 +10,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.internship.move.R
 import com.internship.move.databinding.FragmentTripDetailsBinding
 import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
@@ -35,7 +36,13 @@ class TripDetailsFragment : Fragment(R.layout.fragment_trip_details), OnMapReady
     private fun initButtons() {
         binding.payTripBtn.setOnClickListener {
             scooterStateViewModel.finishRidePayment()
-            findNavController().navigateUp()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(resources.getString(R.string.dialog_title))
+                .setMessage(resources.getString(R.string.dialog_supporting_text))
+                .setPositiveButton(resources.getString(R.string.dialog_positive_text)) { _, _ ->
+                    findNavController().navigateUp()
+                }
+                .show()
         }
     }
 

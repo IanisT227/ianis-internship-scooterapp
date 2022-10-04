@@ -139,5 +139,8 @@
     <string name="new_password_text">New password</string>
     <string name="confirm_new_password_text">Confirm new password</string>
     <string name="pay_with_text">Pay with</string>
+    <string name="dialog_title">Payment successful</string>
+    <string name="dialog_supporting_text">You can find your receipt on your email</string>
+    <string name="dialog_positive_text">OK</string>
     <!--    endregion-->
 </resources>
