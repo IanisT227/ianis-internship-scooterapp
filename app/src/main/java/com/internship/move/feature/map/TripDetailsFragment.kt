@@ -9,11 +9,13 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.internship.move.R
 import com.internship.move.databinding.FragmentTripDetailsBinding
 import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
+import com.internship.move.utils.bitmapDescriptorFromVector
 import com.internship.move.utils.getScooterAddress
 import com.internship.move.utils.logTag
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -77,6 +79,22 @@ class TripDetailsFragment : Fragment(R.layout.fragment_trip_details), OnMapReady
         for (coordinate in scooterStateViewModel.lastRide.value?.coordinates!!)
             options.add(LatLng(coordinate.latitude, coordinate.longitude))
         tripMap.addPolyline(options)
+        val coordinates = scooterStateViewModel.lastRide.value?.coordinates
+        tripMap.addMarker(
+            MarkerOptions().icon(bitmapDescriptorFromVector(R.drawable.ic_live_location, requireContext())).position(
+                LatLng(
+                    coordinates?.first()?.latitude ?: CLUJANGELES.latitude, coordinates?.first()?.longitude ?: CLUJANGELES.longitude
+                )
+            )
+        )
+
+        tripMap.addMarker(
+            MarkerOptions().icon(bitmapDescriptorFromVector(R.drawable.ic_map_pin, requireContext())).position(
+                LatLng(
+                    coordinates?.last()?.latitude ?: CLUJANGELES.latitude, coordinates?.last()?.longitude ?: CLUJANGELES.longitude
+                )
+            )
+        )
         tripMap.animateCamera(
             CameraUpdateFactory.newLatLngZoom(
                 LatLng(
