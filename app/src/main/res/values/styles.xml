@@ -2,7 +2,7 @@
 <resources>
     <!--region TextStyles-->
     <style name="Heading1">
-        <item name="android:textSize">36sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="fontFamily">@font/bai_jamjuree_bold</item>
     </style>
 
@@ -49,6 +49,11 @@
         <item name="android:minHeight">@dimen/button_height</item>
         <item name="android:textAppearance">@style/Button1</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="SmallButton" parent="PrimaryButton">
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/bg_small_button</item>
     </style>
 
     <style name="OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -119,12 +124,13 @@
         <item name="android:background">@drawable/rounded_dialog</item>
     </style>
 
-    <style name="ImageButton">
+    <style name="ImageButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:background">@drawable/bg_small_icon_btn</item>
         <item name="android:backgroundTint">@color/small_icon_button_tint</item>
         <item name="android:elevation">@dimen/bottom_sheet_small_icon_elevation</item>
         <item name="android:foreground">?selectableItemBackground</item>
         <item name="android:padding">@dimen/bottom_sheet_small_icon_padding</item>
+
     </style>
 
     <style name="SheetDialog" parent="Theme.Design.Light.BottomSheetDialog">

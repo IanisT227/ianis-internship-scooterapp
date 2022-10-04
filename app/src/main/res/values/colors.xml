@@ -26,6 +26,16 @@
     <color name="map_location_circle_color">#02210B50</color>
     <color name="unlock_by_number_title_color">@color/neutral_white</color>
     <color name="unlock_by_number_subtitle_color">@color/neutral_grey</color>
+    <color name="pin_view_default">@color/neutral_grey</color>
+    <color name="line_selected">@color/neutral_white</color>
+    <color name="line_focused">@color/neutral_grey</color>
+    <color name="line_default">@color/neutral_grey</color>
+    <color name="loading_indicator_color">@color/neutral_white</color>
+    <color name="small_button_color">#33FFFFFF</color>
+    <color name="ride_card_info_secondary_text_color">#99210B50</color>
+    <color name="ride_card_info_primary_text_color">@color/primary_dark_purple</color>
+
+
     <!--endregion-->
 
     <!--   region Standard android colors-->

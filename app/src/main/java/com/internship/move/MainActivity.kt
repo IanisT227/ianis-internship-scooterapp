@@ -12,13 +12,16 @@ import androidx.navigation.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.internship.move.feature.onboarding.OnSkipButtonPressed
 import com.internship.move.feature.onboarding.OnboardingViewModel
+import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
 import com.internship.move.feature.splash.SplashFragmentDirections
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity(), OnSkipButtonPressed {
 
-    private val viewModel: OnboardingViewModel by viewModel()
+    private val onboardingViewModel: OnboardingViewModel by viewModel()
+    private val scooterStateViewModel: ScooterStateViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +29,7 @@ class MainActivity : AppCompatActivity(), OnSkipButtonPressed {
     }
 
     override fun onPressed() {
-        viewModel.changeLogStatus(true)
+        onboardingViewModel.changeLogStatus(true)
         findNavController(R.id.navigationHost).navigate(SplashFragmentDirections.actionGlobalRegisterFragment())
     }
 

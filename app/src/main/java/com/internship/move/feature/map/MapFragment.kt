@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
+import android.graphics.Typeface.BOLD
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -14,13 +16,17 @@ import android.location.LocationManager.NETWORK_PROVIDER
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.provider.Settings
 import android.view.View
+import android.widget.Chronometer
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -30,21 +36,34 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.internship.move.R
-import com.internship.move.databinding.BottomSheetScooterCardBinding
+import com.internship.move.databinding.BottomSheetRideInfoCardBinding
+import com.internship.move.databinding.BottomSheetScooterStartRideBinding
+import com.internship.move.databinding.BottomSheetScooterUnlockOptionsCardBinding
 import com.internship.move.databinding.FragmentMapBinding
 import com.internship.move.feature.authentication.AuthenticationViewModel
+import com.internship.move.feature.scooter_unlock.LocationDTO
+import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
 import com.internship.move.utils.bitmapDescriptorFromVector
 import com.internship.move.utils.logTag
+import com.internship.move.utils.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -53,6 +72,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private val binding by viewBinding(FragmentMapBinding::bind)
     private val authViewModel: AuthenticationViewModel by viewModel()
     private val scooterViewModel: ScooterViewModel by viewModel()
+    private val scooterStateViewModel: ScooterStateViewModel by sharedViewModel()
     private lateinit var scooterMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var doubleBackPressed = false
@@ -60,6 +80,11 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private val locationPermissionRequest = initPermissions()
     private var selectedMarker: Marker? = null
     private lateinit var currentLocation: LatLng
+    private var rideStarted = false
+    private var ongoingRide = false
+    private var pauseOffset: Long = 0
+    private var currentRideDistance: Int = 0
+    private var scooterCircle: Circle? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,6 +98,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         initViews()
         initButtons()
         initObservers()
+        println()
     }
 
     private fun initViews() {
@@ -91,6 +117,21 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             if (scooterList.isNotEmpty()) {
                 addClusteredMarkers(scooterList)
             }
+        }
+
+        scooterStateViewModel.scooterResult.observe(viewLifecycleOwner) { scooterResult ->
+            if (scooterResult != null) {
+                showStartRideBottomSheetDialog(scooterResult)
+            }
+        }
+
+        scooterStateViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (!isError.isNullOrEmpty())
+                showAlerter(isError.toString(), requireActivity())
+        }
+
+        scooterStateViewModel.rideDistance.observe(viewLifecycleOwner) { rideDistance ->
+            currentRideDistance = rideDistance
         }
     }
 
@@ -138,9 +179,9 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         true
     }
 
-    private fun showBottomSheetDialog(scooter: ScooterResponseDTO) {
+    private fun showUnlockScooterBottomSheetDialog(scooter: ScooterResponseDTO) {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
-        val dialogBinding = BottomSheetScooterCardBinding.inflate(layoutInflater, null, false)
+        val dialogBinding = BottomSheetScooterUnlockOptionsCardBinding.inflate(layoutInflater, null, false)
         dialogBinding.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
         dialogBinding.batteryLevelTV.text = scooter.battery
         setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
@@ -148,9 +189,129 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             bottomSheetDialog.hide()
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToUnlockByCodeFragment())
         }
-
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
+    }
+
+    private fun showStartRideBottomSheetDialog(scooter: ScooterResponseDTO) {
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
+        bottomSheetDialog.setCanceledOnTouchOutside(true)
+        val dialogBinding = BottomSheetScooterStartRideBinding.inflate(layoutInflater, null, false)
+        dialogBinding.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
+        dialogBinding.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
+        setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
+        dialogBinding.startRideBtn.setOnClickListener {
+            rideStarted = true
+            bottomSheetDialog.dismiss()
+            scooterStateViewModel.startScooterRide()
+            if (scooterStateViewModel.isError.value.isNullOrEmpty() && scooterStateViewModel.scooterResult.value != null) {
+                showOngoingRideBottomSheet(scooterStateViewModel.scooterResult.value!!)
+            }
+        }
+        bottomSheetDialog.setContentView(dialogBinding.root)
+        bottomSheetDialog.show()
+        val job = GlobalScope.launch(Dispatchers.Main) {
+            coroutineScope {
+                delay(30000L)
+                showAlerter(getString(R.string.expired_reservation_text), requireActivity())
+                scooterStateViewModel.resetScooterState()
+                bottomSheetDialog.hide()
+            }
+        }
+        bottomSheetDialog.setOnDismissListener {
+            job.cancel()
+            if (!rideStarted) {
+                scooterStateViewModel.resetScooterState()
+            }
+        }
+    }
+
+    private fun showOngoingRideBottomSheet(scooter: ScooterResponseDTO) {
+        if (scooterStateViewModel.isError.value.isNullOrEmpty()) {
+            val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.SheetDialog)
+            bottomSheetDialog.setCancelable(false)
+            val dialogBinding = BottomSheetRideInfoCardBinding.inflate(layoutInflater, null, false)
+            dialogBinding.batteryLevelTV.text = scooter.battery
+            setBatteryIcon(scooter.battery.toInt(), dialogBinding.batteryIndicatorIV)
+
+            dialogBinding.endRideBtn.setOnClickListener {
+                scooterStateViewModel.endScooterRIde()
+                bottomSheetDialog.dismiss()
+                dialogBinding.travelTimeChrono.base = SystemClock.elapsedRealtime()
+                getLocation()
+            }
+
+            dialogBinding.pauseRideBtn.setOnClickListener {
+                if (!ongoingRide) {
+                    dialogBinding.pauseRideBtn.text = getString(R.string.lock_ride_btn_text)
+                    dialogBinding.pauseRideBtn.setCompoundDrawables(
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_lock),
+                        null,
+                        null,
+                        null
+                    )
+                    startChronometer(dialogBinding.travelTimeChrono)
+                    scooterStateViewModel.unlockScooterRide()
+                } else {
+                    pauseChronometer(dialogBinding.travelTimeChrono)
+                    scooterStateViewModel.lockScooterRide()
+                    dialogBinding.pauseRideBtn.text = getString(R.string.unlock_ride_btn_text)
+                    dialogBinding.pauseRideBtn.setCompoundDrawables(
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_unlock),
+                        null,
+                        null,
+                        null
+                    )
+                }
+            }
+            dialogBinding.topBarIV.setOnClickListener {
+                BottomSheetBehavior.from(dialogBinding.bottomSheetCV).state = BottomSheetBehavior.STATE_EXPANDED
+                BottomSheetBehavior.from(dialogBinding.bottomSheetCV).peekHeight = Resources.getSystem().displayMetrics.heightPixels
+            }
+
+            bottomSheetDialog.setContentView(dialogBinding.root)
+            bottomSheetDialog.show()
+            initChronometer(dialogBinding.travelTimeChrono, dialogBinding.distanceTV)
+            startChronometer(dialogBinding.travelTimeChrono)
+
+
+        }
+
+    }
+
+    private fun initChronometer(chronometer: Chronometer, distanceTv: TextView) {
+        chronometer.setOnChronometerTickListener {
+            val time: Long = SystemClock.elapsedRealtime() - it.base
+            val h = (time / 3600000).toInt()
+            val m = (time - h * 3600000).toInt() / 60000
+            val s = (time - h * 3600000 - m * 60000).toInt() / 1000
+            val hh = if (h < 10) "0$h" else h.toString() + ""
+            val mm = if (m < 10) "0$m" else m.toString() + ""
+            val ss = if (s < 10) "0$s" else s.toString() + ""
+            it.text = "$hh:$mm min"
+            if (ss.toInt() % 10 == 0) {
+                getLocation()
+                scooterStateViewModel.updateRideLocation(currentLocation)
+                distanceTv.setTypeface(distanceTv.typeface, BOLD)
+                distanceTv.text = currentRideDistance.toString()
+            }
+        }
+    }
+
+    private fun startChronometer(chronometer: Chronometer) {
+        if (!ongoingRide) {
+            chronometer.base = SystemClock.elapsedRealtime() - pauseOffset
+            chronometer.start()
+            ongoingRide = true
+        }
+    }
+
+    private fun pauseChronometer(chronometer: Chronometer) {
+        if (ongoingRide) {
+            chronometer.stop()
+            pauseOffset = SystemClock.elapsedRealtime() - chronometer.base
+            ongoingRide = false
+        }
     }
 
     private fun addClusteredMarkers(scooterList: List<ScooterResponseDTO>) {
@@ -168,8 +329,14 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                 scooterInfo.scooterNumberTV.text = getString(R.string.scooter_number_text, scooter.scooterNumber)
                 scooterInfo.batteryLevelTV.text = getString(R.string.scooter_battery_level_text, scooter.battery)
                 scooterInfo.scooterLocationTV.text = getScooterAddress(scooter.location)
-                binding.scooterInfo.unlockScooterBtn.setOnClickListener {
-                    showBottomSheetDialog(scooter)
+                scooterInfo.unlockScooterBtn.setOnClickListener {
+                    showUnlockScooterBottomSheetDialog(scooter)
+                }
+                scooterInfo.pingScooterIBtn.setOnClickListener {
+                    scooterStateViewModel.pingScooter(
+                        scooter.scooterNumber,
+                        LocationDTO(currentLocation.longitude, currentLocation.latitude)
+                    )
                 }
             }
             setBatteryIcon(scooter.battery.toInt(), binding.scooterInfo.batteryIndicatorIV)
@@ -279,32 +446,40 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
         binding.cityTv.text =
             Geocoder(requireContext(), Locale.getDefault()).getFromLocation(location.latitude, location.longitude, 1)[0].locality.toString()
-
-        scooterMap.addCircle(
-            CircleOptions().center(location)
-                .fillColor(ColorUtils.setAlphaComponent(resources.getColor(R.color.primary_dark_purple, null), 26)).radius(30.0)
-                .strokeWidth(0.0f)
-        )
+        if (scooterCircle?.center != location) {
+            scooterCircle?.remove()
+            scooterCircle = scooterMap.addCircle(
+                CircleOptions().center(location)
+                    .fillColor(ColorUtils.setAlphaComponent(resources.getColor(R.color.primary_dark_purple, null), 26)).radius(30.0)
+                    .strokeWidth(0.0f)
+            )
+        }
 
         scooterMap.addMarker(
             MarkerOptions().position(location).icon(bitmapDescriptorFromVector(R.drawable.ic_live_location, requireContext()))
+                .anchor(.5f, .5f)
         )
     }
 
     private fun getScooterAddress(scooterCoords: CoordinatesDTO): String {
-        return getString(
-            R.string.scooter_address_string, Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-                scooterCoords.coordinates[1],
-                scooterCoords.coordinates[0],
-                1
-            )[0].thoroughfare
-                .toString(), Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-                scooterCoords.coordinates[1],
-                scooterCoords.coordinates[0],
-                1
-            )[0].subThoroughfare
-                .toString()
-        )
+        try {
+            return getString(
+                R.string.scooter_address_string, Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
+                    scooterCoords.coordinates[1],
+                    scooterCoords.coordinates[0],
+                    1
+                )[0].thoroughfare
+                    .toString(), Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
+                    scooterCoords.coordinates[1],
+                    scooterCoords.coordinates[0],
+                    1
+                )[0].subThoroughfare
+                    .toString()
+            )
+        } catch (e: Exception) {
+            logTag("GetAddressException", e.toString())
+            return getString(R.string.address_exception_location_text)
+        }
     }
 
     companion object {

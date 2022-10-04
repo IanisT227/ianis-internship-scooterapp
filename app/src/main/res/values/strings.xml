@@ -92,5 +92,20 @@
     <string name="small_icon_missing_text">Missing</string>
     <string name="unlock_by_code_title_text">Enter the scoter’s serial number</string>
     <string name="unlock_by_code_subtitle_text">You can find it on the \nscooter’s front panel</string>
+    <string name="unlock_suggestions_text">Alternately you can unlock using</string>
+    <string name="qr_btn_text">QR</string>
+    <string name="scan_alternate_options_text">or</string>
+    <string name="nfc_btn_text">NFC</string>
+    <string name="scooter_success_safety_request_text">Please respect all the driving regulations\nand other participants in traffic while using\nour scooters.</string>
+    <string name="scooter_unlock_successful_text">Unlock\nSuccessful</string>
+    <string name="address_exception_location_text">Galati, Romania</string>
+    <string name="card_trip_details_title_text">Trip details</string>
+    <string name="distance_subtitle_text">Distance</string>
+    <string name="travel_time_subtitle_text">Travel time</string>
+    <string name="lock_ride_btn_text">Lock</string>
+    <string name="unlock_ride_btn_text">Unlock</string>
+    <string name="end_ride_btn_text">End Ride</string>
+    <string name="cronometer_format_string">%s min</string>
+    <string name="expired_reservation_text">Your reservation has expired!</string>
     <!--    endregion-->
 </resources>
