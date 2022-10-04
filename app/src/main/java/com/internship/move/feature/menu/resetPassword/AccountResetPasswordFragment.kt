@@ -9,6 +9,7 @@ import com.internship.move.databinding.FragmentAccountResetPasswordBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
 class AccountResetPasswordFragment : Fragment(R.layout.fragment_account_reset_password) {
+
     private val binding by viewBinding(FragmentAccountResetPasswordBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

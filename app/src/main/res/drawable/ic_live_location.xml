@@ -6,9 +6,9 @@
     </item>
 
     <item
-        android:bottom="4dp"
-        android:drawable="@drawable/ic_aaaaaa"
-        android:left="4dp"
-        android:right="6dp"
-        android:top="6dp" />
+        android:bottom="@dimen/ic_live_location_bottom_left_offset"
+        android:drawable="@drawable/ic_live_location_pin"
+        android:left="@dimen/ic_live_location_bottom_left_offset"
+        android:right="@dimen/ic_live_location_top_right_offset"
+        android:top="@dimen/ic_live_location_top_right_offset" />
 </layer-list>

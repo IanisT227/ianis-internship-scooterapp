@@ -15,6 +15,7 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AccountDetailsFragment : Fragment(R.layout.fragment_account_details) {
+
     private val binding by viewBinding(FragmentAccountDetailsBinding::bind)
     private val accountDetailsViewModel: MenuViewModel by viewModel()
     private val authenticationViewModel: AuthenticationViewModel by viewModel()

@@ -1,8 +1,6 @@
 package com.internship.move.feature.map
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -36,9 +34,8 @@ class TripDetailsFragment : Fragment(R.layout.fragment_trip_details), OnMapReady
 
     private fun initButtons() {
         binding.payTripBtn.setOnClickListener {
-            Handler(Looper.getMainLooper()).postDelayed({
-                findNavController().navigate(TripDetailsFragmentDirections.actionTripDetailsFragmentToMapFragment())
-            }, PAYMENT_DELAY)
+            scooterStateViewModel.finishRidePayment()
+            findNavController().navigateUp()
         }
     }
 
@@ -57,8 +54,8 @@ class TripDetailsFragment : Fragment(R.layout.fragment_trip_details), OnMapReady
         binding.endAddressTV.text = getScooterAddress(
             CoordinatesDTO(
                 listOf(
-                    coordinatesList?.get(coordinatesList.size - 2)?.longitude ?: CLUJANGELES.longitude,
-                    coordinatesList?.get(coordinatesList.size - 2)?.latitude ?: CLUJANGELES.latitude
+                    coordinatesList?.last()?.longitude ?: CLUJANGELES.longitude,
+                    coordinatesList?.last()?.latitude ?: CLUJANGELES.latitude
                 )
             ), requireContext()
         )
@@ -94,6 +91,5 @@ class TripDetailsFragment : Fragment(R.layout.fragment_trip_details), OnMapReady
     companion object {
         private val CLUJANGELES = LatLng(46.770439, 23.591423)
         private const val ZOOM_LEVEL = 16.0f
-        private const val PAYMENT_DELAY= 2000L
     }
 }

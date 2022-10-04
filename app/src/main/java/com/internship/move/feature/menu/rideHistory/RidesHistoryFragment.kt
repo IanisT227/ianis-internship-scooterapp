@@ -13,10 +13,10 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RidesHistoryFragment : Fragment(R.layout.fragment_ride_history) {
+
     private val binding by viewBinding(FragmentRideHistoryBinding::bind)
     private val adapter by lazy { initRidesAdapter() }
     private val ridesViewModel: MenuViewModel by viewModel()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,9 +27,8 @@ class RidesHistoryFragment : Fragment(R.layout.fragment_ride_history) {
     }
 
     private fun initRidesAdapter(): RideHistoryAdapter =
-        RideHistoryAdapter(requireContext())
-
-
+        RideHistoryAdapter()
+    
     private fun initRecyclerView(layoutManager: LinearLayoutManager) {
         binding.rideHistoryRV.adapter = adapter
         binding.rideHistoryRV.layoutManager = layoutManager

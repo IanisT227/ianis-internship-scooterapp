@@ -20,9 +20,11 @@ class MenuViewModel(
     private val _userData: MutableLiveData<MainMenuUserDTO> = MutableLiveData()
     val userData: LiveData<MainMenuUserDTO>
         get() = _userData
+
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
+
     private val _isError: MutableLiveData<String?> = MutableLiveData()
     val isError: LiveData<String?>
         get() = _isError

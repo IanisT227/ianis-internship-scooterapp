@@ -22,7 +22,7 @@ interface ScooterStateService {
     suspend fun startRide(@Body startScooterDto: StartScooterDTO): RideDTO
 
     @PUT("rides/{idRide}")
-    suspend fun endRide(@Path(value = "idRide") rideId: String, @Body location: endRideDTO): RideHistoryItemDTO
+    suspend fun endRide(@Path(value = "idRide") rideId: String, @Body location: EndRideDTO): RideHistoryItemDTO
 
     @PUT("rides")
     suspend fun updateRideLocation(@Body location: LocationDTO): RideDTO

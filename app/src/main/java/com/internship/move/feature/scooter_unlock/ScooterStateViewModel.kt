@@ -34,8 +34,8 @@ class ScooterStateViewModel(
     val rideDistance: LiveData<Int>
         get() = _rideDistance
     private lateinit var rideResult: RideDTO
-    private val _lastRide: MutableLiveData<RideHistoryItemDTO> = MutableLiveData()
-    val lastRide: LiveData<RideHistoryItemDTO>
+    private val _lastRide: MutableLiveData<RideHistoryItemDTO?> = MutableLiveData()
+    val lastRide: LiveData<RideHistoryItemDTO?>
         get() = _lastRide
 
     fun startScooterUnlock(scooterCode: Int) {
@@ -50,6 +50,10 @@ class ScooterStateViewModel(
                 _isLoading.value = false
             }
         }
+    }
+
+    fun finishRidePayment(){
+        _lastRide.value = null
     }
 
     fun resetScooterState() {
@@ -104,7 +108,7 @@ class ScooterStateViewModel(
                 _isLoading.value = true
                 _lastRide.value = scooterStateService.endRide(
                     rideId = rideResult.rideId,
-                    location = endRideDTO(
+                    location = EndRideDTO(
                         _scooterResult.value?.location?.coordinates?.get(0) ?: CLUJANGELES.longitude,
                         _scooterResult.value?.location?.coordinates?.get(1) ?: CLUJANGELES.latitude,
                         getScooterAddress(
@@ -162,7 +166,7 @@ class ScooterStateViewModel(
                     )
                 ).distance.toInt()
             } catch (e: Exception) {
-                _isError.postValue(e.toErrorResponse(errorJsonAdapter).message)
+                logTag("UpdateRideError", e.message.toString())
             }
         }
     }
@@ -181,6 +185,5 @@ class ScooterStateViewModel(
 
     companion object {
         private val CLUJANGELES = LatLng(46.770439, 23.591423)
-
     }
 }

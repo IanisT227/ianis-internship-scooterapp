@@ -13,6 +13,7 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainMenuFragment : Fragment(R.layout.fragment_main_menu) {
+
     private val binding by viewBinding(FragmentMainMenuBinding::bind)
     private val menuViewModel: MenuViewModel by viewModel()
 
@@ -55,9 +56,9 @@ class MainMenuFragment : Fragment(R.layout.fragment_main_menu) {
         }
 
         menuViewModel.isError.observe(viewLifecycleOwner) { isError ->
-            if (!isError.isNullOrEmpty())
-                showAlerter(isError.toString(), requireActivity())
+            if (!isError.isNullOrEmpty()) {
+                showAlerter(isError, requireActivity())
+            }
         }
     }
-
 }

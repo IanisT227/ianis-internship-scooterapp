@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class endRideDTO(
+data class EndRideDTO(
     @Json(name = "longitude")
     val longitude: Double,
     @Json(name = "latitude")

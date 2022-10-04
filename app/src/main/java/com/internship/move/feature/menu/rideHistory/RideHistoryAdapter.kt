@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.internship.move.databinding.RideHistoryCardviewBinding
 
-class RideHistoryAdapter(private val context: Context) :
+class RideHistoryAdapter() :
     ListAdapter<RideHistoryItemDTO, RideHistoryItemViewHolder>(RideHistoryItemDiffUtilItemCallback()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = RideHistoryItemViewHolder(
         RideHistoryCardviewBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
@@ -15,6 +16,6 @@ class RideHistoryAdapter(private val context: Context) :
     )
 
     override fun onBindViewHolder(holder: RideHistoryItemViewHolder, position: Int) {
-        holder.bind(getItem(position), context)
+        holder.bind(getItem(position))
     }
 }

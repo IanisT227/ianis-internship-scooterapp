@@ -25,7 +25,6 @@
         android:paddingTop="@dimen/bottom_sheet_padding_top"
         android:paddingBottom="@dimen/bottom_sheet_padding_bottom">
 
-
         <TextView
             android:id="@+id/tripDetailsTitleTV"
             style="@style/Body1"
@@ -112,6 +111,7 @@
             android:paddingVertical="4dp"
             android:textColor="@color/ride_card_info_primary_text_color"
             android:textStyle="bold"
+            android:fontFamily="@font/bai_jamjuree_bold"
             app:layout_constraintStart_toStartOf="@+id/travelTimeIV"
             app:layout_constraintTop_toBottomOf="@+id/travelTimeTitleTV" />
 
