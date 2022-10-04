@@ -92,7 +92,6 @@ class TripDetailsFragment : Fragment(R.layout.fragment_trip_details), OnMapReady
                 ZOOM_LEVEL
             )
         )
-
     }
 
     companion object {

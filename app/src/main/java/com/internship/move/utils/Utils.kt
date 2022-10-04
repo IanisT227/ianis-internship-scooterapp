@@ -90,7 +90,7 @@ fun Exception.toErrorResponse(errorResponseDtoJsonAdapter: JsonAdapter<ErrorResp
         ErrorResponse(message.toString())
     }
 
- fun getScooterAddress(scooterCoords: CoordinatesDTO, context:Context): String {
+fun getScooterAddress(scooterCoords: CoordinatesDTO, context: Context): String {
     try {
         return context.getString(
             R.string.scooter_address_string, Geocoder(context, Locale.getDefault()).getFromLocation(

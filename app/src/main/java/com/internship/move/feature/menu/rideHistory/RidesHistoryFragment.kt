@@ -28,7 +28,7 @@ class RidesHistoryFragment : Fragment(R.layout.fragment_ride_history) {
 
     private fun initRidesAdapter(): RideHistoryAdapter =
         RideHistoryAdapter()
-    
+
     private fun initRecyclerView(layoutManager: LinearLayoutManager) {
         binding.rideHistoryRV.adapter = adapter
         binding.rideHistoryRV.layoutManager = layoutManager
@@ -42,7 +42,7 @@ class RidesHistoryFragment : Fragment(R.layout.fragment_ride_history) {
 
         ridesViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.rideHistoryRV.isVisible = !isLoading
-            binding.getListProgressIndicator.isVisible= isLoading
+            binding.getListProgressIndicator.isVisible = isLoading
         }
     }
 

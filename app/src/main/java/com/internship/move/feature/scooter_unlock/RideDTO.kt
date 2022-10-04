@@ -19,6 +19,6 @@ data class RideDTO(
     val coordinates: List<LocationDTO>,
     @Json(name = "endTime")
     val endTime: Long = 0,
-    @Json(name= "duration")
+    @Json(name = "duration")
     val duration: Int
 )

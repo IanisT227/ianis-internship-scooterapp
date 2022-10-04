@@ -14,7 +14,6 @@ import com.internship.move.feature.onboarding.OnSkipButtonPressed
 import com.internship.move.feature.onboarding.OnboardingViewModel
 import com.internship.move.feature.scooter_unlock.ScooterStateViewModel
 import com.internship.move.feature.splash.SplashFragmentDirections
-import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

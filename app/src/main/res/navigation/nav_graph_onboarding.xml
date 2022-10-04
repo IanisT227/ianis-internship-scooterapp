@@ -210,7 +210,7 @@
     <fragment
         android:id="@+id/accountDetailsFragment"
         android:name="com.internship.move.feature.menu.accountDetails.AccountDetailsFragment"
-        android:label="AccountDetailsFragment" >
+        android:label="AccountDetailsFragment">
         <action
             android:id="@+id/action_accountDetailsFragment_to_registerFragment"
             app:destination="@id/registerFragment"
@@ -223,7 +223,7 @@
     <fragment
         android:id="@+id/tripDetailsFragment"
         android:name="com.internship.move.feature.map.TripDetailsFragment"
-        android:label="TripDetailsFragment" >
+        android:label="TripDetailsFragment">
         <action
             android:id="@+id/action_tripDetailsFragment_to_mapFragment"
             app:destination="@id/mapFragment" />

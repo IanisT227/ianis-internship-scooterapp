@@ -296,7 +296,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             val ss = if (s < 10) "0$s" else s.toString() + ""
             it.text = getString(R.string.live_ride_duration_format_string, hh, mm)
             if (ss.toInt() % 10 == 0) {
-                if (ongoingRide){
+                if (ongoingRide) {
                     getLocation()
                     scooterStateViewModel.updateRideLocation(currentLocation)
                     distanceTv.setTypeface(distanceTv.typeface, BOLD)

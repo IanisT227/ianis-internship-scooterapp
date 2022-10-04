@@ -52,7 +52,7 @@ class ScooterStateViewModel(
         }
     }
 
-    fun finishRidePayment(){
+    fun finishRidePayment() {
         _lastRide.value = null
     }
 

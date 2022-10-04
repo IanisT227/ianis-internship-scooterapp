@@ -12,4 +12,4 @@ data class LocationDTO(
     val longitude: Double,
     @Json(name = "latitude")
     val latitude: Double
-): Parcelable
+) : Parcelable
