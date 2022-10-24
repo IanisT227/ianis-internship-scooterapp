@@ -99,7 +99,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         initViews()
         initButtons()
         initObservers()
-        println()
     }
 
     private fun initViews() {
@@ -132,14 +131,21 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         }
 
         scooterStateViewModel.rideDistance.observe(viewLifecycleOwner) { rideDistance ->
-            currentRideDistance = rideDistance
+            if (rideDistance != null) {
+                currentRideDistance = rideDistance
+            }
+        }
+
+        scooterStateViewModel.lastRide.observe(viewLifecycleOwner) { lastRide ->
+            if (lastRide != null) {
+                findNavController().navigate(MapFragmentDirections.actionMapFragmentToTripDetailsFragment())
+            }
         }
     }
 
     private fun initButtons() {
         requireActivity().onBackPressedDispatcher.addCallback {
             if (doubleBackPressed) {
-                authViewModel.logOut()
                 requireActivity().finish()
             } else {
                 doubleBackPressed = true
@@ -238,9 +244,10 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             dialogBinding.endRideBtn.setOnClickListener {
                 scooterStateViewModel.endScooterRIde(requireContext())
                 currentRideDistance = 0
+                ongoingRide = false
+                dialogBinding.travelTimeChrono.stop()
+                scooterStateViewModel.updateRideLocation(currentLocation)
                 bottomSheetDialog.dismiss()
-                dialogBinding.travelTimeChrono.base = SystemClock.elapsedRealtime()
-                getLocation()
             }
 
             dialogBinding.pauseRideBtn.setOnClickListener {
@@ -275,10 +282,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             bottomSheetDialog.show()
             initChronometer(dialogBinding.travelTimeChrono, dialogBinding.distanceTV)
             startChronometer(dialogBinding.travelTimeChrono)
-
-
         }
-
     }
 
     private fun initChronometer(chronometer: Chronometer, distanceTv: TextView) {
@@ -292,16 +296,20 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             val ss = if (s < 10) "0$s" else s.toString() + ""
             it.text = getString(R.string.live_ride_duration_format_string, hh, mm)
             if (ss.toInt() % 10 == 0) {
-                getLocation()
-                scooterStateViewModel.updateRideLocation(currentLocation)
-                distanceTv.setTypeface(distanceTv.typeface, BOLD)
-                distanceTv.text = getString(R.string.ride_cardview_distance_format_text, currentRideDistance)
+                if (ongoingRide) {
+                    getLocation()
+                    scooterStateViewModel.updateRideLocation(currentLocation)
+                    distanceTv.setTypeface(distanceTv.typeface, BOLD)
+                    distanceTv.text = getString(R.string.ride_cardview_distance_format_text, currentRideDistance)
+                }
+
             }
         }
     }
 
     private fun startChronometer(chronometer: Chronometer) {
         if (!ongoingRide) {
+            scooterStateViewModel.updateRideLocation(currentLocation)
             chronometer.base = SystemClock.elapsedRealtime() - pauseOffset
             chronometer.start()
             ongoingRide = true
@@ -310,6 +318,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     private fun pauseChronometer(chronometer: Chronometer) {
         if (ongoingRide) {
+            scooterStateViewModel.updateRideLocation(currentLocation)
             chronometer.stop()
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.base
             ongoingRide = false
@@ -452,7 +461,9 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             scooterCircle?.remove()
             scooterCircle = scooterMap.addCircle(
                 CircleOptions().center(location)
-                    .fillColor(ColorUtils.setAlphaComponent(resources.getColor(R.color.primary_dark_purple, null), 26)).radius(30.0)
+                    .fillColor(ColorUtils.setAlphaComponent(resources.getColor(R.color.primary_dark_purple, null), CIRCLE_ALPHA)).radius(
+                        CIRCLE_RADIUS
+                    )
                     .strokeWidth(0.0f)
             )
         }
@@ -467,6 +478,8 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         private val CLUJANGELES = LatLng(46.770439, 23.591423)
         private const val ZOOM_LEVEL = 18.0f
         private const val ON_BACK_RESET_DURATION = 3000L
+        private const val CIRCLE_ALPHA = 26
+        private const val CIRCLE_RADIUS = 30.0
 
     }
 }

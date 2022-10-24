@@ -5,18 +5,18 @@
     android:id="@+id/bottomSheetCV"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/bottom_sheet_corner_radius"
-    android:background="@drawable/bg_bottom_sheet">
+    android:background="@drawable/bg_bottom_sheet"
+    app:cardCornerRadius="@dimen/bottom_sheet_corner_radius">
 
     <ImageView
         android:id="@+id/top_bar_IV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_pink_rectangle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_gravity="center_horizontal"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,7 +24,6 @@
         android:paddingHorizontal="@dimen/bottom_sheet_padding_horizontal"
         android:paddingTop="@dimen/bottom_sheet_padding_top"
         android:paddingBottom="@dimen/bottom_sheet_padding_bottom">
-
 
         <TextView
             android:id="@+id/tripDetailsTitleTV"
@@ -82,11 +81,11 @@
             app:layout_constraintTop_toTopOf="@+id/travelTimeIV" />
 
         <ImageView
-            android:layout_marginTop="@dimen/bottom_sheet_ride_icon_margin_top"
             android:id="@+id/distanceIV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/bottom_sheet_ride_distance_icon_margin_start"
+            android:layout_marginTop="@dimen/bottom_sheet_ride_icon_margin_top"
             android:src="@drawable/ic_distance"
             app:layout_constraintStart_toEndOf="@id/travelTimeTitleTV"
             app:layout_constraintTop_toBottomOf="@+id/batteryIndicatorIV" />
@@ -108,6 +107,7 @@
             style="@style/Heading1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bai_jamjuree_bold"
             android:format="@string/cronometer_format_string"
             android:paddingVertical="4dp"
             android:textColor="@color/ride_card_info_primary_text_color"

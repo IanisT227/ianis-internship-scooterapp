@@ -107,4 +107,16 @@
     <dimen name="account_data_margin_top">44dp</dimen>
     <dimen name="save_changes_margin_horizontal">24dp</dimen>
     <dimen name="reset_password_btn_margin_bottom">106dp</dimen>
+    <dimen name="ic_live_location_bottom_left_offset">4dp</dimen>
+    <dimen name="ic_live_location_top_right_offset">6dp</dimen>
+    <dimen name="bottom_sheet_button_margin_bottom">10dp</dimen>
+    <dimen name="main_menu_text_btn_margin_top">16dp</dimen>
+    <dimen name="subtitle_icon_margin_start">24dp</dimen>
+    <dimen name="subtitle_icon_margin_top">32dp</dimen>
+    <dimen name="title_button_margin_start">16dp</dimen>
+    <dimen name="unlock_by_code_title_margin_top">36dp</dimen>
+    <dimen name="unlock_by_code_subtitle_margin_top">16dp</dimen>
+    <dimen name="unlock_by_code_pinview_margin_top">108dp</dimen>
+    <dimen name="unlock_by_code_alternate_methods_margin_top">24dp</dimen>
+    <dimen name="or_text_margin_horizontal">20dp</dimen>
 </resources>

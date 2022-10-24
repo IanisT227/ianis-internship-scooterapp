@@ -1,6 +1,7 @@
 package com.internship.move.feature.scooter_unlock
 
 import com.internship.move.feature.map.ScooterResponseDTO
+import com.internship.move.feature.menu.rideHistory.RideHistoryItemDTO
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -21,7 +22,7 @@ interface ScooterStateService {
     suspend fun startRide(@Body startScooterDto: StartScooterDTO): RideDTO
 
     @PUT("rides/{idRide}")
-    suspend fun endRide(@Path(value = "idRide") rideId: String, @Body location: endRideDTO)
+    suspend fun endRide(@Path(value = "idRide") rideId: String, @Body location: EndRideDTO): RideHistoryItemDTO
 
     @PUT("rides")
     suspend fun updateRideLocation(@Body location: LocationDTO): RideDTO

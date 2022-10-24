@@ -153,5 +153,11 @@
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
     </style>
+
+    <style name="MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">@color/accent_pink</item>
+        <item name="android:textColor">@color/primary_dark_purple</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
     <!--    endregion-->
 </resources>

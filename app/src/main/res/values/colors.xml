@@ -34,6 +34,8 @@
     <color name="small_button_color">#33FFFFFF</color>
     <color name="ride_card_info_secondary_text_color">#99210B50</color>
     <color name="ride_card_info_primary_text_color">@color/primary_dark_purple</color>
+    <color name="bottom_sheet_bg_color">@color/neutral_white</color>
+    <color name="log_out_button_color">#FF0000</color>
 
 
     <!--endregion-->

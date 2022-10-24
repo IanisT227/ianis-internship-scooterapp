@@ -18,6 +18,6 @@ class UnlockSuccessfulFragment : Fragment(R.layout.fragment_successful_unlock) {
     }
 
     companion object {
-        private const val UNLOCK_TO_MAP_DELAY = 3000L
+        private const val UNLOCK_TO_MAP_DELAY = 2000L
     }
 }
